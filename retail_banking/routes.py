@@ -1,7 +1,7 @@
 #import this line in every new module you create this will give access to app with required library
 #for more info check __init__.py file
 from retail_banking import *
-
+from flask import redirect,render_template,url_for
 
 import hashlib
 
@@ -23,6 +23,25 @@ def login():
 
 
 
+
+@app.route('/register', methods=['get', 'post'])
+def register():
+
+    if request.method == "GET":
+        return render_template('register.html')
+
+
+    ssn_id = request.form.get('ssn')
+    name = request.form.get('name')
+    age = request.form.get('age')
+    state = request.form.get('state')
+    city = request.form.get('city')
+
+    print(ssn_id,name,age,state,city)# Simulating database insertion
+
+    return redirect(url_for('login'))
+
+    
 
 
 
