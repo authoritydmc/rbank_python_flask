@@ -1,7 +1,7 @@
 #import this line in every new module you create this will give access to app with required library
 #for more info check __init__.py file
 from retail_banking import *
-
+from retail_banking import database
 
 import hashlib
 
@@ -19,7 +19,16 @@ def login():
         # after user submit his username and password we get to this...
         username=request.form.get('uid',"userNotFound")
         password=request.form.get('psw',"passwordNotfound")
-        return render_template('login.html',a="post--"+username+"-"+password+"--"+hashlib.sha256(password.encode()).hexdigest())
+        passhax=hashlib.sha256(password.encode()).hexdigest()
+        
+        db=database.DB().getdb()
+        # 
+
+        cluster=db["login"]
+        doc={"user":username,"pass":passhax}
+        cluster.insert_one(doc)
+
+        return render_template('login.html',a="post--"+username+passhax)
 
 
 
