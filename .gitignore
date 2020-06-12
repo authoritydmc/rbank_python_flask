@@ -2,4 +2,5 @@ Pipfile*
 __pycache__
 test_*.py
 temp.py
+config_internal.py
 */__pycache__
