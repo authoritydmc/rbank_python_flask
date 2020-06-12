@@ -17,10 +17,9 @@ def login():
         return render_template('login.html',a="getr")
     else:
         # after user submit his username and password we get to this...
-        email=request.form.get('email',None)
-        password=request.form.get('psw',None)
-        
-        return render_template('login.html',a="post--"+email+"---"+hashlib.sha256(b'{password}').hexdigest())
+        username=request.form.get('uid',"userNotFound")
+        password=request.form.get('psw',"passwordNotfound")
+        return render_template('login.html',a="post--"+username+"-"+password+"--"+hashlib.sha256(password.encode()).hexdigest())
 
 
 
