@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
 <!-- head content -->
 {% block head %}
 <title>Home</title>
@@ -6,10 +6,10 @@
 <!-- end of head content -->
 
 <!-- below is body content  -->
-{% block body %}
+{% block content %}
 
 
-<h2> this is Home .</h2>
+<h2> Welcome to retail banking.</h2>
 
 <h3>
    <a href=" {{ url_for('login') }} "> Login now </a>
