@@ -1,11 +1,10 @@
-from flask import Flask,render_template,url_for,request
+from retail_banking import app
 import hashlib
-
-app=Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    # return render_template(url_for('retail_banking.home'))
+    return "home"
 
 
 @app.route("/login",methods=['GET','POST'])
@@ -26,7 +25,3 @@ def login():
 
 
 
-
-
-if __name__=="__main__":      
-    app.run(debug=True)
