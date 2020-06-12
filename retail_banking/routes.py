@@ -1,4 +1,8 @@
+#import this line in every new module you create this will give access to app with required library
+#for more info check __init__.py file
 from retail_banking import *
+
+
 import hashlib
 
 @app.route('/')
