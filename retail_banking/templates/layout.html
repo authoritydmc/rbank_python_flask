@@ -13,9 +13,9 @@
 
 <body>
 
-
-    <div class="container">
-        {% include "includes/nav.html" %}
+    {% include "includes/nav.html" %}
+    <div class="container mt-5">
+       
 
         {% if session['username']%}
         <span class='user'>Welcome, {{ session.get('username') }}</span>
@@ -24,8 +24,8 @@
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages%}
                 {%for category,message in messages%}
-                    <div class="alert alert-{{category}}">
-                        <p>{{message}}</p>
+                    <div>
+                        <p style="font-size:20px;" class="text-{{category}}">{{message}}</p>
                     </div>
                 {%endfor%}
             {%endif%}
@@ -38,6 +38,8 @@
 
 
     </div>
+    {% include "includes/footer.html" %}
+
 </body>
 
 </html>

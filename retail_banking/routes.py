@@ -12,14 +12,14 @@ from retail_banking.DATABASES import executive as edb
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', home=True)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
         # show when default this url is loaded ..
-        return render_template('login.html')
+        return render_template('login.html', login=True)
     else:
         # after user submit his username and password we get to this...
         username = request.form.get('uid', "userNotFound")
@@ -31,10 +31,10 @@ def login():
         result = edb.find(filter)
 
         if result == None:
-            flash("Wrong UserName or Password retry")
+            flash("Wrong UserName or Password retry","danger")
             return redirect(url_for('login'))
         else:
-            flash("Successfully Logged in")
+            flash("Successfully Logged in","success")
             return redirect(url_for('home'))
 
 
@@ -43,7 +43,7 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html')
+        return render_template('registerExecutive.html',registerExecutive=True)
 
     regdata = {}
 

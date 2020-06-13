@@ -1,0 +1,31 @@
+body
+{
+	background: aliceblue;
+	font-family: Montserrat;
+	/* text-align: center;
+	align-content: center; */
+}
+.footer_style {
+    text-align: center;
+    height: 50px;
+    color: black;
+    padding: 5px;
+    margin-top: 10px;
+	bottom: 0px;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 150px;
+	word-spacing: 3px;
+	font-weight: 400;
+}
+a{
+	color: white;
+}
+a:hover{
+	color: grey;
+	text-decoration: none;
+}
+.footer_links{
+	font-size: 30px;
+	font-weight: 400;
+}
