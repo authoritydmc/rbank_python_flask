@@ -7,7 +7,8 @@ class DB:
 
         if self._url==None:
             #change this url to your mongodb database for testing ....
-            self._url="mongodb+srv://DBUSER:pass123@cluster0-l63ew.mongodb.net/retail_bank?retryWrites=true&w=majority"
+            from retail_banking import config_internal
+            self._url=config_internal.dburl
         self._client=pymongo.MongoClient(self._url)
 
         self.db=self._client.retail_bank
