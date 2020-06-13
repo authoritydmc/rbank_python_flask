@@ -90,5 +90,5 @@ def registerCustomer():
     else:
         flash("Failed to Register Customer "+err)
 
-    return render_template('register.html')
+    return render_template('registerCustomer.html')
 
