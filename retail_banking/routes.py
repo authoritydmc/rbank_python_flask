@@ -7,7 +7,7 @@ from flask import redirect, render_template, url_for, json, flash
 import hashlib
 
 from retail_banking.DATABASES import customerdb as cdb
-from retail_banking.DATABASES import executive
+from retail_banking.DATABASES import executive as edb
 
 
 
@@ -20,13 +20,26 @@ def home():
 def login():
     if request.method == "GET":
         # show when default this url is loaded ..
-        return render_template('login.html', a="getr")
+        return render_template('login.html')
     else:
         # after user submit his username and password we get to this...
         username = request.form.get('uid', "userNotFound")
         password = request.form.get('psw', "passwordNotfound")
         passhax = hashlib.sha256(password.encode()).hexdigest()
-        return render_template('login.html', a="post--"+username+passhax)
+
+        filter={'ssn_id':username,'pass':passhax}
+
+
+        result=edb.find(filter)
+
+        if result==None:
+            flash("Wrong UserName or Password retry")
+            return  redirect(url_for('login'))
+        else:
+            flash("Successfully Logged in")
+            return  redirect(url_for('home'))
+
+    regdata = {}
 
 
 
@@ -34,7 +47,8 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html')
+        return render_template('register.html')
+    
 
     regdata = {}
 
@@ -43,15 +57,17 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(request.form.get('psw').encode()).hexdigest()
 
-    print(regdata)  # Simulating database insertion
+    result, err = edb.register(regdata)
+
     jsondata = json.dumps(regdata)
-    result, err = executive.insertCustomerDetail(regdata)
+    result, err = cdb.insertCustomerDetail(regdata)
 
     if result:
-        flash("Executive Registered Successfully"+jsondata)
+        flash("Executive Registered Successfully ...    Login Now")
+        return  redirect(url_for('login'))
     else:
-        flash("Failed to Register Executive "+err)
-
+        flash("Failed to Register :"+err)
+        return  redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
 
@@ -72,7 +88,7 @@ def registerCustomer():
     print(regdata)  # Simulating database insertion
 
     jsondata = json.dumps(regdata)
-    result, err = cdb.insertCustomerDetail(regdata)
+    result, err = cdb.registerSSN(regdata)
 
     if result:
         flash("Customer Registered Successfully"+jsondata)

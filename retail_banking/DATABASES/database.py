@@ -24,5 +24,11 @@ class DB:
     def RegisterUser(self):
         pass
 
+    def find(self,collectionName,filter):
+        collection= self.db[collectionName]
+        res=collection.find_one(filter)
+        return res
+
+
 
 
