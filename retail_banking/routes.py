@@ -2,6 +2,7 @@
 # for more info check __init__.py file
 from retail_banking import *
 import time
+from datetime import  datetime
 from flask import redirect, render_template, url_for, json, flash
 
 import hashlib
@@ -52,7 +53,7 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
-
+    regdata['creation_time']=str(datetime.now())
     result, err = edb.register(regdata)
 
     if result:
