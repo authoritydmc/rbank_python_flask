@@ -1,30 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script>alert("wow");</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_main.css') }}?q={{ range(1, 51) | random }}">
     {% block head %}
-     {% endblock %}
+    {% endblock %}
 
 </head>
+
 <body>
     <!-- flash messaging system -->
-    <script>
-    setTimeout(function() {
-        $('#alert alert-message').fadeOut('fast');
-    }, 5000);
-</script>
+    <!-- <script>{% include "includes/nav.html" %}
+        setTimeout(function () {
+            $('#alert alert-message').fadeOut('fast');
+        }, 5000);
+    </script>
     <div id="successMessage" style="text-align:center; width:100%">
-            {% for message in get_flashed_messages() %}
-            <p>{{ message }}</p>
-            {% endfor %}
+        {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+        {% endfor %}
     </div>
-<!--  -->
-    {% block body %}
-    
-    {% endblock %}  
+    <!--  -->
 
+    {% include "includes/nav.html" %}
+
+    <div class="container mt-4">
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages%}
+                {%for category,message in messages%}
+                     <div class="alert alert-{{category}}">
+                        <p>{{message}}</p>
+                    </div>
+                {%endfor%}
+            {%endif%}
+        {%endwith%}
+
+        {% block content%}
+
+        <!-- all work here -->
+        {%endblock%}
+
+
+    </div>
+    {% include "includes/footer.html" %}
 </body>
+
 </html>

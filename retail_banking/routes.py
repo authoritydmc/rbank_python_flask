@@ -10,35 +10,32 @@ from retail_banking.DATABASES import customerdb as cdb
 from retail_banking.DATABASES import executive as edb
 
 
-
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', home=True)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
         # show when default this url is loaded ..
-        return render_template('login.html')
+        return render_template('login.html', login=True)
     else:
         # after user submit his username and password we get to this...
         username = request.form.get('uid', "userNotFound")
         password = request.form.get('psw', "passwordNotfound")
         passhax = hashlib.sha256(password.encode()).hexdigest()
 
-        filter={'ssn_id':username,'pass':passhax}
+        filter = {'ssn_id': username, 'pass': passhax}
 
+        result = edb.find(filter)
 
-        result=edb.find(filter)
-
-        if result==None:
-            flash("Wrong UserName or Password retry")
-            return  redirect(url_for('login'))
+        if result == None:
+            flash("Wrong UserName or Password retry","danger")
+            return redirect(url_for('login'))
         else:
-            flash("Successfully Logged in")
-            return  redirect(url_for('home'))
-
+            flash("Successfully Logged in","success")
+            return redirect(url_for('home'))
 
 
 
@@ -46,23 +43,24 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html')
+        return render_template('registerExecutive.html',registerExecutive=True)
 
     regdata = {}
 
     regdata['ssn_id'] = request.form.get('ssn')
     regdata['name'] = request.form.get('name')
     regdata['email'] = request.form.get('email')
-    regdata['pass'] = hashlib.sha256(request.form.get('psw').encode()).hexdigest()
+    regdata['pass'] = hashlib.sha256(
+        request.form.get('psw').encode()).hexdigest()
 
     result, err = edb.register(regdata)
 
     if result:
         flash("Executive Registered Successfully ...    Login Now")
-        return  redirect(url_for('login'))
+        return redirect(url_for('login'))
     else:
         flash("Failed to Register :"+err)
-        return  redirect(url_for('registerExecutive'))
+        return redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
 
@@ -91,4 +89,3 @@ def registerCustomer():
         flash("Failed to Register Customer "+err)
 
     return render_template('registerCustomer.html')
-
