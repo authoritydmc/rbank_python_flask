@@ -16,7 +16,7 @@ def insertCustomerDetail(data):
         return True,None
     except Exception as e:
         print("exception ....",e)
-        return False,e.message
+        return False,str(e)
 
 
     
