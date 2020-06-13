@@ -61,7 +61,7 @@ def registerExecutive():
         flash("Executive Registered Successfully ...    Login Now")
         return  redirect(url_for('login'))
     else:
-        flash("Failed to Register Executive "+err)
+        flash("Failed to Register :"+err)
         return  redirect(url_for('registerExecutive'))
     return redirect('login.html')
 

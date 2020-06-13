@@ -17,11 +17,12 @@ def register(data):
     except Exception as e:
         print("exception ....",e)
         if 'duplicate key error' in str(e):
-            return False,"Already Registered"
+            return False,"Executive already Registered"
             
         return False,str(e)
 
 
 def find(filter):
+    ##filter will be used to find something ... 
     res=DB.find(collectionName,filter)
     return res
