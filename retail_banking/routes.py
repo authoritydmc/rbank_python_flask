@@ -1,8 +1,8 @@
 # import this line in every new module you create this will give access to app with required library
 # for more info check __init__.py file
 from retail_banking import *
+from time import gmtime,strftime
 import time
-from datetime import  datetime
 from flask import redirect, render_template, url_for, json, flash
 
 import hashlib
@@ -53,10 +53,10 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
-    regdata['creation_time']=str(datetime.now())
+    regdata['creation_time']=time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     result, err = edb.register(regdata)
 
-    if result:
+    if result:  
         flash("Executive Registered Successfully ...    Login Now")
         return redirect(url_for('login'))
     else:
