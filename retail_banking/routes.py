@@ -10,7 +10,6 @@ from retail_banking.DATABASES import customerdb as cdb
 from retail_banking.DATABASES import executive as edb
 
 
-
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -27,19 +26,16 @@ def login():
         password = request.form.get('psw', "passwordNotfound")
         passhax = hashlib.sha256(password.encode()).hexdigest()
 
-        filter={'ssn_id':username,'pass':passhax}
+        filter = {'ssn_id': username, 'pass': passhax}
 
+        result = edb.find(filter)
 
-        result=edb.find(filter)
-
-        if result==None:
+        if result == None:
             flash("Wrong UserName or Password retry")
-            return  redirect(url_for('login'))
+            return redirect(url_for('login'))
         else:
             flash("Successfully Logged in")
-            return  redirect(url_for('home'))
-
-    regdata = {}
+            return redirect(url_for('home'))
 
 
 
@@ -47,27 +43,24 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('register.html')
-    
+        return render_template('registerExecutive.html')
 
     regdata = {}
 
     regdata['ssn_id'] = request.form.get('ssn')
     regdata['name'] = request.form.get('name')
     regdata['email'] = request.form.get('email')
-    regdata['pass'] = hashlib.sha256(request.form.get('psw').encode()).hexdigest()
+    regdata['pass'] = hashlib.sha256(
+        request.form.get('psw').encode()).hexdigest()
 
     result, err = edb.register(regdata)
 
-    jsondata = json.dumps(regdata)
-    result, err = cdb.insertCustomerDetail(regdata)
-
     if result:
         flash("Executive Registered Successfully ...    Login Now")
-        return  redirect(url_for('login'))
+        return redirect(url_for('login'))
     else:
         flash("Failed to Register :"+err)
-        return  redirect(url_for('registerExecutive'))
+        return redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
 
@@ -96,4 +89,3 @@ def registerCustomer():
         flash("Failed to Register Customer "+err)
 
     return render_template('registerCustomer.html')
-
