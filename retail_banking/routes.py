@@ -57,10 +57,10 @@ def registerExecutive():
     result, err = edb.register(regdata)
 
     if result:  
-        flash("Executive Registered Successfully ...    Login Now")
+        flash("Executive Registered Successfully ...    Login Now","success")
         return redirect(url_for('login'))
     else:
-        flash("Failed to Register :"+err)
+        flash("Failed to Register :"+err,"danger")
         return redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
