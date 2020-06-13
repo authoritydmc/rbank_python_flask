@@ -10,7 +10,7 @@ collectionName="customer"
 def insertCustomerDetail(data):
     clctn=DB.getdb()[collectionName]
 
-    clctn.create_index('ssn_id')
+    clctn.create_index('ssn_id',unique=True)
     try:
         DB.insertCollection(collectionName,data)
         return True,None
