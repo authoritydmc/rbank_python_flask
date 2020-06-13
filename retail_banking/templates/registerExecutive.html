@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Login</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form class="mt-5" action="/registerExecutive" method="POST" >
+      <div class="form-group">
+        <label for="uid">Executive SSN ID</label>
+        <input type="text" class="form-control" name="ssn" placeholder="This will be your username" >
+      </div>
+      <div class="form-group">
+        <label for="uid">Executive Name</label>
+        <input type="text" class="form-control"  name="name" placeholder="Enter Name">
+      </div>
+      <div class="form-group">
+        <label for="uid">Executive Email</label>
+        <input type="email" class="form-control"  name="email" placeholder="Enter Email">
+      </div>
+      <div class="form-group">
+        <label for="psw">Password</label>
+        <input type="password" class="form-control" name="psw" placeholder="Password">
+      </div>
+
+      <button type="submit"  class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+{{ a }}
+
+
+
+{% endblock %}
+<!-- end of body conent -->
+
+
+
