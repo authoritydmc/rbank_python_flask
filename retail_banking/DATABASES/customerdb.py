@@ -9,7 +9,7 @@ collectionAccount="customerAccount"
 
 
 def registerSSN(data):
-    clctn=DB.getdb()[collectionName1]
+    clctn=DB.getdb()[collectionSSN]
 
     clctn.create_index('ssn_id',unique=True)
     try:
