@@ -17,4 +17,13 @@ class DB:
     def getdb(self):
         return self.db
 
+    def insertCollection(self,collectionName,datainJson):
+       collection= self.db[collectionName]
+       collection.insert_one(datainJson)
+       print("data inserted successfully ",datainJson)
+    
+    def RegisterUser(self):
+        pass
+
+
 

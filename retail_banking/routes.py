@@ -1,13 +1,14 @@
 #import this line in every new module you create this will give access to app with required library
 #for more info check __init__.py file
 from retail_banking import *
-
-from flask import redirect,render_template,url_for
-
-from retail_banking import database
-
+import time
+from flask import redirect,render_template,url_for,json,flash
 
 import hashlib
+
+from retail_banking.DATABASES import customerdb as cdb
+
+
 
 @app.route('/')
 def home():
@@ -25,12 +26,7 @@ def login():
         password=request.form.get('psw',"passwordNotfound")
         passhax=hashlib.sha256(password.encode()).hexdigest()
         
-        db=database.DB().getdb()
-        # 
 
-        cluster=db["login"]
-        doc={"user":username,"pass":passhax}
-        cluster.insert_one(doc)
 
         return render_template('login.html',a="post--"+username+passhax)
 
@@ -42,18 +38,27 @@ def register():
 
     if request.method == "GET":
         return render_template('register.html')
+    
+    regdata={}
 
+    regdata['ssn_id']=     request.form.get('ssn')
+    regdata['name']=    request.form.get('name')
+    regdata['age']=  request.form.get('age')
+    regdata['state']=     request.form.get('state')
+    regdata['city ']=    request.form.get('city')
 
-    ssn_id = request.form.get('ssn')
-    name = request.form.get('name')
-    age = request.form.get('age')
-    state = request.form.get('state')
-    city = request.form.get('city')
+    print(regdata)# Simulating database insertion
 
-    print(ssn_id,name,age,state,city)# Simulating database insertion
+    jsondata=json.dumps(regdata)
+    result,err=cdb.insertCustomerDetail(regdata)
 
-    return redirect(url_for('login'))
+    if result:
+        flash("Customer Registered Successfully"+jsondata)
+    else:
+        flash("Failed to Register Customer "+err)
 
+    return render_template('register.html')
+    
     
 
 
