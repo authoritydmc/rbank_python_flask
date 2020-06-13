@@ -16,6 +16,9 @@ def insertCustomerDetail(data):
         return True,None
     except Exception as e:
         print("exception ....",e)
+        if 'duplicate key error' in str(e):
+            return False,"SSN ID should be unique"
+            
         return False,str(e)
 
 
