@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>View Detail {{detailTitle}}</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+{% if request.method=="GET" %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+
+        <form class="form" action='{{url_for("viewCustomerDetail")}}' method="POST">
+            <div class="form-inline mb-2">
+                <label class="pr-2">Customer SSN ID</label>
+                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary mb-2">Search Customer</button>
+         
+        </form>
+
+
+    </div>
+</div>
+{% else %}
+<form action="{{url_for('searchCustomer')}}" method="POST">
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label ">Customer SSN ID</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext" name="ssn_id" value="{{ssn_id}}">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">Customer Name</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext" value="{{name}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">Address</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext" value="{{address}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label">Age</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext" value="{{age}}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
+        
+    </div>
+</div>
+</form>
+
+{% endif %}
+
+
+
+{% endblock %}
+<!-- end of body conent -->
