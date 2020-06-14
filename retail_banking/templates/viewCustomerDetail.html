@@ -25,8 +25,10 @@
     </div>
 </div>
 {% else %}
+<form action="{{url_for('searchCustomer')}}" method="POST">
 <div class="row">
     <div class="col-md-6 offset-md-3">
+
             <div class="form-group row">
                 <label class="col-sm-5 col-form-label ">Customer SSN ID</label>
                 <div class="col-sm-7">
@@ -54,9 +56,17 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
 
     </div>
 </div>
+=======
+            <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
+        
+    </div>
+</div>
+</form>
+>>>>>>> Dev
 
 {% endif %}
 
