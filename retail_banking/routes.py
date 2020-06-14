@@ -192,3 +192,6 @@ def updateCustomer():
 
     return redirect(url_for('searchCustomer'))
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('error404.html')
