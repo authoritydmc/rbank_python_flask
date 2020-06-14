@@ -14,14 +14,13 @@
     <ul class="navbar-nav">
 
 
-<<<<<<< HEAD
-      {% if 'ssn_id' in session.keys() and session['logged_in']==True %}
+
+      {% if 'ssn_id' in session.keys() %}
+
       <li class="nav-item active">
         <a class="btn nav-link {% if update %}btn-primary {% endif%}" href='{{ url_for("updateCustomer") }}'>Update Customer</a>
       </li>
-=======
 
-      {% if 'ssn_id' in session.keys() %}
       <li class="nav-item active">
         <a class="btn nav-link {% if update %}btn-primary {% endif%}" href='{{ url_for("registerCustomer") }}'>Add Customer</a>
       </li>

@@ -16,12 +16,6 @@ body
     text-align: center;
     height: 50px;
     color: black;
-<<<<<<< HEAD
-    padding: 5px;
-    margin-top: 100px;
-	bottom: 0px;
-	position: relative;
-=======
 
 	padding: 5px;
 	padding-bottom: 20px;
@@ -29,7 +23,6 @@ body
 	bottom: 0px;
 	position:fixed;
 
->>>>>>> 8a1a85ff5a585fff30e75e188b0ed5ad634b03e5
 	background-color: rgba(0, 0, 0, 0.3);
 	height: 120px;
 	word-spacing: 3px;
