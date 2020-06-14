@@ -150,8 +150,6 @@ def searchCustomer():
     result = cdb.findSSN(filter)
     print(result)
 
-
-
     if result:
             ###creating argument that will be passed ...
         args={}
@@ -159,6 +157,7 @@ def searchCustomer():
         args['oldAge']=result['age']
         args['oldAddress']=result['address']
         args['oldName']=result['name']
+
         flash("Customer Found. Now you can update the details.", "success")
         return render_template('updateCustomer.html',**args)
     else:
