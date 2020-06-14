@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Login</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+
+        <form class="form" action='/searchCustomer' method="POST">
+            <div class="form-inline mb-2">
+                <label class="pr-2">Customer SSN ID</label>
+                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary mb-2">Search Customer</button>
+         
+        </form>
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+<!-- end of body conent -->

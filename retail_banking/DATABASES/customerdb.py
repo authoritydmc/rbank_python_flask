@@ -22,4 +22,22 @@ def registerSSN(data):
         return False,str(e)
 
 
-    
+def findSSN(filter):
+    ##filter will be used to find something ... 
+    res=DB.find(collectionSSN,filter)
+    return res
+
+def updateSSN(data):
+    print("update using these values ",data)
+    # ssn_id=data['ssn_id']
+    # data.pop('ssn_id',None)
+    updatedict={"$set":data}
+    print(updatedict)
+    try:
+        res=DB.update(collectionSSN,{'ssn_id':data['ssn_id']},updatedict)
+        if res:
+            return True,None
+        else:
+            return False,"Can not Update to Database"
+    except Exception as e:
+        return False,"Error Occured : "+str(e)
