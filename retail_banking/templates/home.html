@@ -10,6 +10,7 @@
 
 
 <h2> Welcome to retail banking.</h2>
+<img width="1000px" height="400px" src="../static/images/rb.png" alt="">
 <br>
 <br>
 <br>
@@ -23,7 +24,7 @@
 <h3><a href={{ url_for('registerExecutive') }}>Register</h3></a>
 {% else %}
 
-<p>You are logged in ...Enjoy</p>
+<p>From here you can manage all the customer and their accounts. Keep track of account status and add, delete or update the customer details.</p>
 
 <h5><a href="{{ url_for('logout') }}">Logout {{ session['ssn_id'] }}</a></h5>
 
