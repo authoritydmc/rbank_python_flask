@@ -100,13 +100,13 @@ def registerCustomer():
 
     print(regdata)  # Simulating database insertion
 
-    jsondata = json.dumps(regdata)
     result, err = cdb.registerSSN(regdata)
 
     if result:
-        flash("Customer Registered Successfully"+jsondata)
+        flash("Customer Registered Successfully","success")
+        return redirect (url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
     else:
-        flash("Failed to Register Customer "+err)
+        flash("Failed to Register Customer "+err,"danger")
 
     return render_template('registerCustomer.html')
 
