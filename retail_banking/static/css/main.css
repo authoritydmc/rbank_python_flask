@@ -43,3 +43,32 @@ a:hover{
 
     color: aliceblue;
 }
+
+
+
+/* Sidebar css */
+#sidebar{
+    position: fixed;
+    /* width: 200px; */
+    /* height: 390px     ; */
+    /* background: url("images/p55.jpg"); */
+    /* margin: 5% 0; */
+    /* border-top-right-radius: 7px; */
+    /* border-bottom-right-radius: 7px; */
+    background-color: #343a40;
+  }
+  #sidebar ul{
+    padding: 0;
+  }
+  #sidebar ul li{
+    list-style: none;
+    padding: 20px 15px;
+    border-bottom: 1px solid rgba(100,100,100,0.3);
+  }
+
+  #sidebar ul li a {
+    color: antiquewhite;
+    text-decoration: none;
+  }
+
+  /* ------------------------------------ */

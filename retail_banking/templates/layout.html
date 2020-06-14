@@ -14,7 +14,9 @@
 <body>
 
     {% include "includes/nav.html" %}
-    <div class="container mt-5">
+    {% include "includes/sidebar.html" %}
+
+    <div class="container mt-5 col-10 align-self-center">
        
 
         {% if session['username']%}
@@ -31,6 +33,8 @@
             {%endif%}
 
         {%endwith%}
+
+
         {% block content%}
 
 
@@ -38,6 +42,7 @@
 
 
     </div>
+</div>
     {% include "includes/footer.html" %}
 
 </body>
