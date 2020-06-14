@@ -24,10 +24,15 @@ class DB:
     def RegisterUser(self):
         pass
 
-    def find(self,collectionName,filter):
+    def find(self,collectionName,filter,no_of_data="single"):
         collection= self.db[collectionName]
-        res=collection.find_one(filter)
-        return res
+        if no_of_data == "many":
+            return collection.find_many(filter)
+        elif no_of_data=="single":
+            return collection.find_one(filter)
+        else:
+            return collection.find()
+ 
 
     def update(self,collectionName,selectionCriteria,updateData):
         collection= self.db[collectionName]
