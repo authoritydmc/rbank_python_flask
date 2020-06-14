@@ -14,7 +14,7 @@
         <form class="form" action='{{url_for("viewCustomerDetail")}}' method="POST">
             <div class="form-inline mb-2">
                 <label class="pr-2">Customer SSN ID</label>
-                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID">
+                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID"  required>
             </div>
             <br>
             <button type="submit" class="btn btn-primary mb-2">Search Customer</button>
@@ -61,7 +61,6 @@
     </div>
 </div>
 </form>
-
 
 {% endif %}
 
