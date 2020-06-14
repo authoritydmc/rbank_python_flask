@@ -10,9 +10,23 @@
 
 
 <h2> Welcome to retail banking.</h2>
+<br>
+<br>
+<br>
+{% if not 'ssn_id' in session.keys() %}
 
+<h3><a href={{ url_for('login') }}>Login</h3></a>
 
+<br>
+<br>
 
+<h3><a href={{ url_for('registerExecutive') }}>Register</h3></a>
+{% else %}
 
+<p>You are logged in ...Enjoy</p>
+
+<h5><a href="{{ url_for('logout') }}">Logout {{ session['ssn_id'] }}</a></h5>
+
+{% endif %}
 {% endblock %}
 <!-- end of body conent -->

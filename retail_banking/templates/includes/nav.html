@@ -15,13 +15,21 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
 
+
+      {% if 'ssn_id' in session.keys() and session['loggedin']==True %}
+      <li class="nav-item active">
+        <a class="btn nav-link {% if logout %}btn-primary {% endif%}" href='{{ url_for("logout") }}'>Logout</a>
+      </li>
+      {% else %}
       <li class="nav-item active">
         <a class="nav-link btn {% if login %}btn-primary {% endif%}" href='{{ url_for("login") }}'>Login <i
             class="fas fa-sign-in-alt"></i></a>
       </li>
       <li class="nav-item active">
-        <a class="btn nav-link {% if register %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register</a>
+        <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register</a>
       </li>
+
+      {% endif %}
     </ul>
   </div>
 </nav>

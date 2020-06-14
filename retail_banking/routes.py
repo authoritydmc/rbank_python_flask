@@ -1,6 +1,7 @@
 # import this line in every new module you create this will give access to app with required library
 # for more info check __init__.py file
 from retail_banking import *
+from time import gmtime,strftime
 import time
 from flask import redirect, render_template, url_for, json, flash
 
@@ -35,6 +36,14 @@ def login():
             return redirect(url_for('login'))
         else:
             flash("Successfully Logged in","success")
+
+            ###setup session~~~
+
+            session['ssn_id']=username
+            session['loggedin']=True
+
+            ##end setup
+
             return redirect(url_for('home'))
 
 
@@ -52,14 +61,14 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
-
+    regdata['creation_time']=time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     result, err = edb.register(regdata)
 
-    if result:
-        flash("Executive Registered Successfully ...    Login Now")
+    if result:  
+        flash("Executive Registered Successfully ...    Login Now","success")
         return redirect(url_for('login'))
     else:
-        flash("Failed to Register :"+err)
+        flash("Failed to Register :"+err,"danger")
         return redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
@@ -89,3 +98,20 @@ def registerCustomer():
         flash("Failed to Register Customer "+err)
 
     return render_template('registerCustomer.html')
+
+
+@app.route('/logout')
+def logout():
+
+
+    if 'ssn_id' in session.keys() and session['loggedin']==True:
+        #log out by invalidating session
+
+        session.pop('ssn_id',None)
+
+        session['loggedin']=False
+
+
+        flash("You have been successfully logged out","success")
+
+    return redirect(url_for('home'))
