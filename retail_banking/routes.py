@@ -225,3 +225,11 @@ def viewCustomerDetail():
         return redirect(url_for('searchCustomer'))
 
 
+@app.route('/viewAllCustomer')
+def viewAllCustomer():
+
+    customers_data=[]
+    for dat in cdb.findSSN_all():
+        customers_data.append(dat)
+
+    return render_template('viewAllCustomer.html',datas=customers_data)

@@ -27,6 +27,9 @@ def findSSN(filter):
     res=DB.find(collectionSSN,filter)
     return res
 
+def findSSN_all(filter={}):
+    return DB.find(collectionSSN,filter,"all")
+
 def updateSSN(data):
     print("update using these values ",data)
     # ssn_id=data['ssn_id']
