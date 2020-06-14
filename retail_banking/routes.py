@@ -1,7 +1,7 @@
 # import this line in every new module you create this will give access to app with required library
 # for more info check __init__.py file
 from retail_banking import *
-from time import gmtime,strftime
+from time import gmtime, strftime
 import time
 from flask import redirect, render_template, url_for, json, flash
 
@@ -32,27 +32,26 @@ def login():
         result = edb.find(filter)
 
         if result == None:
-            flash("Wrong UserName or Password retry","danger")
+            flash("Wrong UserName or Password retry", "danger")
             return redirect(url_for('login'))
         else:
-            flash("Successfully Logged in","success")
+            flash("Successfully Logged in", "success")
 
-            ###setup session~~~
+            # setup session~~~
 
-            session['ssn_id']=username
-            session['loggedin']=True
+            session['ssn_id'] = username
+            session['logged_in'] = True
 
-            ##end setup
+            # end setup
 
             return redirect(url_for('home'))
-
 
 
 @app.route('/registerExecutive', methods=['get', 'post'])
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html',registerExecutive=True)
+        return render_template('registerExecutive.html', registerExecutive=True)
 
     regdata = {}
 
@@ -61,14 +60,15 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
-    regdata['creation_time']=time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    regdata['creation_time'] = time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     result, err = edb.register(regdata)
 
-    if result:  
-        flash("Executive Registered Successfully ...    Login Now","success")
+    if result:
+        flash("Executive Registered Successfully ...    Login Now", "success")
         return redirect(url_for('login'))
     else:
-        flash("Failed to Register :"+err,"danger")
+        flash("Failed to Register :"+err, "danger")
         return redirect(url_for('registerExecutive'))
     return redirect('login.html')
 
@@ -100,18 +100,66 @@ def registerCustomer():
     return render_template('registerCustomer.html')
 
 
+# Search customer by SSN ID to delete or update details
+@app.route('/searchCustomer', methods=['get', 'post'])
+def searchCustomer():
+    if not session['logged_in']:
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return render_template('searchCustomer.html')
+
+    filter = {'ssn_id': request.form.get('ssn_id')}
+
+    # Retrieving details of customer
+    result = cdb.findSSN(filter)
+
+    if result:
+        flash("Customer Found. Now you can update the details.", "success")
+        return render_template('updateCustomer.html')
+    else:
+        flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
+        return redirect(url_for('searchCustomer'))
+
+@app.route('/updateCustomer', methods=['get', 'post', 'update'])
+def updateCustomer():
+
+    if not session['logged_in']:
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return redirect('searchCustomer')
+
+    regdata = {}
+
+    regdata['ssn_id'] = request.form.get('ssn')
+    regdata['name'] = request.form.get('name')
+    regdata['age'] = request.form.get('age')
+    regdata['state'] = request.form.get('state')
+    regdata['city '] = request.form.get('city')
+
+    print(regdata)  # Simulating database insertion
+
+    jsondata = json.dumps(regdata)
+    result, err = cdb.registerSSN(regdata)
+
+    if result:
+        flash("Customer Registered Successfully"+jsondata)
+    else:
+        flash("Failed to Register Customer "+err)
+
+    return render_template('registerCustomer.html')
+
+
 @app.route('/logout')
 def logout():
 
+    if 'ssn_id' in session.keys() and session['logged_in'] == True:
+        # log out by invalidating session
 
-    if 'ssn_id' in session.keys() and session['loggedin']==True:
-        #log out by invalidating session
+        session.pop('ssn_id', None)
 
-        session.pop('ssn_id',None)
+        session['logged_in'] = False
 
-        session['loggedin']=False
-
-
-        flash("You have been successfully logged out","success")
-
+        flash("You have been successfully logged out", "success")
     return redirect(url_for('home'))
