@@ -14,14 +14,16 @@ body
 }
 .footer_style {
     text-align: center;
-    height: 50px;
+	height: 10em;
+	
+   
     color: black;
 
 	padding: 5px;
 	padding-bottom: 20px;
     margin-top: 10px;
 	bottom: 0px;
-	position:fixed;
+	position: relative;;
 
 	background-color: rgba(0, 0, 0, 0.3);
 	height: 120px;
@@ -48,10 +50,10 @@ a:hover{
 
 /* Sidebar css */
 #sidebar{
-    position: fixed;
+    /* position: fixed; */
     /* width: 200px; */
     /* height: 390px     ; */
-    /* background: url("images/p55.jpg"); */
+    /* background: url(""); */
     /* margin: 5% 0; */
     /* border-top-right-radius: 7px; */
     /* border-bottom-right-radius: 7px; */

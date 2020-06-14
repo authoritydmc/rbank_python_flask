@@ -2,14 +2,18 @@
 
 
 <div class="row align-self-center">
-    <div class="col-2 align-self-center">
+    <div class="col-2 align-self-center pt-2">
         <div id="sidebar">
             <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">Add Customer</a></li>
-                <li><a href="">Update Customer</a></li>
+                <li><a href="{{ url_for('home')}}">Home</a></li>
+                <li><a href="{{ url_for('registerCustomer')}}">Add Customer</a></li>
+                <li><a href="{{ url_for('updateCustomer')}}">Update Customer</a></li>
                 <li><a href="">Delete Customer</a></li>
-                <li><a href="">Add Customer Account</a></li>
+                <li><a href="">Add Account</a></li>
+                <li><a href="">Customer status</a></li>
+                <li><a href="">Account status</a></li>
+
+
 
 
             </ul>
