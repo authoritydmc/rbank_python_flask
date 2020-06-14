@@ -159,6 +159,7 @@ def searchCustomer():
         args['oldName']=result['name']
 
         flash("Customer Found. Now you can update the details.", "success")
+        
         return render_template('updateCustomer.html',**args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
@@ -192,6 +193,35 @@ def updateCustomer():
 
     return redirect(url_for('searchCustomer'))
 
+
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template('error404.html')
+
+
+@app.route('/viewCustomerDetail',methods=["GET","POST"])
+def viewCustomerDetail():
+    if not isLoggedin():
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return render_template('viewCustomerDetail.html')
+
+    filter = {'ssn_id': request.form.get('ssn_id')}
+
+    # Retrieving details of customer
+    result = cdb.findSSN(filter)
+    if result:
+        args={}
+        args['titleDetail']=":Customer SSN Detail"
+        args['age']=result['age']
+        args['name']=result['name']
+        args['address']=result['address']
+        args['ssn_id']=result['ssn_id']
+        return render_template('viewCustomerDetail.html',**args)
+    else:
+        flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
+        return redirect(url_for('searchCustomer'))
+
+
