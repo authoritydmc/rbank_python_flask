@@ -7,24 +7,7 @@
 
 <!-- below is body content  -->
 {% block content %}
-{% if request.method=="GET" %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
 
-        <form class="form" action='{{url_for("viewCustomerDetail")}}' method="POST">
-            <div class="form-inline mb-2">
-                <label class="pr-2">Customer SSN ID</label>
-                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID"  required>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary mb-2">Search Customer</button>
-         
-        </form>
-
-
-    </div>
-</div>
-{% else %}
 <form action="{{url_for('searchCustomer')}}" method="POST">
 <div class="row">
     <div class="col-md-6 offset-md-3">
@@ -62,7 +45,7 @@
 </div>
 </form>
 
-{% endif %}
+
 
 
 

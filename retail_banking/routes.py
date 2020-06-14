@@ -144,35 +144,44 @@ def searchCustomer():
     if request.method == "GET":
         return render_template('searchCustomer.html')
 
-    filter = {'ssn_id': request.form.get('ssn_id')}
+                #when ssn_id is passed ..so 
 
-    # Retrieving details of customer
-    result = cdb.findSSN(filter)
-    print(result)
+    #make a rediection while post ..
+    return redirect(url_for('updateCustomer')+"/"+request.form.get('ssn_id'))
 
-    if result:
-            ###creating argument that will be passed ...
-        args={}
-        args['ssn_id']=result['ssn_id']
-        args['oldAge']=result['age']
-        args['oldAddress']=result['address']
-        args['oldName']=result['name']
 
-        flash("Customer Found. Now you can update the details.", "success")
-        
-        return render_template('updateCustomer.html',**args)
-    else:
-        flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
-        return redirect(url_for('searchCustomer'))
-
+@app.route('/updateCustomer/<ssn_id>')
 @app.route('/updateCustomer', methods=['get', 'post', 'update'])
-def updateCustomer():
+def updateCustomer(ssn_id=None):
 
     if not isLoggedin():
         return redirect(url_for('login'))
 
-    if request.method == "GET":
-        return redirect(url_for('searchCustomer'))
+    if request.method == "GET" :
+        if ssn_id==None:
+            return redirect(url_for('searchCustomer'))
+        else:
+            #when ssn_id is passed ..so 
+            filter = {'ssn_id': ssn_id}
+
+            # Retrieving details of customer
+            result = cdb.findSSN(filter)
+            if result:
+                args={}
+                args['ssn_id']=result['ssn_id']
+                args['oldAge']=result['age']
+                args['oldAddress']=result['address']
+                args['oldName']=result['name']
+                return render_template('updateCustomer.html',**args)
+            else:
+                flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
+                return redirect(url_for('searchCustomer'))
+
+
+
+
+
+
 
     regdata = {}
 
@@ -181,7 +190,6 @@ def updateCustomer():
     regdata['age'] = request.form.get('newAge')
     regdata['address'] = request.form.get('newAddress')
 
-    print(regdata)  # Simulating database insertion
 
     result, err = cdb.updateSSN(regdata)
 
@@ -199,19 +207,26 @@ def updateCustomer():
 def not_found(e):
     return render_template('error404.html')
 
-
+@app.route('/viewCustomerDetail/<ssn_id>')
 @app.route('/viewCustomerDetail',methods=["GET","POST"])
-def viewCustomerDetail():
+def viewCustomerDetail(ssn_id=None):
     if not isLoggedin():
         return redirect(url_for('login'))
 
-    if request.method == "GET":
-        return render_template('viewCustomerDetail.html')
-
-    filter = {'ssn_id': request.form.get('ssn_id')}
+    filter={}
+    if request.method == "GET" :
+        if ssn_id ==None:
+            redirect (url_for('searchCustomer'))
+        else:
+            filter={'ssn_id': ssn_id}
+    else: #if it is a post request..
+        filter = {'ssn_id': request.form.get('ssn_id')}
 
     # Retrieving details of customer
     result = cdb.findSSN(filter)
+    print("ssn is ",ssn_id)
+    print(result)
+
     if result:
         args={}
         args['titleDetail']=":Customer SSN Detail"
