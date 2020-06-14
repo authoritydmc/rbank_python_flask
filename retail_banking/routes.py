@@ -1,6 +1,7 @@
 # import this line in every new module you create this will give access to app with required library
 # for more info check __init__.py file
 from retail_banking import *
+
 from time import gmtime,strftime
 import time
 from flask import redirect, render_template, url_for, json, flash
@@ -35,10 +36,9 @@ def login():
         result = edb.find(filter)
 
         if result == None:
-            flash("Wrong UserName or Password retry","danger")
+            flash("Wrong UserName or Password retry", "danger")
             return redirect(url_for('login'))
         else:
-
             ###setup session~~~
             session_login(username)
             if isLoggedin():
@@ -50,12 +50,11 @@ def login():
             return redirect(url_for('home'))
 
 
-
 @app.route('/registerExecutive', methods=['get', 'post'])
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html',registerExecutive=True)
+        return render_template('registerExecutive.html', registerExecutive=True)
 
     regdata = {}
 
@@ -64,6 +63,7 @@ def registerExecutive():
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
+
     regdata['creation_time']=time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     result, err = edb.register(regdata)
 
@@ -73,6 +73,7 @@ def registerExecutive():
     else:
         flash("Failed to Register :"+err,"danger")
         return redirect(url_for('registerExecutive'))
+      
     return redirect('login.html')
 
 
@@ -132,3 +133,54 @@ def isLoggedin():
         return True
     else :
         return False
+
+# Search customer by SSN ID to delete or update details
+@app.route('/searchCustomer', methods=['get', 'post'])
+def searchCustomer():
+    if not session['logged_in']:
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return render_template('searchCustomer.html')
+
+    filter = {'ssn_id': request.form.get('ssn_id')}
+
+    # Retrieving details of customer
+    result = cdb.findSSN(filter)
+
+    if result:
+        flash("Customer Found. Now you can update the details.", "success")
+        return render_template('updateCustomer.html')
+    else:
+        flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
+        return redirect(url_for('searchCustomer'))
+
+@app.route('/updateCustomer', methods=['get', 'post', 'update'])
+def updateCustomer():
+
+    if not session['logged_in']:
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return redirect('searchCustomer')
+
+    regdata = {}
+
+    regdata['ssn_id'] = request.form.get('ssn')
+    regdata['name'] = request.form.get('name')
+    regdata['age'] = request.form.get('age')
+    regdata['state'] = request.form.get('state')
+    regdata['city '] = request.form.get('city')
+
+    print(regdata)  # Simulating database insertion
+
+    jsondata = json.dumps(regdata)
+    result, err = cdb.registerSSN(regdata)
+
+    if result:
+        flash("Customer Registered Successfully"+jsondata)
+    else:
+        flash("Failed to Register Customer "+err)
+
+    return render_template('registerCustomer.html')
+

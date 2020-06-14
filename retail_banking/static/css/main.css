@@ -16,11 +16,13 @@ body
     text-align: center;
     height: 50px;
     color: black;
+
 	padding: 5px;
 	padding-bottom: 20px;
     margin-top: 10px;
 	bottom: 0px;
 	position:fixed;
+
 	background-color: rgba(0, 0, 0, 0.3);
 	height: 120px;
 	word-spacing: 3px;

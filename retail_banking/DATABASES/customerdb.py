@@ -22,4 +22,7 @@ def registerSSN(data):
         return False,str(e)
 
 
-    
+def findSSN(filter):
+    ##filter will be used to find something ... 
+    res=DB.find(collectionSSN,filter)
+    return res
