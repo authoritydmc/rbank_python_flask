@@ -14,11 +14,12 @@
 <body>
 
     {% include "includes/nav.html" %}
-    <div class="container mt-5">
+    {% include "includes/sidebar.html" %}
+    <div class="mt-5 col-10 align-self-center text-center">
        
 
         {% if session['username']%}
-        <span class='user'>Welcome, {{ session.get('username') }}</span>
+        <span class='user '>Welcome, {{ session.get('username') }}</span>
         {%endif%}
 
         {% with messages = get_flashed_messages(with_categories=True) %}
@@ -31,6 +32,8 @@
             {%endif%}
 
         {%endwith%}
+
+
         {% block content%}
 
 
@@ -38,6 +41,7 @@
 
 
     </div>
+</div>
     {% include "includes/footer.html" %}
 
 </body>
