@@ -1,9 +1,7 @@
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Retail Banking <i class="fas fa-money-check-alt"></i></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation">
+    aria-expanded="true" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <ul class="navbar-nav">
@@ -12,14 +10,27 @@
           class="sr-only">(current)</span></a>
     </li>
   </ul>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+  <div class="collapse navbar-collapse in justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
 
 
+<<<<<<< HEAD
       {% if 'ssn_id' in session.keys() and session['logged_in']==True %}
       <li class="nav-item active">
         <a class="btn nav-link {% if update %}btn-primary {% endif%}" href='{{ url_for("updateCustomer") }}'>Update Customer</a>
       </li>
+=======
+
+      {% if 'ssn_id' in session.keys() %}
+      <li class="nav-item active">
+        <a class="btn nav-link {% if update %}btn-primary {% endif%}" href='{{ url_for("registerCustomer") }}'>Add Customer</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="btn nav-link {% if update %}btn-primary {% endif%}" href='{{ url_for("updateCustomer") }}'>Update Customer</a>
+      </li>
+
+>>>>>>> 8a1a85ff5a585fff30e75e188b0ed5ad634b03e5
       <li class="nav-item active">
         <a class="btn nav-link {% if logout %}btn-primary {% endif%}" href='{{ url_for("logout") }}'>Logout</a>
       </li>
