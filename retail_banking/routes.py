@@ -96,6 +96,7 @@ def registerCustomer():
     regdata['age'] = request.form.get('age')
     regdata['state'] = request.form.get('state')
     regdata['city '] = request.form.get('city')
+    regdata['address']=request.form.get('address')
 
     print(regdata)  # Simulating database insertion
 
@@ -137,7 +138,7 @@ def isLoggedin():
 # Search customer by SSN ID to delete or update details
 @app.route('/searchCustomer', methods=['get', 'post'])
 def searchCustomer():
-    if not session['logged_in']:
+    if not isLoggedin():
         return redirect(url_for('login'))
 
     if request.method == "GET":
@@ -147,10 +148,18 @@ def searchCustomer():
 
     # Retrieving details of customer
     result = cdb.findSSN(filter)
+    print(result)
+    ###creating argument that will be passed ...
+    args={}
+    args['ssn_id']=result['ssn_id']
+    args['oldAge']=result['age']
+    args['oldAddress']=result['address']
+    args['oldName']=result['name']
+
 
     if result:
         flash("Customer Found. Now you can update the details.", "success")
-        return render_template('updateCustomer.html')
+        return render_template('updateCustomer.html',**args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
@@ -158,29 +167,28 @@ def searchCustomer():
 @app.route('/updateCustomer', methods=['get', 'post', 'update'])
 def updateCustomer():
 
-    if not session['logged_in']:
+    if not isLoggedin():
         return redirect(url_for('login'))
 
     if request.method == "GET":
-        return redirect('searchCustomer')
+        return redirect(url_for('searchCustomer'))
 
     regdata = {}
 
-    regdata['ssn_id'] = request.form.get('ssn')
-    regdata['name'] = request.form.get('name')
-    regdata['age'] = request.form.get('age')
-    regdata['state'] = request.form.get('state')
-    regdata['city '] = request.form.get('city')
+    regdata['ssn_id'] = request.form.get('ssn_id')
+    regdata['name'] = request.form.get('newName')
+    regdata['age'] = request.form.get('newAge')
+    regdata['address'] = request.form.get('newAddress')
 
     print(regdata)  # Simulating database insertion
 
-    jsondata = json.dumps(regdata)
-    result, err = cdb.registerSSN(regdata)
+    result, err = cdb.updateSSN(regdata)
 
     if result:
-        flash("Customer Registered Successfully"+jsondata)
-    else:
-        flash("Failed to Register Customer "+err)
+        flash("Customer Details Updated Successfully")
 
-    return render_template('registerCustomer.html')
+    else:
+        flash("Failed to Update  Customer  Details "+err)
+
+    return redirect(url_for('searchCustomer'))
 

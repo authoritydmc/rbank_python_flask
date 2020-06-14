@@ -29,6 +29,11 @@ class DB:
         res=collection.find_one(filter)
         return res
 
+    def update(self,collectionName,selectionCriteria,updateData):
+        collection= self.db[collectionName]
+        res=collection.update_one(selectionCriteria,updateData)
+        return res
+
 
 
 
