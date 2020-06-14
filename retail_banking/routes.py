@@ -36,6 +36,14 @@ def login():
             return redirect(url_for('login'))
         else:
             flash("Successfully Logged in","success")
+
+            ###setup session~~~
+
+            session['ssn_id']=username
+            session['loggedin']=True
+
+            ##end setup
+
             return redirect(url_for('home'))
 
 
@@ -90,3 +98,20 @@ def registerCustomer():
         flash("Failed to Register Customer "+err)
 
     return render_template('registerCustomer.html')
+
+
+@app.route('/logout')
+def logout():
+
+
+    if 'ssn_id' in session.keys() and session['loggedin']==True:
+        #log out by invalidating session
+
+        session.pop('ssn_id',None)
+
+        session['loggedin']=False
+
+
+        flash("You have been successfully logged out","success")
+
+    return redirect(url_for('home'))
