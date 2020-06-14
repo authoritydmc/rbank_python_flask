@@ -8,7 +8,7 @@
 <!-- below is body content  -->
 {% block content %}
 
-<form action="{{url_for('searchCustomer')}}" method="POST">
+<form  method="POST">
 <div class="row">
     <div class="col-md-6 offset-md-3">
 
@@ -38,9 +38,10 @@
                     <input type="text" readonly class="form-control-plaintext" value="{{age}}">
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
-        
+    
+            <button type="submit" formaction="{{url_for('searchCustomer')}}" class="btn btn-primary mb-2">Update Detail</button>
+            
+            <button type="button" onclick="window.location.href='{{ url_for( 'searchCustomer'  ) }}';" class="btn btn-primary mb-2">Seach Another Customer</button>            
     </div>
 </div>
 </form>

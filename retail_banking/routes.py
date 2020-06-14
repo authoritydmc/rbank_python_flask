@@ -194,10 +194,11 @@ def updateCustomer(ssn_id=None):
     result, err = cdb.updateSSN(regdata)
 
     if result:
-        flash("Customer Details Updated Successfully")
+        flash("Customer Details Updated Successfully","success")
+        return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
 
     else:
-        flash("Failed to Update  Customer  Details "+err)
+        flash("Failed to Update  Customer  Details "+err,"danger")
 
     return redirect(url_for('searchCustomer'))
 
