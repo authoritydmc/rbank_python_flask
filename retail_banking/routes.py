@@ -18,6 +18,9 @@ def home():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if isLoggedin():
+        #redirect in case user is already logged In
+        return(redirect(url_for('home')))
     if request.method == "GET":
         # show when default this url is loaded ..
         return render_template('login.html', login=True)
@@ -35,13 +38,13 @@ def login():
             flash("Wrong UserName or Password retry","danger")
             return redirect(url_for('login'))
         else:
-            flash("Successfully Logged in","success")
 
             ###setup session~~~
-
-            session['ssn_id']=username
-            session['loggedin']=True
-
+            session_login(username)
+            if isLoggedin():
+                flash("Successfully Logged in","success")
+            else:
+                flash("Can not setup session ","danger")
             ##end setup
 
             return redirect(url_for('home'))
@@ -75,6 +78,12 @@ def registerExecutive():
 
 @app.route('/registerCustomer', methods=['get', 'post'])
 def registerCustomer():
+    
+    if not isLoggedin():
+        #if there is no one loggedIn disallow this route
+        flash("Login first to access it ","danger")
+        return redirect(url_for('home'))
+
 
     if request.method == "GET":
         return render_template('registerCustomer.html')
@@ -102,16 +111,24 @@ def registerCustomer():
 
 @app.route('/logout')
 def logout():
-
-
-    if 'ssn_id' in session.keys() and session['loggedin']==True:
+    if isLoggedin():
         #log out by invalidating session
-
-        session.pop('ssn_id',None)
-
-        session['loggedin']=False
-
-
+        session_logout()
         flash("You have been successfully logged out","success")
+    else:
+        flash("You are already Logged out..","success")
+
 
     return redirect(url_for('home'))
+
+###Utility Function
+
+def session_logout():
+    session.pop('ssn_id',None)
+def session_login(ssn_val):
+    session['ssn_id']=ssn_val
+def isLoggedin():
+    if 'ssn_id' in session.keys():
+        return True
+    else :
+        return False
