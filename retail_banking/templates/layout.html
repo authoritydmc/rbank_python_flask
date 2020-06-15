@@ -121,23 +121,19 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
                     </div>
                 </div>    <div class="app-main__outer">
                     <div class="app-main__inner">
-                        <div class="app-page-title">
-                            <!-- <div class="page-title-wrapper">
-                                <div class="page-title-heading">
-                                    <div class="page-title-icon">
-                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                        </i>
-                                    </div>
-                                    <div>Retail Banking
-                                        <div class="page-title-subheading">Made with love
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                
-                            -->
-                            </div> 
-                                     </div>         
+                            <div class="my_content" style="height: 100%;">
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages%}
+                {%for category,message in messages%}
+                    <div>
+                        <p style="font-size:20px;" class="text-{{category}}">{{message}}</p>
+                    </div>
+                {%endfor%}
+            {%endif%}
+
+        {%endwith%}
+                                            
                                         {% block content %}
 
                                         {% endblock %}
