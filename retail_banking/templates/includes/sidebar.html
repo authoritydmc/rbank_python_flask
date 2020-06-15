@@ -18,21 +18,21 @@
                 {% else %}
 
                 <li class="app-sidebar__heading">Home</li>
-                <li class="active" ><a href="{{ url_for('home')}}">Home <i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="nav-item  active" ><a href="{{ url_for('home')}}">Home <i class="fa fa-home" aria-hidden="true"></i></a></li>
 
-                <li class="active" ><a href="{{ url_for('logout')}}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                <li class="nav-item  active" ><a href="{{ url_for('logout')}}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
                   
                 <li class="app-sidebar__heading">Customer Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
 
-                <li><a href="{{ url_for('registerCustomer')}}" class="{% if registerCustomer %}btn-primary {% endif%}">Register Customer <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
-                <li><a href="{{ url_for('updateCustomer')}}" class="{% if updateCustomer %}btn-primary {% endif%}">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                <li class="nav-item  active"><a href="{{ url_for('registerCustomer')}}" class="nav-link btn {% if registerCustomer %}btn-primary {% endif%}">Register Customer <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
+                <li><a href="{{ url_for('updateCustomer')}}" class="nav-link btn {% if updateCustomer %}btn-primary {% endif%}">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </a></li>
-                <li><a href="{{ url_for('viewAllCustomer')}}" class="{% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
+                <li class="nav-item  active"><a href="{{ url_for('viewAllCustomer')}}" class="nav-link btn {% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
                 </a></li>
-                <li><a href="">Delete Customer</a></li>
-                <li><a href="">Add Customer Account</a></li>
-                <li><a href="">Customer status</a></li>
-                <li><a href="">Account status</a></li>
+                <li class="nav-item  active"><a href="">Delete Customer</a></li>
+                <li class="nav-item  active"><a href="">Add Customer Account</a></li>
+                <li class="nav-item  active"><a href="">Customer status</a></li>
+                <li class="nav-item  active" ><a href="">Account status</a></li>
 
 
 
