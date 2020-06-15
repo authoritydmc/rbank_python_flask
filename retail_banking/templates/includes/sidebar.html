@@ -14,12 +14,10 @@
                   </li>
                 {% else %}
 
-                <li class="app-sidebar__heading">Home</li>
                 <li class="active" ><a href="{{ url_for('home')}}">Home <i class="fa fa-home" aria-hidden="true"></i></a></li>
 
                 <li class="active" ><a href="{{ url_for('logout')}}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
                   
-                <li class="app-sidebar__heading">Customer Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
 
                 <li><a href="{{ url_for('registerCustomer')}}" class="{% if registerCustomer %}btn-primary {% endif%}">Register Customer <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
                 <li><a href="{{ url_for('updateCustomer')}}" class="{% if updateCustomer %}btn-primary {% endif%}">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
