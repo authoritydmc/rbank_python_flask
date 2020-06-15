@@ -251,7 +251,3 @@ def viewAllCustomer():
         customers_data.append(dat)
 
     return render_template('viewAllCustomer.html',datas=customers_data)
-
-@app.route('/index')
-def index():
-    return render_template('index.html')

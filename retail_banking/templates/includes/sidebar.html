@@ -12,20 +12,23 @@
                         class="fas fa-sign-in-alt"></i></a>
                   </li>
                   <li class="nav-item active">
-                    <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register</a>
+                    <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register
+                    <i class="fa fa-user-plus" aria-hidden="true"></i></a>
                   </li>
                 {% else %}
 
                 <li class="app-sidebar__heading">Home</li>
-                <li class="active" ><a href="{{ url_for('home')}}">Home</a></li>
+                <li class="active" ><a href="{{ url_for('home')}}">Home <i class="fa fa-home" aria-hidden="true"></i></a></li>
 
-                <li class="active" ><a href="{{ url_for('logout')}}">Logout</a></li>
+                <li class="active" ><a href="{{ url_for('logout')}}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
                   
-                <li class="app-sidebar__heading">Customer Management</li>
+                <li class="app-sidebar__heading">Customer Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
 
-                <li><a href="{{ url_for('registerCustomer')}}" class="{% if registerCustomer %}btn-primary {% endif%}">Register Customer</a></li>
-                <li><a href="{{ url_for('updateCustomer')}}" class="{% if updateCustomer %}btn-primary {% endif%}">Update Customer</a></li>
-                <li><a href="{{ url_for('viewAllCustomer')}}" class="{% if viewAllCustomer %}btn-primary {% endif%}">All Customer</a></li>
+                <li><a href="{{ url_for('registerCustomer')}}" class="{% if registerCustomer %}btn-primary {% endif%}">Register Customer <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
+                <li><a href="{{ url_for('updateCustomer')}}" class="{% if updateCustomer %}btn-primary {% endif%}">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="{{ url_for('viewAllCustomer')}}" class="{% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
+                </a></li>
                 <li><a href="">Delete Customer</a></li>
                 <li><a href="">Add Customer Account</a></li>
                 <li><a href="">Customer status</a></li>
