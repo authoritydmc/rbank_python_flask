@@ -2,10 +2,7 @@ body
 {
 	background: aliceblue;
 	font-family: Montserrat;
-	/* text-align: center;
-	align-content: center; */
-	width: 100%;
-	height: 100;
+
 
 	overflow-x: hidden;
 
@@ -44,7 +41,11 @@ a:hover{
     color: aliceblue;
 }
 
-
+.navbar{
+  position:sticky;
+  position:-webkit-sticky;
+  top: 0;
+}
 
 /* Sidebar css */
 #sidebar{
