@@ -70,12 +70,14 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
                             <div class="widget-content-wrapper">
    
                                 <div class="widget-content-left  ml-3 header-user-info">
+                                   {% if 'username' in session.keys() %}
                                     <div class="widget-heading">
                                       Welcome,  {{session.username}}
                                     </div>
                                     <div class="widget-subheading">
                                         Customer Executive
                                     </div>
+                                    {% endif %}
                                 </div>
                                
                             </div>
