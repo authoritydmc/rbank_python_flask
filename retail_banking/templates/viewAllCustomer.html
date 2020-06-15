@@ -7,32 +7,42 @@
 
 <!-- below is body content  -->
 {% block content %}
-{% for data in datas %}
-<form action="/searchCustomer" method="POST">
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-            <div class="form-group row">
-                <label class="col col-form-label ">Customer SSN ID</label>
-                <div class="col">
-                    <input type="text" readonly class="form-control-plaintext"  name="ssn_id" value="{{data.ssn_id}}">
-                </div>
-            </div>
-    
-            <div class="form-group row">
-                <label class="col col-form-label">Customer Name</label>
-                <div class="col">
-                    <input type="text" readonly  value="{{data.name}}">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
-            
 
 
-    </div>
+<!-- ///////////////////////// -->
+
+
+<div class="container">
+    <h2>Customer Details</h2>
+    <ul class="responsive-table">
+        <li class="table-header font-weight-bold">
+            <div class="col col-1">SSN ID</div>
+            <div class="col col-2">Customer Name</div>
+            <div class="col col-3">Age</div>
+            <div class="col col-4">Address</div>
+            <div class="col col-5">Update</div>
+
+        </li>
+
+        {% for data in datas %}
+
+        <li class="table-row">
+            <div class="col col-1">{{ data.name }}</div>
+            <div class="col col-2">{{ data.name }}</div>
+            <div class="col col-3">{{ data.age }}</div>
+            <div class="col col-4">{{ data.address }}</div>
+            <div class="col col-5">
+                <form action="/searchCustomer" method="POST">
+                    <input type="text" readonly hidden class="form-control-plaintext" name="ssn_id" value="{{data.ssn_id}}">
+                    <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
+                </form>
+            </div>
+        </li>
+
+        {% endfor %}
+    </ul>
 </div>
-<hr>
-</form>
-{% endfor %}
+
 
 {% endblock %}
 <!-- end of body conent -->
