@@ -25,9 +25,7 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 <script src="https://kit.fontawesome.com/b0efb4e1c0.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-
 {% block head %} {% endblock %}
-
 
 </head>
 <body>
@@ -116,19 +114,12 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
                                 </span>
                             </button>
                         </span>
-
-                    </div>    
-                    
-                    
-                    <div class="scrollbar-sidebar">
-
+                    </div>    <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
                             {% include "includes/sidebar.html" %}
                         </div>
                     </div>
-
-                </div>   
-                <div class="app-main__outer">
+                </div>    <div class="app-main__outer">
                     <div class="app-main__inner">
                             <div class="my_content" style="height: 100%;">
 
@@ -146,7 +137,6 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
                                         {% block content %}
 
                                         {% endblock %}
-                                    </div>
 
                             <div class="app-wrapper-footer">
                                 <div class="app-footer">
@@ -154,9 +144,7 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
                                 </div>
                          </div>     
                     </div>
-
-                </div>
-    
-
+        </div>
+    </div>
 <script type="text/javascript" src="{{url_for('static',filename='scripts/main.js')}}"></script></body>
 </html>
