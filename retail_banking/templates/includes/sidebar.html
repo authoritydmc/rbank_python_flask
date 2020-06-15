@@ -1,14 +1,31 @@
 
-{% if 'ssn_id' in session.keys() %}
 
-<div class="row align-self-center">
-    <div class="col-2 align-self-center pt-2">
-        <div id="sidebar">
-            <ul>
+
+<!-- <div class="row align-self-center">
+    <div class="col-2 align-self-center pt-2"> -->
+       
+            <ul class="vertical-nav-menu metismenu">
+                {% if not  'ssn_id' in session.keys() %}
+
+                <li class="nav-item active">
+                    <a class="nav-link btn {% if login %}btn-primary {% endif%}" href='{{ url_for("login") }}'>Login <i
+                        class="fas fa-sign-in-alt"></i></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register</a>
+                  </li>
+                {% else %}
+
+                <li class="app-sidebar__heading">Home</li>
                 <li class="active" ><a href="{{ url_for('home')}}">Home</a></li>
-                <li><a href="{{ url_for('registerCustomer')}}">Register Customer</a></li>
-                <li><a href="{{ url_for('updateCustomer')}}">Update Customer</a></li>
-                <li><a href="{{ url_for('viewAllCustomer')}}">All Customer</a></li>
+
+                <li class="active" ><a href="{{ url_for('logout')}}">Logout</a></li>
+                  
+                <li class="app-sidebar__heading">Customer Management</li>
+
+                <li><a href="{{ url_for('registerCustomer')}}" class="{% if registerCustomer %}btn-primary {% endif%}">Register Customer</a></li>
+                <li><a href="{{ url_for('updateCustomer')}}" class="{% if updateCustomer %}btn-primary {% endif%}">Update Customer</a></li>
+                <li><a href="{{ url_for('viewAllCustomer')}}" class="{% if viewAllCustomer %}btn-primary {% endif%}">All Customer</a></li>
                 <li><a href="">Delete Customer</a></li>
                 <li><a href="">Add Customer Account</a></li>
                 <li><a href="">Customer status</a></li>
@@ -16,8 +33,6 @@
 
 
 
-
+                  {% endif %}
             </ul>
-        </div>
-    </div>
-{% endif %}
+        

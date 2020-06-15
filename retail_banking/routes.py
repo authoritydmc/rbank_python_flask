@@ -27,11 +27,11 @@ def login():
         return render_template('login.html', login=True)
     else:
         # after user submit his username and password we get to this...
-        username = request.form.get('uid', "userNotFound")
+        uid= request.form.get('uid', "userNotFound")
         password = request.form.get('psw', "passwordNotfound")
         passhax = hashlib.sha256(password.encode()).hexdigest()
 
-        filter = {'ssn_id': username, 'pass': passhax}
+        filter = {'ssn_id': uid, 'pass': passhax}
 
         result = edb.find(filter)
 
@@ -40,7 +40,7 @@ def login():
             return redirect(url_for('login'))
         else:
             ###setup session~~~
-            session_login(username)
+            session_login(uid,result['name'])
             if isLoggedin():
                 flash("Successfully Logged in","success")
             else:
@@ -127,8 +127,10 @@ def logout():
 
 def session_logout():
     session.pop('ssn_id',None)
-def session_login(ssn_val):
+    session.pop('username',None)
+def session_login(ssn_val,username):
     session['ssn_id']=ssn_val
+    session['username']=username
 def isLoggedin():
     if 'ssn_id' in session.keys():
         return True
@@ -249,3 +251,7 @@ def viewAllCustomer():
         customers_data.append(dat)
 
     return render_template('viewAllCustomer.html',datas=customers_data)
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
