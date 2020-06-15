@@ -13,35 +13,35 @@
     <div class="col-md-6 offset-md-3">
 
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label ">Customer SSN ID</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label ">Customer SSN ID</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" name="ssn_id" value="{{ssn_id}}">
                 </div>
             </div>
     
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Customer Name</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Customer Name</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{name}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Address</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Address</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{address}}">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Age</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Age</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{age}}">
                 </div>
             </div>
     
-            <button type="submit" formaction="{{url_for('searchCustomer')}}" class="btn btn-primary mb-2">Update Detail</button>
+            <button type="submit" formaction="{{url_for('searchCustomer')}}" class="btn btn-primary mb-2" style="margin-left: 5%;">Update Detail</button>
             
-            <button type="button" onclick="window.location.href='{{ url_for( 'searchCustomer'  ) }}';" class="btn btn-primary mb-2">Seach Another Customer</button>            
+            <button type="button" onclick="window.location.href='{{ url_for( 'searchCustomer'  ) }}';" class="btn btn-primary mb-2" style="margin-left: 25%;">Seach Again</button>            
     </div>
 </div>
 </form>

@@ -14,49 +14,49 @@
     <div class="col-md-6 offset-md-3">
         <form action="{{ url_for('updateCustomer') }}" method="POST">
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Customer SSN ID</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Customer SSN ID</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" name="ssn_id" value="{{ssn_id}}">
                 </div>
             </div>
     
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Old Customer Name</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Old Customer Name</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{oldName}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">New Customer Name</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">New Customer Name</label>
+                <div class="col">
                     <input type="text" name="newName" class="form-control" required >
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Old Address</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Old Address</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{oldAddress}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">New Address</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">New Address</label>
+                <div class="col">
                     <input type="text" name="newAddress" class="form-control" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">Old Age</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">Old Age</label>
+                <div class="col">
                     <input type="text" readonly class="form-control-plaintext" value="{{oldAge}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-5 col-form-label">New Age</label>
-                <div class="col-sm-7">
+                <label class="col col-form-label">New Age</label>
+                <div class="col">
                     <input type="number" name="newAge"  class="form-control"  required>
                 </div>
             </div>
-            <button type="submit"  class="btn btn-primary">Update</button>
+            <button type="submit"  class="btn btn-primary " style="margin-left: 40%;">Update</button>
 
         </form>
 
