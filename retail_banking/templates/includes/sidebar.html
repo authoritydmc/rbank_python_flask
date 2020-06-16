@@ -27,8 +27,12 @@
     <li class="nav-item  active"><a href="{{ url_for('viewAllCustomer')}}" class="nav-link btn {% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
                 </a></li>
     <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}" class="nav-link btn {% if deleteCustomer %}btn-primary {% endif%}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
+    <li class="app-sidebar__heading">Account Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
+
     <li class="nav-item  active"><a href="{{ url_for('createAccount')}}" class="btn nav-link {% if createAccount %}btn-primary {% endif%}">Add Account <i class="fas fa-user-plus"></i></a></li>
-    <li class="nav-item  active"><a href="">Customer status</a></li>
-    <li class="nav-item  active"><a href="">Account status</a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deleteAccount')}}" class="btn nav-link {% if deleteAccount %}btn-primary {% endif%}">Delete Account</a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deposit')}}" class="btn nav-link {% if deposit %}btn-primary {% endif%}">Deposit Amount<i class="fas fa-user-plus"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('withdraw')}}" class="btn nav-link {% if withdraw %}btn-primary {% endif%}">Withdraw Amount<i class="fas fa-user-plus"></i></a></li>
+
     {% endif %}
 </ul>

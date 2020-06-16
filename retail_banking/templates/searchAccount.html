@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Search Customer </title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+
+
+<form class="form text-center" method="POST">
+    <div class="form mb-2">
+        <label class="pr-2">Customer SSN ID</label>
+        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="ssn_id" placeholder="Enter SSN ID" required>
+    </div>
+    <br>
+    <button type="submit" formaction='/searchAccount' class="btn btn-success mb-2" style="margin-left: 1%;">Search Account<i class="fa fa-eye" aria-hidden="true"></i></button>
+
+</form>
+
+
+
+
+
+{% endblock %}
+<!-- end of body conent -->

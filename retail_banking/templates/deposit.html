@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Deposit</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form action="{{ url_for('deposit') }}" method="POST">
+            <div class="form-group row">
+                <label class="col col-form-label">Customer SSN ID</label>
+                <div class="col">
+                    <input type="text" readonly class="form-control-plaintext" name="ssn_id" value="{{ssn_id}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col col-form-label">Account ID </label>
+                <div class="col">
+                    <input type="text" readonly class="form-control-plaintext" value="{{cust_acc_id}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col col-form-label">Account Type</label>
+                <div class="col">
+                    <input type="text" readonly name="newName" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col col-form-label">Balance</label>
+                <div class="col">
+                    <input type="text" readonly class="form-control-plaintext" value="{{balance}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col col-form-label">Deposit Amount</label>
+                <div class="col">
+                    <input type="number" name="amount" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary " style="margin-left: 40%;">Deposit</button>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+<!-- end of body conent -->
