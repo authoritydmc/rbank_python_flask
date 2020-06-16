@@ -12,16 +12,17 @@
 
 
 
-        <form class="form"  method="POST">
-            <div class="form-inline mb-2">
-                <label class="pr-2">Customer SSN ID</label>
-                <input type="text"  class="form-control" name="ssn_id" placeholder="Enter SSN ID"  required>
-            </div>
-            <br>
-            <button type="submit" formaction='/viewCustomerDetail' class="btn btn-primary mb-2" style="margin-left: 1   %;">View Customer Detail</button>
-            <button type="submit" formaction='/searchCustomer' class="btn btn-primary mb-2" style="margin-left: 5%;">Update Customer</button>
+<form class="form text-center" method="POST">
+    <div class="form mb-2">
+        <label class="pr-2">Customer SSN ID</label>
+        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="ssn_id" placeholder="Enter SSN ID" required>
+    </div>
+    <br>
+    <button type="submit" formaction='/viewCustomerDetail' class="btn btn-success mb-2" style="margin-left: 1%;">View Customer  <i class="fa fa-eye" aria-hidden="true"></i></button>
+    <button type="submit" formaction='/searchCustomer' class="btn btn-primary mb-2" style="margin-left: 5%;">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    <button type="submit" formmethod="GET" formaction='/deleteCustomer' class="btn btn-danger mb-2" style="margin-left: 5%;">Delete Customer <i class="far fa-trash-alt"></i></button>
 
-        </form>
+</form>
 
 
 

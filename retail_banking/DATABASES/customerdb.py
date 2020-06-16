@@ -44,3 +44,6 @@ def updateSSN(data):
             return False,"Can not Update to Database"
     except Exception as e:
         return False,"Error Occured : "+str(e)
+
+def deleteSSN(filter):
+    return DB.delete(collectionSSN,filter)
