@@ -15,10 +15,12 @@
 <form class="form text-center" method="POST">
     <div class="form mb-2">
         <label class="pr-2">Customer SSN ID</label>
-        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="ssn_id" placeholder="Enter SSN ID" required>
+        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="ssn_id" placeholder="Enter SSN ID" required value={{autodata.ssn_id}}>
     </div>
     <br>
     <button type="submit" formaction='/viewCustomerDetail' class="btn btn-success mb-2" style="margin-left: 1%;">View Customer  <i class="fa fa-eye" aria-hidden="true"></i></button>
+    <button type="submit" formmethod="GET" formaction='/createAccount' class="btn btn-success mb-2" style="margin-left: 5%;">Create Account <i class="fa fa-address-book" aria-hidden="true"></i></button>
+    
     <button type="submit" formaction='/searchCustomer' class="btn btn-primary mb-2" style="margin-left: 5%;">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
     <button type="submit" formmethod="GET" formaction='/deleteCustomer' class="btn btn-danger mb-2" style="margin-left: 5%;">Delete Customer <i class="far fa-trash-alt"></i></button>
 
