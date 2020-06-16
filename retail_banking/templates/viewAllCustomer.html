@@ -12,37 +12,36 @@
 <!-- ///////////////////////// -->
 
 
-<div class="container">
-    <h2>Customer Details</h2>
-    <ul class="responsive-table">
-        <li class="table-header font-weight-bold">
-            <div class="col col-1">SSN ID</div>
-            <div class="col col-2">Customer Name</div>
-            <div class="col col-3">Age</div>
-            <div class="col col-4">Address</div>
-            <div class="col col-5">Update</div>
 
-        </li>
 
+<table class="table table-striped">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th scope="col">SSN ID</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Address</th>
+            <th scope="col">Update</th>
+
+        </tr>
+    </thead>
+    <tbody>
         {% for data in datas %}
-
-        <li class="table-row">
-            <div class="col col-1">{{ data.ssn_id }}</div>
-            <div class="col col-2">{{ data.name }}</div>
-            <div class="col col-3">{{ data.age }}</div>
-            <div class="col col-4">{{ data.address }}</div>
-            <div class="col col-5">
+        <tr>
+            <th scope="row">{{ data.ssn_id }}</th>
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+            <td>
                 <form action="/searchCustomer" method="POST">
                     <input type="text" readonly hidden class="form-control-plaintext" name="ssn_id" value="{{data.ssn_id}}">
                     <button type="submit" class="btn btn-primary mb-2">Update Detail</button>
                 </form>
-            </div>
-        </li>
-
-        {% endfor %}
-    </ul>
-</div>
-
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
 
 {% endblock %}
 <!-- end of body conent -->
