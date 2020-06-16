@@ -74,7 +74,7 @@ def createAccount(data):
 def getautoAccountid():
     cust_id=""
     while True:
-        ssn_id=DB.randIdgen("1")
+        cust_id=DB.randIdgen("1")
         filter = {'cust_acc_id': cust_id}
         if not findAccount(filter):
             break
