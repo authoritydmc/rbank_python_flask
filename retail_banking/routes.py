@@ -146,9 +146,11 @@ def isLoggedin():
 def searchCustomer():
     if not isLoggedin():
         return redirect(url_for('login'))
-
+    autodata={}
     if request.method == "GET":
-        return render_template('searchCustomer.html',searchCustomer=True)
+        if 'ssn_id' in request.args:
+            autodata['ssn_id']=request.args.get('ssn_id')
+        return render_template('searchCustomer.html',searchCustomer=True,autodata=autodata)
 
         # when ssn_id is passed ..so
 
@@ -297,8 +299,26 @@ def createAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
 
+    cust_acc_id=cdb.getautoAccountid()
+    print("GeNerated : ",cust_acc_id)
+    flash("Auto generated Account no : "+cust_acc_id)
+    autodata={} #data that will be passed
+    autodata['cust_acc_id']=cust_acc_id
     if request.method=="GET":
-        return render_template('createAccount.html',createAccount=True,autodata={'cust_acc_id':cdb.getautoAccountid()})
+        if 'ssn_id' in request.args:
+            sid=request.args.get('ssn_id')
+            if not cdb.findSSN({'ssn_id':sid}):
+                #no such ssn exist return back to searchCustomer
+                flash("Unable to find customer. Try again by entering valid SSN ID.","danger")
+                return redirect(url_for('searchCustomer'))
+
+            autodata['ssn_id']=sid
+
+
+        cust_acc_id=cdb.getautoAccountid()
+        flash("Auto generated Account no : "+cust_acc_id)
+        autodata['cust_acc_id']=cust_acc_id
+        return render_template('createAccount.html',createAccount=True,autodata=autodata)
 
     # if request id POST
     data = {}
@@ -312,6 +332,9 @@ def createAccount():
 
     print(data)
     # save data to database.
+    if not  cdb.findSSN({'ssn_id':data['ssn_id']}):
+        flash("No such Customer Registered with SSN_ID="+data['ssn_id'],"danger")
+        return render_template('createAccount.html',createAccount=True,autodata={'cust_acc_id':cust_acc_id})
 
     result, err = cdb.createAccount(data)
 

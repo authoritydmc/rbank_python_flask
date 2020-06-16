@@ -31,8 +31,8 @@
             <td>{{ data.age }}</td>
             <td>{{ data.address }}</td>
             <td>
-                <form action="/searchCustomer " method="POST ">
-                    <input type="text " readonly hidden class="form-control-plaintext " name="ssn_id " value="{{data.ssn_id}} ">
+                <form action="/searchCustomer " method="GET">
+                    <input type="text " readonly hidden class="form-control-plaintext " name="ssn_id" value="{{data.ssn_id}} ">
                     <button type="submit " class="btn btn-primary mb-2 ">Update Detail</button>
                 </form>
             </td>
