@@ -270,13 +270,14 @@ def deleteCustomer():
                 args['oldAge'] = result['age']
                 args['oldAddress'] = result['address']
                 args['oldName'] = result['name']
-                flash(" Customer found! Please confirm the details before deletion.")
+                flash(" Customer found! ","success")
+                flash("Please confirm the details before deletion.","danger")
                 return render_template('confirmDeleteCustomer.html',**args)
 
             else:
-                flash("Customer not found! Please enter a valid SSN ID.")
-                
-            return redirect(url_for('searchCustomer'))
+                flash("Customer not found! Please enter a valid SSN ID.","danger")
+
+        return redirect(url_for('searchCustomer'))
 
     filter = {'ssn_id':request.form.get('ssn_id')}
 
