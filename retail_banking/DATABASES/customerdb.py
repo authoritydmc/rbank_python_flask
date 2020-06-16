@@ -1,4 +1,5 @@
 from retail_banking.DATABASES import database
+import random
 
 DB=database.DB()
 
@@ -26,9 +27,16 @@ def findSSN(filter):
     ##filter will be used to find something ... 
     res=DB.find(collectionSSN,filter)
     return res
+def findAccount(filter):
+    ##filter will be used to find something ... 
+    res=DB.find(collectionAccount,filter)
+    return res
 
 def findSSN_all(filter={}):
     return DB.find(collectionSSN,filter,"all")
+
+def findAcc_all(filter={}):
+    return DB.find(collectionAccount,filter,"all")
 
 def updateSSN(data):
     print("update using these values ",data)
@@ -47,3 +55,38 @@ def updateSSN(data):
 
 def deleteSSN(filter):
     return DB.delete(collectionSSN,filter)
+
+
+def createAccount(data):
+    clctn=DB.getdb()[collectionAccount]
+
+    clctn.create_index('cust_acc_id',unique=True)
+    try:
+        DB.insertCollection(collectionAccount,data)
+        return True,None
+    except Exception as e:
+        print("exception ....",e)
+        if 'duplicate key error' in str(e):
+            return False,f":A Customer with  cAccount no ={data['cust_acc_id']} already exist"
+        return False,str(e)
+
+
+def getautoAccountid():
+    cust_id=""
+    while True:
+        ssn_id=DB.randIdgen("1")
+        filter = {'cust_acc_id': cust_id}
+        if not findAccount(filter):
+            break
+    return cust_id
+
+def getautoSSNid():
+    ssn_id=""
+    while True:
+        ssn_id=DB.randIdgen("5")
+        filter = {'ssn_id': ssn_id}
+        if not findSSN(filter):
+            break
+    return ssn_id
+
+

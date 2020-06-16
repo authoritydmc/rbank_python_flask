@@ -1,4 +1,5 @@
 from retail_banking.DATABASES import database
+import random
 
 DB=database.DB()
 
@@ -26,3 +27,12 @@ def find(filter):
     ##filter will be used to find something ... 
     res=DB.find(collectionName,filter)
     return res
+
+def getautoSSNid():
+    ssn_id=""
+    while True:
+        ssn_id=DB.randIdgen("9")
+        filter = {'ssn_id': ssn_id}
+        if not find(filter):
+            break
+    return ssn_id

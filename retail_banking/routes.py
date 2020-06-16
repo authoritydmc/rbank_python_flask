@@ -54,7 +54,7 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html', registerExecutive=True)
+        return render_template('registerExecutive.html', registerExecutive=True,autodata={'ssn_id':edb.getautoSSNid()})
 
     regdata = {}
 
@@ -87,7 +87,7 @@ def registerCustomer():
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template('registerCustomer.html')
+        return render_template('registerCustomer.html',registerCustomer=True,autodata={'ssn_id':cdb.getautoSSNid()})
 
     regdata = {}
 
@@ -295,7 +295,7 @@ def createAccount():
         return redirect(url_for('login'))
 
     if request.method=="GET":
-        return render_template('createAccount.html')
+        return render_template('createAccount.html',autodata={'cust_acc_id':cdb.getautoAccountid()})
 
     # if request id POST
     data = {}
@@ -304,9 +304,18 @@ def createAccount():
 
     data['ssn_id'] = request.form.get('ssn_id')
     data['type'] = request.form.get('type')
-    data['deposit'] = request.form.get('deposit')
+    data['cust_acc_id'] = request.form.get('cust_acc_id')
 
     print(data)
     # save data to database.
 
-    return data
+    result, err = cdb.createAccount(data)
+
+    if result:
+        flash("Customer Account  Successfully", "success")
+        # return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
+        return redirect(url_for('home'))
+    else:
+        flash("Failed to Create Customer Account: "+err, "danger")
+
+    return render_template('createAccount.html',autodata=data)
