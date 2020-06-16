@@ -323,3 +323,42 @@ def createAccount():
         flash("Failed to Create Customer Account: "+err, "danger")
 
     return render_template('createAccount.html',createAccount=True,autodata=data)
+
+
+@app.route('/deleteAccount/<accID>')
+@app.route('/deleteAccount',methods=['GET','POST'])
+def deleteAccount(accID=None):
+    if not isLoggedin():
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        if accID == None:
+            print("ACC ",accID)
+            flash("Something went wrong")
+            return render_template('searchAccount.html')
+
+        else:
+            # Deleting account from table
+            print("DELETING ACCOUNT")
+            filter = {'accID': request.form.get('accID')}
+            print(filter)
+            # Delete account and render searchAccount Page
+
+            flash("Successfully deleted account!","success")
+            return redirect(url_for('home'))
+    
+    
+    # Handeling post req fromm searchAccount page.  
+    ssn_id = request.form.get('ssn_id')
+
+    # Find all the accounts associated with this ssn_id.
+
+    # res = find_all_acc({'ssn_id': ssn_id})
+
+    res = {'accID':1234,'name':'Shivam', 'type':'Saving'}
+        
+    # Send this result to delete Account page to show then in tabular form with delete button.
+    return render_template('deleteAccount.html',datas=[res])
+
+   
+    

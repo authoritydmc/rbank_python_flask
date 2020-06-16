@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>View All Customer</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+<!-- ///////////////////////// -->
+
+
+<table class="table table-striped ">
+    <thead class="thead-dark  ">
+        <tr>
+            <th scope="col ">Account ID</th>
+            <th scope="col ">Customer Name</th>
+            <th scope="col ">Account Type</th>
+            <th scope="col ">Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in datas %}
+        <tr>
+            <th scope="row ">{{ data.accID }}</th>
+            <td>{{ data.name }}</td>
+            <td>{{ data.type }}</td>
+            <td>
+                <form method="GET">
+                    <input type="text " readonly hidden class="form-control-plaintext " name="accID" " value="{{data.accID}} ">
+                    <button type="submit " formaction="{{url_for( 'deleteAccount')}} " class="btn btn-primary mb-2 ">Delete Account</button>
+                </form>
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+{% endblock %}
+<!-- end of body content -->
