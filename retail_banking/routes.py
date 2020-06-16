@@ -251,7 +251,7 @@ def viewAllCustomer():
     for dat in cdb.findSSN_all():
         customers_data.append(dat)
 
-    return render_template('viewAllCustomer.html', datas=customers_data)
+    return render_template('viewAllCustomer.html', viewAllCustomer=True,datas=customers_data)
 
 
 @app.route('/deleteCustomer',methods=['GET','POST'])
@@ -260,20 +260,22 @@ def deleteCustomer():
         return redirect(url_for('login'))
 
     if request.method == "GET":
-        ssn_id = request.args.get('ssn_id')
-        result = cdb.findSSN({'ssn_id': ssn_id})
+        if 'ssn_id' in request.args:
+            ssn_id = request.args.get('ssn_id')
+            result = cdb.findSSN({'ssn_id': ssn_id})
 
-        if result:
-            args = {}
-            args['ssn_id'] = result['ssn_id']
-            args['oldAge'] = result['age']
-            args['oldAddress'] = result['address']
-            args['oldName'] = result['name']
-            flash(" Customer found! Please confirm the details before deletion.")
-            return render_template('confirmDeleteCustomer.html',**args)
+            if result:
+                args = {}
+                args['ssn_id'] = result['ssn_id']
+                args['oldAge'] = result['age']
+                args['oldAddress'] = result['address']
+                args['oldName'] = result['name']
+                flash(" Customer found! Please confirm the details before deletion.")
+                return render_template('confirmDeleteCustomer.html',**args)
 
-        else:
-            flash("Customer not found! Please enter a valid SSN ID.")
+            else:
+                flash("Customer not found! Please enter a valid SSN ID.")
+                
             return redirect(url_for('searchCustomer'))
 
     filter = {'ssn_id':request.form.get('ssn_id')}
@@ -295,7 +297,7 @@ def createAccount():
         return redirect(url_for('login'))
 
     if request.method=="GET":
-        return render_template('createAccount.html',autodata={'cust_acc_id':cdb.getautoAccountid()})
+        return render_template('createAccount.html',createAccount=True,autodata={'cust_acc_id':cdb.getautoAccountid()})
 
     # if request id POST
     data = {}
