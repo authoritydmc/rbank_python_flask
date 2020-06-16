@@ -54,7 +54,11 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html', registerExecutive=True,autodata={'ssn_id':edb.getautoSSNid()})
+        autodata={}
+        sid=edb.getautoSSNid()
+        flash("Auto generated SSN ID : "+sid)
+        autodata['ssn_id']=sid
+        return render_template('registerExecutive.html', registerExecutive=True,autodata=autodata)
 
     regdata = {}
 
@@ -87,7 +91,11 @@ def registerCustomer():
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template('registerCustomer.html',registerCustomer=True,autodata={'ssn_id':cdb.getautoSSNid()})
+        autodata={}
+        sid=cdb.getautoSSNid()
+        flash("Auto generated SSN ID : "+sid)
+        autodata['ssn_id']=sid
+        return render_template('registerCustomer.html',registerCustomer=True,autodata=autodata)
 
     regdata = {}
 
@@ -299,11 +307,7 @@ def createAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
 
-    cust_acc_id=cdb.getautoAccountid()
-    print("GeNerated : ",cust_acc_id)
-    flash("Auto generated Account no : "+cust_acc_id)
     autodata={} #data that will be passed
-    autodata['cust_acc_id']=cust_acc_id
     if request.method=="GET":
         if 'ssn_id' in request.args:
             sid=request.args.get('ssn_id')
@@ -339,7 +343,7 @@ def createAccount():
     result, err = cdb.createAccount(data)
 
     if result:
-        flash("Customer Account  Successfully", "success")
+        flash(f"Customer Account {data['cust_acc_id']}  Successfully", "success")
         # return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
         return redirect(url_for('home'))
     else:
