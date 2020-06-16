@@ -12,9 +12,12 @@
     {% else %}
 
     <li class="app-sidebar__heading">Home</li>
-    <li class="nav-item  active"><a href="{{ url_for('home')}}">Home <i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <li class="nav-item  active">
+        <a href="{{ url_for('home')}}" class="btn nav-link {% if home %}btn-primary {% endif%}">Home <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </li>
 
-    <li class="nav-item  active"><a href="{{ url_for('logout')}}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('logout')}}" class="btn nav-link ">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
 
     <li class="app-sidebar__heading">Customer Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
 
@@ -23,8 +26,8 @@
                 </a></li>
     <li class="nav-item  active"><a href="{{ url_for('viewAllCustomer')}}" class="nav-link btn {% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
                 </a></li>
-    <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}" class="nav-link btn {% if registerCustomer %}btn-primary {% endif%}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
-    <li class="nav-item  active"><a href="{{ url_for('createAccount')}}">Add Account <i class="fas fa-user-plus"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}" class="nav-link btn {% if deleteCustomer %}btn-primary {% endif%}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('createAccount')}}" class="btn nav-link {% if createAccount %}btn-primary {% endif%}">Add Account <i class="fas fa-user-plus"></i></a></li>
     <li class="nav-item  active"><a href="">Customer status</a></li>
     <li class="nav-item  active"><a href="">Account status</a></li>
     {% endif %}

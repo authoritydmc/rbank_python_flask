@@ -67,7 +67,7 @@ def createAccount(data):
     except Exception as e:
         print("exception ....",e)
         if 'duplicate key error' in str(e):
-            return False,f":A Customer with  cAccount no ={data['cust_acc_id']} already exist"
+            return False,f":A Customer with  Account no ={data['cust_acc_id']} already exist"
         return False,str(e)
 
 

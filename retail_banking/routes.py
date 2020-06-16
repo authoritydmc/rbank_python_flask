@@ -108,7 +108,7 @@ def registerCustomer():
     else:
         flash("Failed to Register Customer "+err, "danger")
 
-    return render_template('registerCustomer.html')
+    return render_template('registerCustomer.html',registerCustomer=True)
 
 
 @app.route('/logout')
@@ -148,7 +148,7 @@ def searchCustomer():
         return redirect(url_for('login'))
 
     if request.method == "GET":
-        return render_template('searchCustomer.html')
+        return render_template('searchCustomer.html',searchCustomer=True)
 
         # when ssn_id is passed ..so
 
@@ -178,7 +178,7 @@ def updateCustomer(ssn_id=None):
                 args['oldAge'] = result['age']
                 args['oldAddress'] = result['address']
                 args['oldName'] = result['name']
-                return render_template('updateCustomer.html', **args)
+                return render_template('updateCustomer.html', updateCustomer=True,**args)
             else:
                 flash(
                     "Unable to find customer. Try again by entering valid SSN ID.", "danger")
@@ -235,7 +235,7 @@ def viewCustomerDetail(ssn_id=None):
         args['name'] = result['name']
         args['address'] = result['address']
         args['ssn_id'] = result['ssn_id']
-        return render_template('viewCustomerDetail.html', **args)
+        return render_template('viewCustomerDetail.html', viewCustomerDetail=True,**args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
@@ -272,7 +272,7 @@ def deleteCustomer():
                 args['oldName'] = result['name']
                 flash(" Customer found! ","success")
                 flash("Please confirm the details before deletion.","danger")
-                return render_template('confirmDeleteCustomer.html',**args)
+                return render_template('confirmDeleteCustomer.html',deleteCustomer=True,**args)
 
             else:
                 flash("Customer not found! Please enter a valid SSN ID.","danger")
@@ -286,7 +286,7 @@ def deleteCustomer():
     if result:
         print(result)
         flash("Successfully deleted customer!", "success")
-        return render_template('home.html')
+        return redirect(url_for('home'))
     else:
         flash("Unable to delete customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
@@ -321,4 +321,4 @@ def createAccount():
     else:
         flash("Failed to Create Customer Account: "+err, "danger")
 
-    return render_template('createAccount.html',autodata=data)
+    return render_template('createAccount.html',createAccount=True,autodata=data)
