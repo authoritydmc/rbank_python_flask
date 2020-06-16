@@ -1,6 +1,3 @@
-<!-- <div class="row align-self-center">
-    <div class="col-2 align-self-center pt-2"> -->
-
 <ul class="vertical-nav-menu metismenu">
     {% if not 'ssn_id' in session.keys() %}
 
@@ -26,13 +23,9 @@
                 </a></li>
     <li class="nav-item  active"><a href="{{ url_for('viewAllCustomer')}}" class="nav-link btn {% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
                 </a></li>
-    <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}" class="nav-link btn {% if registerCustomer %}btn-primary {% endif%}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
     <li class="nav-item  active"><a href="">Add Customer Account</a></li>
     <li class="nav-item  active"><a href="">Customer status</a></li>
     <li class="nav-item  active"><a href="">Account status</a></li>
-
-
-
     {% endif %}
-
 </ul>
