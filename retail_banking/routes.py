@@ -308,6 +308,7 @@ def createAccount():
     data['ssn_id'] = request.form.get('ssn_id')
     data['type'] = request.form.get('type')
     data['cust_acc_id'] = request.form.get('cust_acc_id')
+    data['balance']=0.0
 
     print(data)
     # save data to database.
