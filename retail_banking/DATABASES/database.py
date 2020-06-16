@@ -1,5 +1,6 @@
 import pymongo
 from retail_banking.config import config
+import random
 class DB:
     def __init__(self):
 
@@ -46,3 +47,9 @@ class DB:
 
 
 
+    def randIdgen(self,first):
+        temp=first
+        for _ in range(8):
+            temp+=str(random.randint(0,9))
+
+        return temp

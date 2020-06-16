@@ -15,18 +15,18 @@
         <form class="mt-5" action="/createAccount" method="POST">
             <div class="form-group">
                 <label>Customer SSN ID</label>
-                <input type="text" class="form-control" name="ssn_id" placeholder="Enter SSN ID" required>
+                <input type="text" class="form-control" name="ssn_id"  value="{{autodata.ssn_id}}" placeholder="Enter SSN ID" required >
             </div>
             <div class="form-group">
                 <label>Account Type</label>
                 <select name="type" class="dropdown">
-            <option name="S" value="S">Savings</option>
-            <option name="C" value="C">Current</option>
+            <option name="S" value="saving" {% if autodata.type =="saving" %} selected="selected"{% endif %}>Savings</option>
+            <option name="C" value="current" {% if autodata.type =="current" %} selected="selected"{% endif %}>Current</option>
         </select>
             </div>
             <div class="form-group">
-                <label for="uid">Deposit Amount</label>
-                <input type="number" class="form-control" name="deposit" placeholder="Enter Deposit Amount" required>
+                <label for="uid">Account Number</label>
+                <input type="text" class="form-control" name="deposit" placeholder="Enter Customer Account" required value="{{autodata.cust_acc_id}}">
             </div>
 
             <button type="submit" class="btn btn-primary">Create Account</button>

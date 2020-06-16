@@ -15,7 +15,7 @@
     <form class="mt-5" action="/registerExecutive" method="POST" >
       <div class="form-group">
         <label for="uid">Executive SSN ID</label>
-        <input type="text" class="form-control" name="ssn" placeholder="This will be your username"  required>
+        <input type="text" class="form-control" readonly  name="ssn" placeholder="This will be your username"  required value={{autodata.ssn_id}}>
       </div>
       <div class="form-group">
         <label for="uid">Executive Name</label>

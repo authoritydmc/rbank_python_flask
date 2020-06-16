@@ -54,7 +54,7 @@ def login():
 def registerExecutive():
 
     if request.method == "GET":
-        return render_template('registerExecutive.html', registerExecutive=True)
+        return render_template('registerExecutive.html', registerExecutive=True,autodata={'ssn_id':edb.getautoSSNid()})
 
     regdata = {}
 
@@ -87,7 +87,7 @@ def registerCustomer():
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        return render_template('registerCustomer.html')
+        return render_template('registerCustomer.html',registerCustomer=True,autodata={'ssn_id':cdb.getautoSSNid()})
 
     regdata = {}
 
@@ -108,7 +108,7 @@ def registerCustomer():
     else:
         flash("Failed to Register Customer "+err, "danger")
 
-    return render_template('registerCustomer.html')
+    return render_template('registerCustomer.html',registerCustomer=True)
 
 
 @app.route('/logout')
@@ -148,7 +148,7 @@ def searchCustomer():
         return redirect(url_for('login'))
 
     if request.method == "GET":
-        return render_template('searchCustomer.html')
+        return render_template('searchCustomer.html',searchCustomer=True)
 
         # when ssn_id is passed ..so
 
@@ -178,7 +178,7 @@ def updateCustomer(ssn_id=None):
                 args['oldAge'] = result['age']
                 args['oldAddress'] = result['address']
                 args['oldName'] = result['name']
-                return render_template('updateCustomer.html', **args)
+                return render_template('updateCustomer.html', updateCustomer=True,**args)
             else:
                 flash(
                     "Unable to find customer. Try again by entering valid SSN ID.", "danger")
@@ -235,7 +235,7 @@ def viewCustomerDetail(ssn_id=None):
         args['name'] = result['name']
         args['address'] = result['address']
         args['ssn_id'] = result['ssn_id']
-        return render_template('viewCustomerDetail.html', **args)
+        return render_template('viewCustomerDetail.html', viewCustomerDetail=True,**args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
@@ -251,7 +251,7 @@ def viewAllCustomer():
     for dat in cdb.findSSN_all():
         customers_data.append(dat)
 
-    return render_template('viewAllCustomer.html', datas=customers_data)
+    return render_template('viewAllCustomer.html', viewAllCustomer=True,datas=customers_data)
 
 
 @app.route('/deleteCustomer',methods=['GET','POST'])
@@ -260,21 +260,24 @@ def deleteCustomer():
         return redirect(url_for('login'))
 
     if request.method == "GET":
-        ssn_id = request.args.get('ssn_id')
-        result = cdb.findSSN({'ssn_id': ssn_id})
+        if 'ssn_id' in request.args:
+            ssn_id = request.args.get('ssn_id')
+            result = cdb.findSSN({'ssn_id': ssn_id})
 
-        if result:
-            args = {}
-            args['ssn_id'] = result['ssn_id']
-            args['oldAge'] = result['age']
-            args['oldAddress'] = result['address']
-            args['oldName'] = result['name']
-            flash(" Customer found! Please confirm the details before deletion.")
-            return render_template('confirmDeleteCustomer.html',**args)
+            if result:
+                args = {}
+                args['ssn_id'] = result['ssn_id']
+                args['oldAge'] = result['age']
+                args['oldAddress'] = result['address']
+                args['oldName'] = result['name']
+                flash(" Customer found! ","success")
+                flash("Please confirm the details before deletion.","danger")
+                return render_template('confirmDeleteCustomer.html',deleteCustomer=True,**args)
 
-        else:
-            flash("Customer not found! Please enter a valid SSN ID.")
-            return redirect(url_for('searchCustomer'))
+            else:
+                flash("Customer not found! Please enter a valid SSN ID.","danger")
+
+        return redirect(url_for('searchCustomer'))
 
     filter = {'ssn_id':request.form.get('ssn_id')}
 
@@ -283,7 +286,7 @@ def deleteCustomer():
     if result:
         print(result)
         flash("Successfully deleted customer!", "success")
-        return render_template('home.html')
+        return redirect(url_for('home'))
     else:
         flash("Unable to delete customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
@@ -295,7 +298,7 @@ def createAccount():
         return redirect(url_for('login'))
 
     if request.method=="GET":
-        return render_template('createAccount.html')
+        return render_template('createAccount.html',createAccount=True,autodata={'cust_acc_id':cdb.getautoAccountid()})
 
     # if request id POST
     data = {}
@@ -304,9 +307,19 @@ def createAccount():
 
     data['ssn_id'] = request.form.get('ssn_id')
     data['type'] = request.form.get('type')
-    data['deposit'] = request.form.get('deposit')
+    data['cust_acc_id'] = request.form.get('cust_acc_id')
+    data['balance']=0.0
 
     print(data)
     # save data to database.
 
-    return data
+    result, err = cdb.createAccount(data)
+
+    if result:
+        flash("Customer Account  Successfully", "success")
+        # return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
+        return redirect(url_for('home'))
+    else:
+        flash("Failed to Create Customer Account: "+err, "danger")
+
+    return render_template('createAccount.html',createAccount=True,autodata=data)
