@@ -39,6 +39,10 @@ class DB:
         res=collection.update_one(selectionCriteria,updateData)
         return res
 
+    def delete(self,collectionName,filter):
+        collection= self.db[collectionName]
+        res=collection.find_one_and_delete(filter)
+        return res
 
 
 
