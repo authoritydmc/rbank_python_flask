@@ -16,8 +16,8 @@
     <thead class="thead-dark  ">
         <tr>
             <th scope="col ">Account ID</th>
-            <th scope="col ">Customer Name</th>
             <th scope="col ">Account Type</th>
+            <th scope="col ">Balance</th>
             <th scope="col ">Delete</th>
 
         </tr>
@@ -25,13 +25,13 @@
     <tbody>
         {% for data in datas %}
         <tr>
-            <th scope="row ">{{ data.accID }}</th>
-            <td>{{ data.name }}</td>
+            <th scope="row ">{{ data.cust_acc_id }}</th>
             <td>{{ data.type }}</td>
+            <td>{{ data.balance }}</td>
             <td>
-                <form method="GET">
-                    <input type="text " readonly hidden class="form-control-plaintext " name="accID" " value="{{data.accID}} ">
-                    <button type="submit " formaction="{{url_for( 'deleteAccount')}} " class="btn btn-primary mb-2 ">Delete Account</button>
+                <form action="/deleteAccount" method="GET">
+                    <input type="text " readonly hidden class="form-control-plaintext " name="cust_acc_id" " value="{{data.cust_acc_id}} ">
+                    <button type="submit " class="btn btn-primary mb-2 ">Delete Account</button>
                 </form>
             </td>
         </tr>
