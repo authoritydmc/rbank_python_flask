@@ -421,9 +421,13 @@ def deleteAccount():
 
 @app.route('/deposit',methods=['GET','POST'])
 def deposit():
-    if not isLoggedin():
-        return redirect(url_for('login'))
+    return render_template('deposit.html')
 
-    if request.method=="GET":
 
-        return render_template('deposit.html')
+
+@app.route('/withdraw',methods=['GET','POST'])
+def withdraw():
+    return render_template('withdraw.html')
+
+
+    

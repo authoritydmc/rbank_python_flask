@@ -18,7 +18,7 @@
             <th scope="col ">Account ID</th>
             <th scope="col ">Account Type</th>
             <th scope="col ">Balance</th>
-            <th scope="col ">Delete</th>
+            <th scope="col ">Allowed Actions</th>
 
         </tr>
     </thead>
@@ -29,9 +29,13 @@
             <td>{{ data.type }}</td>
             <td>{{ data.balance }}</td>
             <td>
-                <form action="/deleteAccount" method="GET">
+                <form action="" method="GET">
                     <input type="text " readonly hidden class="form-control-plaintext " name="cust_acc_id" " value="{{data.cust_acc_id}} ">
-                    <button type="submit " class="btn btn-primary mb-2 ">Delete Account</button>
+                    <button type="submit " formaction='/deposit' class="btn btn-primary mb-2 " style="margin-left: 5%; ">Deposit Money <i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
+                    <button type="submit " formaction="/withdraw " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Withdraw Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
+                    <button type="submit " formaction="/deleteAccount " class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
+
+                
                 </form>
             </td>
         </tr>
