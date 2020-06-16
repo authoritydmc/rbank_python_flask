@@ -287,3 +287,26 @@ def deleteCustomer():
     else:
         flash("Unable to delete customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchCustomer'))
+
+
+@app.route('/createAccount',methods=['get','post'])
+def createAccount():
+    if not isLoggedin():
+        return redirect(url_for('login'))
+
+    if request.method=="GET":
+        return render_template('createAccount.html')
+
+    # if request id POST
+    data = {}
+
+    # check if customer exists or not and return flash accordingly
+
+    data['ssn_id'] = request.form.get('ssn_id')
+    data['type'] = request.form.get('type')
+    data['deposit'] = request.form.get('deposit')
+
+    print(data)
+    # save data to database.
+
+    return data

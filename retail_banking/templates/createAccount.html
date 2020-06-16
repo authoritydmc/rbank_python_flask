@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Register Customer</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form class="mt-5" action="/createAccount" method="POST">
+            <div class="form-group">
+                <label>Customer SSN ID</label>
+                <input type="text" class="form-control" name="ssn_id" placeholder="Enter SSN ID" required>
+            </div>
+            <div class="form-group">
+                <label>Account Type</label>
+                <select name="type" class="dropdown">
+            <option name="S" value="S">Savings</option>
+            <option name="C" value="C">Current</option>
+        </select>
+            </div>
+            <div class="form-group">
+                <label for="uid">Deposit Amount</label>
+                <input type="number" class="form-control" name="deposit" placeholder="Enter Deposit Amount" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+    </div>
+</div>
+
+
+{{ a }} {% endblock %}
+<!-- end of body conent -->
