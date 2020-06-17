@@ -385,8 +385,8 @@ def searchAccount():
     if result:
         account_data = []
         for data in result:
-
-            account_data.append(data)
+            if data['ssn_id']==ssn:
+                account_data.append(data)
 
         flash("Successfully found Account!", "success")
         return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)
