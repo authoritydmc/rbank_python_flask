@@ -2,7 +2,8 @@ from retail_banking.DATABASES import database
 import random
 import logging
 try:
-    from . import transactiondb as tdb
+    from . import transactiondb 
+    print(transactiondb.isworking())
 except  Exception as e:
     logging.error("import Error  :"+str(e))
     
