@@ -34,13 +34,12 @@
             <td>{{ data.type }}</td>
             <td>{{ data.balance }}</td>
             <td>
-                <form  method="GET">
-                    <input type="text" readonly hidden     class="form-control-plaintext " name="cust_acc_id"  value="{{data.cust_acc_id}}">
+                <form method="GET">
+                    <input type="text" readonly hidden class="form-control-plaintext " name="cust_acc_id" value="{{data.cust_acc_id}}">
                     <button type="submit" formaction='/deposit' class="btn btn-primary mb-2 " style="margin-left: 5%; ">Deposit Money <i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
                     <button type="submit" formaction="/withdraw " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Withdraw Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit"  formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
-
-                
+                    <button type="submit" formaction="/transferMoney " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Transfer Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
+                    <button type="submit" formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
                 </form>
             </td>
         </tr>

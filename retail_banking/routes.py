@@ -479,7 +479,7 @@ def withdraw():
             cust_acc_id=request.args.get('cust_acc_id')
             result=cdb.findAccount({'cust_acc_id':cust_acc_id})
             if result:
-                return render_template('withdraw.html',deposit=True,data=result)
+                return render_template('withdraw.html',withdraw=True,data=result)
 #if nothing matches in GET atlast goto searchAccount route
         return redirect(url_for('searchAccount'))
 
@@ -500,3 +500,23 @@ def withdraw():
     else:
         flash(f"Error in Transaction :{err}","danger ")
         return redirect(url_for('home'))
+
+@app.route('/transferMoney',methods=['GET','POST'])
+def transferMoney():
+
+    if not isLoggedin():
+        return redirect(url_for('login'))
+
+    if request.method == "GET":
+        if "cust_acc_id" in request.args:
+            cust_acc_id=request.args.get('cust_acc_id')
+            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
+            if result:
+                return render_template('transferMoney.html',transferMoney=True,data=result)
+
+        return redirect('searchAccount')
+
+    # Handle transfer logic --> add and  subtract money from current and saving accordingly.
+    return "Transfred "+request.form.get("amount_transferred")
+
+
