@@ -41,6 +41,8 @@ def findSSN_all(filter={}):
 
 def findAcc_all(filter={}):
     return DB.find(collectionAccount,filter,"all")
+def findAcc_all_of_ssnid(ssn_id):
+    return DB.find(collectionAccount,{"ssn_id":ssn_id},"many")
 
 def updateSSN(data):
     print("update using these values ",data)

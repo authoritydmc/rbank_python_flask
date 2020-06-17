@@ -378,14 +378,12 @@ def searchAccount():
         flash("Invalid SSN entered! Please type correct SSN ID","danger")
         return redirect(url_for('searchAccount'))
 
-    result = cdb.findAcc_all({'ssn_id': ssn})
+    result = cdb.findAcc_all_of_ssnid(str(ssn))
 
-    print(result)
-
+    print("found accounts->")
     if result:
         account_data = []
         for data in result:
-            if data['ssn_id']==ssn:
                 account_data.append(data)
 
         flash("Successfully found Account!", "success")
