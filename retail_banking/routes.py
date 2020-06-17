@@ -588,7 +588,7 @@ def viewTransaction():
   
     if TRANS_DATA:
         print("in o591***********> ",TRANS_DATA)
-        return render_template('viewAllTransaction.html',datas=TRANS_DATA,cust_acc_id=cust_id)
+        return render_template('viewAllTransaction.html',viewTransaction=True,datas=TRANS_DATA,cust_acc_id=cust_id)
     else:
         if trans_id=="":
             flash(f"No Transaction Exist for Account id {cust_id}","danger")
