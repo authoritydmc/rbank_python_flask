@@ -1,6 +1,6 @@
 from retail_banking.DATABASES import database
 import random
-import transactiondb as tdb
+from . import transactiondb as tdb
 DB=database.DB()
 
 collectionSSN="customerSSN"
