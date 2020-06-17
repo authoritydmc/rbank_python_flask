@@ -28,7 +28,7 @@ class DB:
     def find(self,collectionName,filter,no_of_data="single"):
         collection= self.db[collectionName]
         if no_of_data == "many":
-            return collection.find_many(filter)
+            return collection.find(filter)
         elif no_of_data=="single":
             return collection.find_one(filter)
         else:
