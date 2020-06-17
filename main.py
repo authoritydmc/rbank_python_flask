@@ -1,3 +1,4 @@
+import retail_banking.DATABASES
 from retail_banking.DATABASES import database,customerdb,transactiondb,executive
 from retail_banking import app,routes
 
