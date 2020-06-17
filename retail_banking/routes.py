@@ -363,28 +363,63 @@ def createAccount():
 def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
-
+     
+    acc_id=""
     ssn=""
+    result=None
     if request.method == "GET":
         if 'ssn_id'  in request.args:
             ssn=request.args.get('ssn_id')
+        elif 'cust_acc_id' in request.args:
+            temp=cdb.findAccount({'cust_acc_id':request.args.get('cust_acc_id')})
+            if temp:
+                ssn=temp['ssn_id']
+                acc_id=temp['cust_acc_id']
+            else:
+                flash(f"Account ID :{temp['cust_acc_id']} does not exist ","danger")
         else:
             return render_template('searchAccount.html')
-    else:
+    else: #post requests
         ssn = request.form.get('ssn_id')
+        account=request.form.get('cust_acc_id')
+        if ssn=="" and account=="":
+            #both are empty redirect 
+            flash("Please enter Either SSN ID or Customer Account ID! ", "danger")
+            return redirect(url_for('searchAccount'))
+        
+        if ssn!="":
+            #checking of ssn will be done only hence making acc_id blank
+            print("SSN NOT == ",ssn)
+            acc_id=""
 
-    #first find if the ssn id is valid or not
-    if not cdb.findSSN({'ssn_id':ssn}):
-        flash("Invalid SSN entered! Please type correct SSN ID","danger")
-        return redirect(url_for('searchAccount'))
+            #first find if the ssn id is valid or not
+            if not cdb.findSSN({'ssn_id':ssn}):
+                flash("Invalid SSN entered! Please type correct SSN ID","danger")
+                return redirect(url_for('searchAccount'))
+            
+            result = cdb.findAcc_all_of_ssnid(str(ssn))
 
-    result = cdb.findAcc_all_of_ssnid(str(ssn))
 
-    print("found accounts->")
+        if account!="":
+            print("ACC ID == ",account)
+            acc_id=account
+            temp=cdb.findAccount({'cust_acc_id':acc_id})
+            if temp:
+                result=[temp]
+                ssn=temp['ssn_id']
+
+
+                
+
+    print("*"*80)
+    print("found accounts->",result)
+    print("*"*80)
+
     if result:
         account_data = []
         for data in result:
                 account_data.append(data)
+                print(data)
 
         flash("Successfully found Account!", "success")
         return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)

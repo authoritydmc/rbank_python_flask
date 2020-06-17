@@ -34,7 +34,10 @@ def findSSN(filter):
 def findAccount(filter):
     ##filter will be used to find something ... 
     res=DB.find(collectionAccount,filter)
+    print("finding for->",filter)
+    print("found->",res)
     return res
+
 
 def findSSN_all(filter={}):
     return DB.find(collectionSSN,filter,"all")
