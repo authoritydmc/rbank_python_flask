@@ -105,6 +105,8 @@ def registerCustomer():
     regdata['state'] = request.form.get('state')
     regdata['city '] = request.form.get('city')
     regdata['address'] = request.form.get('address')
+    regdata['create_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
     print(regdata)  # Simulating database insertion
 
@@ -333,6 +335,8 @@ def createAccount():
     data['type'] = request.form.get('type')
     data['cust_acc_id'] = request.form.get('cust_acc_id')
     data['balance'] = 0.0
+    data['create_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
     print(data)
     # save data to database.
@@ -353,27 +357,37 @@ def createAccount():
 
     return render_template('createAccount.html', createAccount=True, autodata=data)
 
-
 @app.route('/searchAccount', methods=['get', 'post'])
 def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
 
+    ssn=""
     if request.method == "GET":
-        return render_template('searchAccount.html')
+        if 'ssn_id'  in request.args:
+            ssn=request.args.get('ssn_id')
+        else:
+            return render_template('searchAccount.html')
+    else:
+        ssn = request.form.get('ssn_id')
 
-    ssn = request.form.get('ssn_id')
-    print(ssn)
+    #first find if the ssn id is valid or not
+    if not cdb.findSSN({'ssn_id':ssn}):
+        flash("Invalid SSN entered! Please type correct SSN ID","danger")
+        return redirect(url_for('searchAccount'))
+
     result = cdb.findAcc_all({'ssn_id': ssn})
+
+    print(result)
 
     if result:
         account_data = []
         for data in result:
-            if data['ssn_id'] == ssn:
-                account_data.append(data)
+
+            account_data.append(data)
 
         flash("Successfully found Account!", "success")
-        return render_template('viewAllAccount.html', datas=account_data)
+        return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)
     else:
         flash("Could not find the account! Please enter valid SSN ID", "danger")
         return redirect(url_for('searchAccount'))
@@ -408,12 +422,12 @@ def deleteAccount():
 
     filter = {'cust_acc_id': request.form.get('accID')}
     print("ACC ID ::::", request.form.get('accID'))
-    result = cdb.findAccount(filter)
+    result = cdb.deleteAccount(filter)
     print("result ", result)
     if result:
-        print(result)
-        flash("Successfully deleted account!", "success")
-        return redirect(url_for('home'))
+        print("Delete ACC:---->",result)
+        flash("Successfully deleted account! :"+filter['cust_acc_id'], "success")
+        return redirect(url_for('searchAccount')+"?ssn_id="+result['ssn_id'])
     else:
         flash("Unable to delete customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchAccount'))
@@ -421,13 +435,68 @@ def deleteAccount():
 
 @app.route('/deposit',methods=['GET','POST'])
 def deposit():
-    return render_template('deposit.html')
+    if not isLoggedin():
+        return redirect(url_for('login'))
+    cust_acc_id=""
+    if request.method=="GET":
+        if "cust_acc_id" in request.args:
+            cust_acc_id=request.args.get('cust_acc_id')
+            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
+            if result:
+                return render_template('deposit.html',deposit=True,data=result)
+#if nothing matches in GET atlast goto searchAccount route
+        return redirect(url_for('searchAccount'))
+
+    ###FOR POST >>>MAKING TRANSACTION NOW...
+
+    data={}
+
+    data['cust_acc_id']=request.form.get('cust_acc_id')
+    data['transaction_type']="credit"
+    data['transaction_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    data['amount']=request.form.get('amount')
+    result,err=cdb.deposit(data)
+    if result:
+        flash(f"Amount {data['amount']} deposited Successfully to Account ID :{data['cust_acc_id']}","success")
+        return redirect(url_for('home'))
+    else:
+        flash(f"Error in Transaction :{err}","danger ")
+        return redirect(url_for('home'))
+
+
+
 
 
 
 @app.route('/withdraw',methods=['GET','POST'])
 def withdraw():
-    return render_template('withdraw.html')
+    if not isLoggedin():
+        return redirect(url_for('login'))
+    cust_acc_id=""
+    if request.method=="GET":
+        if "cust_acc_id" in request.args:
+            cust_acc_id=request.args.get('cust_acc_id')
+            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
+            if result:
+                return render_template('withdraw.html',deposit=True,data=result)
+#if nothing matches in GET atlast goto searchAccount route
+        return redirect(url_for('searchAccount'))
 
+    ###FOR POST >>>MAKING TRANSACTION NOW...
 
-    
+    data={}
+
+    data['cust_acc_id']=request.form.get('cust_acc_id')
+    data['transaction_type']="debit"
+    data['transaction_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+        #negative amount
+    data['amount']="-"+request.form.get('amount')
+    result,err=cdb.withdraw(data)
+    if result:
+        flash(f"Amount {data['amount']} Withdrawn Successfully from  Account ID :{data['cust_acc_id']}","success")
+        return redirect(url_for('home'))
+    else:
+        flash(f"Error in Transaction :{err}","danger ")
+        return redirect(url_for('home'))

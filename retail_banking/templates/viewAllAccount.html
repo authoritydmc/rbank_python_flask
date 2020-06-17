@@ -13,6 +13,11 @@
 
 
 <table class="table table-striped ">
+    <thead class="thead-dark align-self-center">
+        <tr>
+            <th>Customer SSN_ID:{{cust_ssn_id}}</th>
+        </tr>
+    </thead>
     <thead class="thead-dark  ">
         <tr>
             <th scope="col ">Account ID</th>
@@ -29,11 +34,11 @@
             <td>{{ data.type }}</td>
             <td>{{ data.balance }}</td>
             <td>
-                <form action="" method="GET">
-                    <input type="text " readonly hidden class="form-control-plaintext " name="cust_acc_id" " value="{{data.cust_acc_id}} ">
-                    <button type="submit " formaction='/deposit' class="btn btn-primary mb-2 " style="margin-left: 5%; ">Deposit Money <i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit " formaction="/withdraw " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Withdraw Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit " formaction="/deleteAccount " class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
+                <form  method="GET">
+                    <input type="text" readonly hidden     class="form-control-plaintext " name="cust_acc_id"  value="{{data.cust_acc_id}}">
+                    <button type="submit" formaction='/deposit' class="btn btn-primary mb-2 " style="margin-left: 5%; ">Deposit Money <i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
+                    <button type="submit" formaction="/withdraw " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Withdraw Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
+                    <button type="submit"  formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
 
                 
                 </form>
