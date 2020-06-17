@@ -544,4 +544,4 @@ def withdraw():
 
 @app.route("/transfer")
 def transferMoney():
-    return "Money transer"
+    return render_template('transferMoney.html')

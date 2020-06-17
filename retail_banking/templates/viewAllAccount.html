@@ -12,13 +12,13 @@
 <!-- ///////////////////////// -->
 
 
+<div>
+    <h4 class="font-weight-normal text-center m-4">Customer SSN ID: <span style="font-size: 2rem;"> {{cust_ssn_id}} </span></h4>
+</div>
+
 <table class="table table-striped ">
-    <thead class="thead-dark align-self-center">
-        <tr>
-            <th>Customer SSN_ID:{{cust_ssn_id}}</th>
-        </tr>
-    </thead>
-    <thead class="thead-dark  ">
+
+    <thead class="font-weight-normal">
         <tr>
             <th scope="col ">Account ID</th>
             <th scope="col ">Account Type</th>
@@ -36,10 +36,9 @@
             <td>
                 <form method="GET">
                     <input type="text" readonly hidden class="form-control-plaintext " name="cust_acc_id" value="{{data.cust_acc_id}}">
-                    <button type="submit" formaction='/deposit' class="btn btn-primary mb-2 " style="margin-left: 5%; ">Deposit Money <i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit" formaction="/withdraw " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Withdraw Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit" formaction="/transferMoney " formmethod="GET " class="btn btn-secondary mb-2 " style="margin-left: 5%; ">Transfer Money<i class="fa fa-pencil-square-o " aria-hidden="true "></i></button>
-                    <button type="submit" formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account</button>
+                    <button type="submit" formaction='/deposit' class="btn btn-dark mb-2 ">Deposit Money  <i class="fas fa-folder-plus"></i></button>
+                    <button type="submit" formaction="/withdraw " formmethod="GET " class="btn btn-dark mb-2 " style="margin-left: 5%; ">Withdraw Money  <i class="fas fa-folder-minus"></i></button>
+                    <button type="submit" formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account  <i class="far fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>

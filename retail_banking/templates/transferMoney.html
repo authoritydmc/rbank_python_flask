@@ -14,20 +14,24 @@
     <div class="col-md-6 offset-md-3">
         <form action="{{ url_for('transferMoney') }}" method="POST">
             <div class="form-group row">
-                <label class="col col-form-label">Customer SSN ID</label>
+                <label class="col col-form-label">Source Account Number</label>
                 <div class="col">
-                    <input type="text" readonly class="form-control-plaintext" value="{{data.ssn_id}}">
+                    <input type="text" class="form-control" name="source_acc_no" placeholder="Source A/C No." required>
                 </div>
             </div>
-
-
-            <div class="form-group row">
-                <label class="col col-form-label">Source Account Type</label>
-                <div class="col">
-                    <select name="type" class="dropdown">
-                    <option name="S" value="saving" >Savings</option>
-                    <option name="C" value="current" >Current</option>
+            <div class="form-group row ">
+                <label class="col col-form-label ">Source Account Type</label>
+                <div class="col ">
+                    <select name="type " class="dropdown ">
+                    <option name="S " value="saving " >Savings</option>
+                    <option name="C " value="current " >Current</option>
                 </select>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label class="col col-form-label ">Target Account Number</label>
+                <div class="col ">
+                    <input type="text " class="form-control " name="target_acc_no " placeholder="Target A/C No. " required>
                 </div>
             </div>
             <div class="form-group row">
@@ -42,7 +46,7 @@
             <div class="form-group row">
                 <label class="col col-form-label">Transfer Amount</label>
                 <div class="col">
-                    <input type="number" class="form-control" name="amount_transferred" placeholder="Enter Amount">
+                    <input type="number" class="form-control" name="amount_transferred" placeholder="Enter Amount" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary " style="margin-left: 40%;">Transfer</button>
