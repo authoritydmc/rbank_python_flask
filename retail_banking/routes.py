@@ -370,6 +370,7 @@ def searchAccount():
     if request.method == "GET":
         if 'ssn_id'  in request.args:
             ssn=request.args.get('ssn_id')
+
             result=cdb.findAcc_all_of_ssnid(str(ssn))
         elif 'cust_acc_id' in request.args:
             temp=cdb.findAccount({'cust_acc_id':request.args.get('cust_acc_id')})
@@ -380,6 +381,7 @@ def searchAccount():
             else:
                 flash(f"Account ID :{request.args.get('cust_acc_id')} does not exist ","danger")
                 return redirect(url_for('searchAccount'))
+
         else:
             return render_template('searchAccount.html')
     else: #post requests
