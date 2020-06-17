@@ -104,18 +104,12 @@ def deleteAccount(filter):
 def make_transaction(data,type):
     print("Making Transaction of  ",data)
     updatedict={}
-    trans_data={}
+    #all the required Data
+    trans_data=data
 
-    if type=="credit":
-        trans_data['trans_type']="credit"
-        updatedict["$inc"]={"balance":float(data['amount'])}
-    else:
-        trans_data['trans_type']="debit"
-        updatedict["$inc"]={"balance":float(data['amount'])} #negate the amount so decrease
-    
-    trans_data['cust_acc_id']=data['cust_acc_id']
-    trans_data['trans_amount']=data['amount']
-    trans_data['trans_time']=data['transaction_time']
+    updatedict["$inc"]={"balance":float(data['amount'])} #negate the amount so decrease
+   
+    trans_data['balance']=float(trans_data['balance'])+float(trans_data['amount'])
     
     
 
@@ -134,6 +128,16 @@ def deposit(data):
     return make_transaction(data,"credit")
 
 def withdraw(data):
+    if float(data['balance'])+float(data['amount']) <0:
+        return False,"Not Sufficient Balance."
     return make_transaction(data,"debit")
 
 
+def findAllTransaction(cust_id):
+    return tdb.findTransaction({"cust_acc_id":cust_id},"many")
+
+def findTransaction(filter):
+    print("Finding---->",filter)
+    res=tdb.findTransaction(filter)
+    print("Found--->",res)
+    return res

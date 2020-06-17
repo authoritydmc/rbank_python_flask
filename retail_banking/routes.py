@@ -496,6 +496,9 @@ def deposit():
     data['transaction_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     data['amount']=request.form.get('amount')
+    data['remark']="self deposit"
+    data['executive_ssn_id']=session.get('ssn_id')
+    data['balance']=request.form.get('balance')
     result,err=cdb.deposit(data)
     if result:
         flash(f"Amount {data['amount']} deposited Successfully to Account ID :{data['cust_acc_id']}","success")
@@ -533,6 +536,10 @@ def withdraw():
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
         #negative amount
     data['amount']="-"+request.form.get('amount')
+    data['remark']="self withdrawl"
+    data['executive_ssn_id']=session.get('ssn_id')
+    data['balance']=request.form.get('balance')
+
     result,err=cdb.withdraw(data)
     if result:
         flash(f"Amount {data['amount']} Withdrawn Successfully from  Account ID :{data['cust_acc_id']}","success")
@@ -542,6 +549,53 @@ def withdraw():
         return redirect(url_for('home'))
 
 
-@app.route("/transfer")
+@app.route("/transfer",methods=["GET","POST"])
 def transferMoney():
-    return render_template('transferMoney.html')
+    if not isLoggedin():
+        return redirect(url_for('login'))
+
+    if request.method=="GET":
+        return render_template('transferMoney.html')
+
+
+@app.route('/viewTransaction')
+def viewTransaction():
+    if not isLoggedin():
+        return redirect(url_for('login'))
+    cust_id=""
+    trans_id=""
+    TRANS_DATA=False
+
+    if request.method=="GET":
+        if 'cust_acc_id' in request.args :
+            cust_id=request.args.get('cust_acc_id')
+        if 'trans_id' in request.args:
+            trans_id=request.args.get('trans_id')
+
+        if cust_id=="" and trans_id=="":
+            flash("Please Enter Either Customer Account ID or Transaction Id ","danger")
+            return render_template('searchTransaction.html')
+        if cust_id!="":
+            TRANS_DATA=cdb.findAllTransaction(cust_id)
+            trans_id==""
+        elif trans_id!="":
+            TRANS_DATA=cdb.findTransaction({'trans_id':trans_id})
+            if TRANS_DATA:
+                cust_id=TRANS_DATA['cust_acc_id']
+                TRANS_DATA=[(TRANS_DATA)]
+        else:
+            return render_template('searchTransaction.html')
+  
+    if TRANS_DATA:
+        print("in o591***********> ",TRANS_DATA)
+        return render_template('viewAllTransaction.html',datas=TRANS_DATA,cust_acc_id=cust_id)
+    else:
+        if trans_id=="":
+            flash(f"No Transaction Exist for Account id {cust_id}","danger")
+        else:
+            flash(f"Transaction {trans_id} Doesn't Exist","danger")
+
+        return redirect(url_for('home'))
+
+
+    

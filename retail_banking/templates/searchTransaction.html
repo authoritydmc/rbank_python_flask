@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>Search Transaction </title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+
+
+
+<form class="form text-center" method="GET">
+    <div class="form mb-2">
+        <label class="pr-2">Customer Account ID</label>
+        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="cust_acc_id" placeholder="Enter Account ID" value="">
+    </div>
+    <hr>
+    <p>OR</p>
+    <hr>
+    <div class="form mb-2">
+        <label class="pr-2">Transaction Account ID</label>
+        <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="trans_id" placeholder="Enter Transaction ID" value="">
+    </div>
+    <br>
+    <button type="submit" formaction='{{url_for("viewTransaction")}}' class="btn btn-success mb-2" style="margin-left: 1%;">Search Transaction<i class="fa fa-eye" aria-hidden="true"></i></button>
+
+</form>
+ {% endblock %}
+<!-- end of body conent -->
