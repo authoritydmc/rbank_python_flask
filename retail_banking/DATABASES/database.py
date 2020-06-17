@@ -1,10 +1,10 @@
 import pymongo
-from retail_banking.config import config
+from .. import config
 import random
 class DB:
     def __init__(self):
 
-        self._url=config.dburl
+        self._url=config.config.dburl
 
         if self._url==None:
             #change this url to your mongodb database for testing ....
