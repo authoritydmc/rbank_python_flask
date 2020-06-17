@@ -32,6 +32,7 @@ class DB:
         elif no_of_data=="single":
             return collection.find_one(filter)
         else:
+            #for all ...
             return collection.find()
  
 
