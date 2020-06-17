@@ -89,4 +89,7 @@ def getautoSSNid():
             break
     return ssn_id
 
+def deleteAccount(filter):
+    return DB.delete(collectionAccount,filter)
+
 

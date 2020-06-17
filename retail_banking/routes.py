@@ -353,27 +353,37 @@ def createAccount():
 
     return render_template('createAccount.html', createAccount=True, autodata=data)
 
-
 @app.route('/searchAccount', methods=['get', 'post'])
 def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
 
+    ssn=""
     if request.method == "GET":
-        return render_template('searchAccount.html')
+        if 'ssn_id'  in request.args:
+            ssn=request.args.get('ssn_id')
+        else:
+            return render_template('searchAccount.html')
+    else:
+        ssn = request.form.get('ssn_id')
 
-    ssn = request.form.get('ssn_id')
-    print(ssn)
+    #first find if the ssn id is valid or not
+    if not cdb.findSSN({'ssn_id':ssn}):
+        flash("Invalid SSN entered! Please type correct SSN ID","danger")
+        return redirect(url_for('searchAccount'))
+
     result = cdb.findAcc_all({'ssn_id': ssn})
+
+    print(result)
 
     if result:
         account_data = []
         for data in result:
-            if data['ssn_id'] == ssn:
-                account_data.append(data)
+
+            account_data.append(data)
 
         flash("Successfully found Account!", "success")
-        return render_template('viewAllAccount.html', datas=account_data)
+        return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)
     else:
         flash("Could not find the account! Please enter valid SSN ID", "danger")
         return redirect(url_for('searchAccount'))
@@ -408,12 +418,12 @@ def deleteAccount():
 
     filter = {'cust_acc_id': request.form.get('accID')}
     print("ACC ID ::::", request.form.get('accID'))
-    result = cdb.findAccount(filter)
+    result = cdb.deleteAccount(filter)
     print("result ", result)
     if result:
-        print(result)
-        flash("Successfully deleted account!", "success")
-        return redirect(url_for('home'))
+        print("Delete ACC:---->",result)
+        flash("Successfully deleted account! :"+filter['cust_acc_id'], "success")
+        return redirect(url_for('searchAccount')+"?ssn_id="+result['ssn_id'])
     else:
         flash("Unable to delete customer. Try again by entering valid SSN ID.", "danger")
         return redirect(url_for('searchAccount'))
@@ -421,12 +431,16 @@ def deleteAccount():
 
 @app.route('/deposit',methods=['GET','POST'])
 def deposit():
+    if not isLoggedin():
+        return redirect(url_for('login'))
     return render_template('deposit.html')
 
 
 
 @app.route('/withdraw',methods=['GET','POST'])
 def withdraw():
+    if not isLoggedin():
+        return redirect(url_for('login'))
     return render_template('withdraw.html')
 
 
