@@ -29,7 +29,11 @@
 
 </form>
 
-
+{%  if request.method == "GET" %}
+GET re
+{%else%}
+post re
+{% endif%}
 
 
 {% endblock %}
