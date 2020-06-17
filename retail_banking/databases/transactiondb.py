@@ -17,12 +17,12 @@ def recordTransaction(data):
     print("recording transaction--->",data)
     clctn.create_index('trans_id',unique=True)
     try:
-        data['trans_id']=str(time.time_ns())[-6:]+str(random.randint(1000,9999))
+        data['trans_id']=str(time.time()).split(".")[0][-6:]+str(random.randint(1000,9999))
         DB.insertCollection(collectionTransaction,data)
         return True,None
     except Exception as e:
         # print("exception ....",e) 
-        logging.error("ERROR _TRANSACTION"+str(e))    
+        logging.error("ERROR _TRANSACTION "+str(e))    
         return e
 
 
