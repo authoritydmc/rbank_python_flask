@@ -1,11 +1,8 @@
 from . import database
 import random
 import logging
-try:
-    from . import transactiondb 
-    print(transactiondb.isworking())
-except  Exception as e:
-    logging.error("import Error  :"+str(e))
+from . import transactiondb  as tdb
+
     
 
 DB=database.DB()
