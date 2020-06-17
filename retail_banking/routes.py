@@ -8,8 +8,8 @@ from flask import redirect, render_template, url_for, json, flash
 
 import hashlib
 try:
-    from .DATABASES import customerdb as cdb
-    from .DATABASES import executive as edb
+    from .databases import customerdb as cdb
+    from .databases import executive as edb
 except Exception as e:
     print("Import error ",e)
 

@@ -1,4 +1,4 @@
-from retail_banking.DATABASES import database
+from . import database
 import random
 import logging
 try:
