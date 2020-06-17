@@ -40,10 +40,10 @@
             </div>
     
             <button type="submit" formaction="{{url_for('searchCustomer')}}" class="btn btn-primary mb-2" style="margin-left: 5%;">Update Detail</button>
-            <button type="submit" formmethod="GET" formaction='/createAccount' class="btn btn-success mb-2" style="margin-left: 5%;">Create Account <i class="fa fa-address-book" aria-hidden="true"></i></button>
-        <button type="submit" formmethod="GET" formaction='{{url_for("searchAccount")}}' class="btn btn-success mb-2" style="margin-left: 1%;">Search Account<i class="fa fa-eye" aria-hidden="true"></i></button>
+            <button type="submit" formmethod="GET" formaction='{{url_for("createAccount")}}' class="btn btn-success mb-2" style="margin-left: 5%;">Create Account <i class="fa fa-address-book" aria-hidden="true"></i></button>
+            <button type="submit" formmethod="GET" formaction='{{url_for("searchAccount")}}' class="btn btn-success mb-2" style="margin-left: 1%;">Search Account<i class="fa fa-eye" aria-hidden="true"></i></button>
             
-            <button type="button" onclick="window.location.href='{{ url_for('searchCustomer') }}';" class="btn btn-primary mb-2" style="margin-left: 5%;">Search Again</button>            
+            <button type="button" onclick="window.location.href='{{ url_for('searchCustomer') }}';" class="btn btn-primary mb-2" style="margin-left: 5%;">New Search</button>            
     </div>
 </div>
 </form>

@@ -370,13 +370,16 @@ def searchAccount():
     if request.method == "GET":
         if 'ssn_id'  in request.args:
             ssn=request.args.get('ssn_id')
+            result=cdb.findAcc_all_of_ssnid(str(ssn))
         elif 'cust_acc_id' in request.args:
             temp=cdb.findAccount({'cust_acc_id':request.args.get('cust_acc_id')})
             if temp:
+                result=[temp]
                 ssn=temp['ssn_id']
                 acc_id=temp['cust_acc_id']
             else:
-                flash(f"Account ID :{temp['cust_acc_id']} does not exist ","danger")
+                flash(f"Account ID :{request.args.get('cust_acc_id')} does not exist ","danger")
+                return redirect(url_for('searchAccount'))
         else:
             return render_template('searchAccount.html')
     else: #post requests
@@ -514,7 +517,7 @@ def withdraw():
             cust_acc_id=request.args.get('cust_acc_id')
             result=cdb.findAccount({'cust_acc_id':cust_acc_id})
             if result:
-                return render_template('withdraw.html',withdraw=True,data=result)
+                return render_template('withdraw.html',deposit=True,data=result)
 #if nothing matches in GET atlast goto searchAccount route
         return redirect(url_for('searchAccount'))
 
@@ -536,22 +539,7 @@ def withdraw():
         flash(f"Error in Transaction :{err}","danger ")
         return redirect(url_for('home'))
 
-@app.route('/transferMoney',methods=['GET','POST'])
+
+@app.route("/transfer")
 def transferMoney():
-
-    if not isLoggedin():
-        return redirect(url_for('login'))
-
-    if request.method == "GET":
-        if "cust_acc_id" in request.args:
-            cust_acc_id=request.args.get('cust_acc_id')
-            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
-            if result:
-                return render_template('transferMoney.html',transferMoney=True,data=result)
-
-        return redirect('searchAccount')
-
-    # Handle transfer logic --> add and  subtract money from current and saving accordingly.
-    return "Transfred "+request.form.get("amount_transferred")
-
-
+    return "Money transer"
