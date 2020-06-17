@@ -501,7 +501,7 @@ def withdraw():
         flash(f"Error in Transaction :{err}","danger ")
         return redirect(url_for('home'))
 
-@app.route('/transferMoney')
+@app.route('/transferMoney',methods=['GET','POST'])
 def transferMoney():
 
     if not isLoggedin():
@@ -517,6 +517,6 @@ def transferMoney():
         return redirect('searchAccount')
 
     # Handle transfer logic --> add and  subtract money from current and saving accordingly.
-    return "Transfred"
+    return "Transfred "+request.form.get("amount_transferred")
 
 
