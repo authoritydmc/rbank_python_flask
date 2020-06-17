@@ -17,7 +17,7 @@ def recordTransaction(data):
     print("recording transaction--->",data)
     clctn.create_index('trans_id',unique=True)
     try:
-        data['trans_id']=str(time.time()).split(".")[0][-6:]+str(random.randint(1000,9999))
+        data['trans_id']=str(time.time_ns())[-6:]+str(random.randint(1000,9999))
         DB.insertCollection(collectionTransaction,data)
         return True,None
     except Exception as e:
@@ -26,7 +26,7 @@ def recordTransaction(data):
         return e
 
 
-def findTransaction(filter):
+def findTransaction(filter,type="single"):
     ##filter will be used to find something ... 
-    res=DB.find(collectionTransaction,filter)
-    return res
+    return DB.find(collectionTransaction,filter,type)
+

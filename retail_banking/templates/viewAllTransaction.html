@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+<!-- head content -->
+{% block head %}
+<title>View All Transaction</title>
+{% endblock %}
+<!-- end of head content -->
+
+<!-- below is body content  -->
+{% block content %}
+
+
+<!-- ///////////////////////// -->
+
+
+<div>
+    <h4 class="font-weight-normal text-center m-4">Customer ACC ID: <span style="font-size: 2rem;"> {{cust_acc_id}} </span></h4>
+</div>
+
+<table class="table table-striped ">
+
+    <thead class="font-weight-normal">
+        <tr>
+            <th scope="col ">ID</th>
+            <th scope="col ">Type</th>
+            <th scope="col ">Amount</th>
+            <th scope="col ">Balance</th>
+            <th scope="col ">Time</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in datas %}
+        <tr>
+            <th scope="row ">{{data.trans_id}}</th>
+            <th scope="row ">{{data.transaction_type}}</th>
+            <td>{{ data.amount }}</td>
+            <td>{{data.balance}}</td>
+            <td>{{data.transaction_time}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+{% endblock %}
+<!-- end of body content -->

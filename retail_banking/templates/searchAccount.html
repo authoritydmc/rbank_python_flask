@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 <!-- head content -->
 {% block head %}
-<title>Search Customer </title>
+<title>Search Account </title>
 {% endblock %}
 <!-- end of head content -->
 
@@ -28,6 +28,5 @@
     <button type="submit" formaction='{{url_for("searchAccount")}}' class="btn btn-success mb-2" style="margin-left: 1%;">Search Account<i class="fa fa-eye" aria-hidden="true"></i></button>
 
 </form>
-
-{% if request.method == "GET" %} {%else%} {% endif%} {% endblock %}
+{% endblock %}
 <!-- end of body conent -->
