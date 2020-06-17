@@ -7,9 +7,11 @@ import time
 from flask import redirect, render_template, url_for, json, flash
 
 import hashlib
-
-from retail_banking.DATABASES import customerdb as cdb
-from retail_banking.DATABASES import executive as edb
+try:
+    from .DATABASES import customerdb as cdb
+    from .DATABASES import executive as edb
+except Exception as e:
+    print("Import error ",e)
 
 
 @app.route('/')

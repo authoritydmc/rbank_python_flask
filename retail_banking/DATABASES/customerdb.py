@@ -1,6 +1,12 @@
 from retail_banking.DATABASES import database
 import random
-from . import transactiondb as tdb
+import logging
+try:
+    from . import transactiondb as tdb
+except  Exception as e:
+    logging.error("import Error  :"+str(e))
+    
+
 DB=database.DB()
 
 collectionSSN="customerSSN"
