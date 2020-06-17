@@ -105,6 +105,8 @@ def registerCustomer():
     regdata['state'] = request.form.get('state')
     regdata['city '] = request.form.get('city')
     regdata['address'] = request.form.get('address')
+    regdata['create_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
     print(regdata)  # Simulating database insertion
 
@@ -333,6 +335,8 @@ def createAccount():
     data['type'] = request.form.get('type')
     data['cust_acc_id'] = request.form.get('cust_acc_id')
     data['balance'] = 0.0
+    data['create_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
     print(data)
     # save data to database.
@@ -433,7 +437,35 @@ def deleteAccount():
 def deposit():
     if not isLoggedin():
         return redirect(url_for('login'))
-    return render_template('deposit.html')
+    cust_acc_id=""
+    if request.method=="GET":
+        if "cust_acc_id" in request.args:
+            cust_acc_id=request.args.get('cust_acc_id')
+            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
+            if result:
+                return render_template('deposit.html',deposit=True,data=result)
+#if nothing matches in GET atlast goto searchAccount route
+        return redirect(url_for('searchAccount'))
+
+    ###FOR POST >>>MAKING TRANSACTION NOW...
+
+    data={}
+
+    data['cust_acc_id']=request.form.get('cust_acc_id')
+    data['transaction_type']="credit"
+    data['transaction_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    data['amount']=request.form.get('amount')
+    result,err=cdb.deposit(data)
+    if result:
+        flash(f"Amount {data['amount']} deposited Successfully to Account ID :{data['cust_acc_id']}","success")
+        return redirect(url_for('home'))
+    else:
+        flash(f"Error in Transaction :{err}","danger ")
+        return redirect(url_for('home'))
+
+
+
 
 
 
@@ -441,7 +473,30 @@ def deposit():
 def withdraw():
     if not isLoggedin():
         return redirect(url_for('login'))
-    return render_template('withdraw.html')
+    cust_acc_id=""
+    if request.method=="GET":
+        if "cust_acc_id" in request.args:
+            cust_acc_id=request.args.get('cust_acc_id')
+            result=cdb.findAccount({'cust_acc_id':cust_acc_id})
+            if result:
+                return render_template('withdraw.html',deposit=True,data=result)
+#if nothing matches in GET atlast goto searchAccount route
+        return redirect(url_for('searchAccount'))
 
+    ###FOR POST >>>MAKING TRANSACTION NOW...
 
-    
+    data={}
+
+    data['cust_acc_id']=request.form.get('cust_acc_id')
+    data['transaction_type']="debit"
+    data['transaction_time']=time.strftime(
+        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+        #negative amount
+    data['amount']="-"+request.form.get('amount')
+    result,err=cdb.withdraw(data)
+    if result:
+        flash(f"Amount {data['amount']} Withdrawn Successfully from  Account ID :{data['cust_acc_id']}","success")
+        return redirect(url_for('home'))
+    else:
+        flash(f"Error in Transaction :{err}","danger ")
+        return redirect(url_for('home'))

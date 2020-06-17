@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 <!-- head content -->
 {% block head %}
-<title>Withdraw</title>
+<title>Deposit</title>
 {% endblock %}
 <!-- end of head content -->
 
@@ -12,36 +12,36 @@
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <form action="{{ url_for('deposit') }}" method="POST">
+        <form action="{{ url_for('withdraw') }}" method="POST">
             <div class="form-group row">
                 <label class="col col-form-label">Customer SSN ID</label>
                 <div class="col">
-                    <input type="text" readonly class="form-control-plaintext" name="ssn_id" value="{{ssn_id}}">
+                    <input type="text" readonly class="form-control-plaintext"  value="{{data.ssn_id}}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col col-form-label">Account ID </label>
                 <div class="col">
-                    <input type="text" readonly class="form-control-plaintext" value="{{cust_acc_id}}">
+                    <input type="text" readonly name="cust_acc_id" class="form-control-plaintext" value="{{data.cust_acc_id}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col col-form-label">Account Type</label>
                 <div class="col">
-                    <input type="text" readonly name="newName" class="form-control" required>
+                    <input type="text" readonly  class="form-control" required  value="{{data.type}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col col-form-label">Balance</label>
                 <div class="col">
-                    <input type="text" readonly class="form-control-plaintext" value="{{balance}}">
+                    <input type="text" readonly class="form-control-plaintext" value="{{data.balance}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col col-form-label">Withdraw Amount</label>
                 <div class="col">
-                    <input type="number" name="amount" class="form-control" required>
+                    <input type="number"   min="1" max="100000" name="amount" class="form-control" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary " style="margin-left: 40%;">Withdraw</button>
