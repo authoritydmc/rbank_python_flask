@@ -36,6 +36,7 @@
     <li class="nav-item  active"><a href="{{ url_for('deleteAccount')}}" class="btn nav-link {% if deleteAccount %}btn-primary {% endif%}">Delete Account <i class="far fa-trash-alt"></i></a></li>
     <li class="nav-item  active"><a href="{{ url_for('deposit')}}" class="btn nav-link {% if deposit %}btn-primary {% endif%}">Deposit Amount<i class="fas fa-user-plus"></i></a></li>
     <li class="nav-item  active"><a href="{{ url_for('withdraw')}}" class="btn nav-link {% if withdraw %}btn-primary {% endif%}">Withdraw Amount<i class="fas fa-user-plus"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('transferMoney')}}" class="btn nav-link {% if transfer %}btn-primary {% endif%}">Transfer Money<i class="fas fa-user-plus"></i></a></li>
 
     {% endif %}
 </ul>
