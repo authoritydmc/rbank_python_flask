@@ -29,12 +29,5 @@
 
 </form>
 
-{%  if request.method == "GET" %}
-GET re
-{%else%}
-post re
-{% endif%}
-
-
-{% endblock %}
+{% if request.method == "GET" %} {%else%} {% endif%} {% endblock %}
 <!-- end of body conent -->
