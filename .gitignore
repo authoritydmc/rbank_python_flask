@@ -4,3 +4,4 @@ test_*.py
 temp.py
 config_internal.py
 */__pycache__
+.vscode
