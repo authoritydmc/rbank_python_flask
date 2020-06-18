@@ -154,7 +154,7 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
         return False,"Error: Insufficient Balance in Source Account"
     
     print("dest->transfermoney cdb")
-    res2=findAccount({'cust_acc_id':source_acc})
+    res2=findAccount({'cust_acc_id':dest_acc})
     if res2==None:
         return False,"Error: Couldn't Find Destination Account"
 
@@ -176,7 +176,7 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
     dataS['transfer_id']=transfer_id
 
 
-    
+
     dataD['transfer_id']=transfer_id
     dataD['cust_acc_id']=dest_acc
     dataD['transaction_type']="credit"
