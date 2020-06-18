@@ -65,6 +65,14 @@ def registerExecutive():
     regdata = {}
 
     regdata['ssn_id'] = request.form.get('ssn')
+    if len(regdata['ssn_id'])<9:
+        flash("SSN ID length should be of minimum 9 ","danger")
+        return redirect(url_for('registerExecutive'))
+    if not str(regdata['ssn_id']).isdecimal():
+        flash("SSN ID should only be numerical ","danger")
+        return redirect(url_for('registerExecutive'))
+
+
     regdata['name'] = request.form.get('name')
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
@@ -103,6 +111,13 @@ def registerCustomer():
     regdata = {}
 
     regdata['ssn_id'] = request.form.get('ssn')
+    if len(regdata['ssn_id'])<9:
+        flash("SSN ID length should be of minimum 9 ","danger")
+        return redirect(url_for('registerCustomer'))
+    if not str(regdata['ssn_id']).isdecimal():
+        flash("SSN ID should only be numerical ","danger")
+        return redirect(url_for('registerCustomer'))
+
     regdata['name'] = request.form.get('name')
     regdata['age'] = request.form.get('age')
     regdata['state'] = request.form.get('state')
