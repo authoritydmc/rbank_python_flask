@@ -391,7 +391,7 @@ def searchAccount():
                 return redirect(url_for('searchAccount'))
 
         else:
-            return render_template('searchAccount.html',is_redirect=str(is_redirect),redirectto=redirectto)
+            return render_template('searchAccount.html',searchAccount=True,is_redirect=str(is_redirect),redirectto=redirectto)
     
     else: #post requests
         ssn = request.form.get('ssn_id')
