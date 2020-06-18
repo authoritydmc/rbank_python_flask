@@ -365,7 +365,7 @@ def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
     is_redirect=False
-    redirectto=""
+    redirectto="home" #bydefault
     acc_id=""
     ssn=""
     result=None
@@ -410,7 +410,7 @@ def searchAccount():
             #checking of ssn will be done only hence making acc_id blank
             print("SSN NOT == ",ssn)
             acc_id=""
-
+            is_redirect=False #make it False in case ssn id is entered..
             #first find if the ssn id is valid or not
             if not cdb.findSSN({'ssn_id':ssn}):
                 flash("Invalid SSN entered! Please type correct SSN ID","danger")
