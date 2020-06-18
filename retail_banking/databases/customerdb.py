@@ -34,7 +34,7 @@ def findSSN(filter):
 def findAccount(filter):
     ##filter will be used to find something ... 
     res=DB.find(collectionAccount,filter)
-    print("finding for->",filter)
+    print("finding for in cdb fa ->",filter)
     print("found->",res)
     return res
 
@@ -118,7 +118,7 @@ def make_transaction(data,type):
         res_rec_tr,err_rec_trans=tdb.recordTransaction(trans_data)
         
         if res:
-            return True,None
+            return True,"No error @make_transaction"
         else:
             return False,"Can not Record this Transaction"
     except Exception as e:
@@ -141,3 +141,55 @@ def findTransaction(filter):
     res=tdb.findTransaction(filter)
     print("Found--->",res)
     return res
+
+def transfer(source_acc,dest_acc,amount,exe_sid):
+    if source_acc==dest_acc:
+        return False,"Error: Source Account and Destination Account is Same"
+    print("Source->cdb tm")
+    res1=findAccount({'cust_acc_id':source_acc})
+    if res1==None:
+        return False,"Error: Couldn't Find Source Account"
+
+    if float(amount)>float(res1['balance']):
+        return False,"Error: Insufficient Balance in Source Account"
+    
+    print("dest->transfermoney cdb")
+    res2=findAccount({'cust_acc_id':source_acc})
+    if res2==None:
+        return False,"Error: Couldn't Find Destination Account"
+
+
+    #all sanity check passed ..Now make Transfer
+
+    dataS={}
+    dataD={}
+
+    transfer_id=tdb.generateTransactionID()
+
+    dataS['cust_acc_id']=source_acc
+    dataS['transaction_type']="debit"
+    #negative amount
+    dataS['amount']="-"+str(amount)
+    dataS['remark']="Transferred to "+str(dest_acc)
+    dataS['executive_ssn_id']=exe_sid
+    dataS['balance']=res1['balance']
+    dataS['transfer_id']=transfer_id
+
+
+    
+    dataD['transfer_id']=transfer_id
+    dataD['cust_acc_id']=dest_acc
+    dataD['transaction_type']="credit"
+    dataD['amount']=str(amount)
+    dataD['remark']="Received From "+str(source_acc)
+    dataD['executive_ssn_id']=exe_sid
+    dataD['balance']=res2['balance']
+    res1,err1=withdraw(dataS)
+    result2,err2=deposit(dataD)
+
+    if res1==True and res2==True:
+        return True,"No error @ make transfer"
+    elif res1==False:
+        return res1,err1
+    else:
+        return result2,err2

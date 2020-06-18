@@ -310,7 +310,7 @@ def deleteCustomer():
 def createAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
-
+    cust_acc_id=""
     autodata = {}  # data that will be passed
     if request.method == "GET":
         if 'ssn_id' in request.args:
@@ -336,11 +336,12 @@ def createAccount():
     data['ssn_id'] = request.form.get('ssn_id')
     data['type'] = request.form.get('type')
     data['cust_acc_id'] = request.form.get('cust_acc_id')
+    cust_acc_id=data['cust_acc_id']
     data['balance'] = 0.0
     data['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
-    print(data)
+    # print(data)
     # save data to database.
     if not cdb.findSSN({'ssn_id': data['ssn_id']}):
         flash("No such Customer Registered with SSN_ID=" +
@@ -493,8 +494,6 @@ def deposit():
 
     data['cust_acc_id']=request.form.get('cust_acc_id')
     data['transaction_type']="credit"
-    data['transaction_time']=time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     data['amount']=request.form.get('amount')
     data['remark']="self deposit"
     data['executive_ssn_id']=session.get('ssn_id')
@@ -532,9 +531,6 @@ def withdraw():
 
     data['cust_acc_id']=request.form.get('cust_acc_id')
     data['transaction_type']="debit"
-    data['transaction_time']=time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
-        #negative amount
     data['amount']="-"+request.form.get('amount')
     data['remark']="self withdrawl"
     data['executive_ssn_id']=session.get('ssn_id')
@@ -556,7 +552,17 @@ def transferMoney():
 
     if request.method=="GET":
         return render_template('transferMoney.html')
+    ###for post get the datass
 
+    amount=request.form.get('amount_transferred')
+    source_acc=request.form.get('source_acc_no')
+    dest_acc=request.form.get('target_acc_no')
+    result,err=cdb.transfer(source_acc,dest_acc,amount,session.get('ssn_id'))
+    if result:
+        flash(f"From Account: {source_acc} transferred Rs. {amount} Successfully to {dest_acc} ","success")
+    else:
+        flash(f"Failed To transfer Money "+str(err),"danger")
+    return redirect(url_for('home'))
 
 @app.route('/viewTransaction')
 def viewTransaction():
@@ -587,7 +593,6 @@ def viewTransaction():
             return render_template('searchTransaction.html')
   
     if TRANS_DATA:
-        print("in o591***********> ",TRANS_DATA)
         return render_template('viewAllTransaction.html',datas=TRANS_DATA,cust_acc_id=cust_id)
     else:
         if trans_id=="":

@@ -17,6 +17,7 @@ class DB:
     def getdb(self):
         return self.db
 
+
     def insertCollection(self,collectionName,datainJson):
        collection= self.db[collectionName]
        collection.insert_one(datainJson)
@@ -54,3 +55,7 @@ class DB:
             temp+=str(random.randint(0,9))
 
         return temp
+
+        
+
+        
