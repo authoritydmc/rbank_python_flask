@@ -36,11 +36,11 @@
             <td>
                 <form method="GET">
                     <input type="text" readonly hidden class="form-control-plaintext " name="cust_acc_id" value="{{data.cust_acc_id}}">
-                    
-                    <button type="submit" formaction='{{url_for("deposit")}}' class="btn btn-dark mb-2 ">Deposit Money  <i class="fas fa-folder-plus"></i></button>
-                    <button type="submit" formaction='{{url_for("viewTransaction")}}' class="btn btn-dark mb-2 " style="margin-left: 5%; ">View Transactions  <i class="fas fa-search-dollar"></i></button> 
-                    <button type="submit" formaction="{{url_for('withdraw')}}" formmethod="GET " class="btn btn-dark mb-2 " style="margin-left: 5%; ">Withdraw Money  <i class="fas fa-folder-minus"></i></button>
-                    <button type="submit" formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-left: 5%; ">Delete Account  <i class="far fa-trash-alt"></i></button>
+
+                    <button type="submit" formaction='{{url_for("deposit")}}' class="btn btn-dark mb-2 " style="margin-right: 5%; ">Deposit Money  <i class="fas fa-folder-plus"></i></button>
+                    <button type="submit" formaction="{{url_for('withdraw')}}" formmethod="GET " class="btn btn-dark mb-2 " style="margin-right: 5%; ">Withdraw Money  <i class="fas fa-folder-minus"></i></button>
+                    <button type="submit" formaction='{{url_for("viewTransaction")}}' class="btn btn-dark mb-2 " style="margin-right: 5%; ">View Transactions  <i class="fas fa-search-dollar"></i></button>
+                    <button type="submit" formaction="{{url_for('deleteAccount')}}" class="btn btn-danger mb-2 " style="margin-right: 5%; ">Delete Account  <i class="far fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>
