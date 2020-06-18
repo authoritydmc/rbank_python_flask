@@ -1,7 +1,7 @@
 # import this line in every new module you create this will give access to app with required library
 # for more info check __init__.py file
 from retail_banking import *
-
+from . import utility
 from time import gmtime, strftime
 import time
 from flask import redirect, render_template, url_for, json, flash
@@ -97,6 +97,7 @@ def registerCustomer():
         sid = cdb.getautoSSNid()
         flash("Auto generated SSN ID : "+sid)
         autodata['ssn_id'] = sid
+        autodata['states']=utility.getState()
         return render_template('registerCustomer.html', registerCustomer=True, autodata=autodata)
 
     regdata = {}
@@ -105,7 +106,7 @@ def registerCustomer():
     regdata['name'] = request.form.get('name')
     regdata['age'] = request.form.get('age')
     regdata['state'] = request.form.get('state')
-    regdata['city '] = request.form.get('city')
+    # regdata['city '] = request.form.get('city')
     regdata['address'] = request.form.get('address')
     regdata['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
@@ -192,6 +193,8 @@ def updateCustomer(ssn_id=None):
                 args['oldAge'] = result['age']
                 args['oldAddress'] = result['address']
                 args['oldName'] = result['name']
+                args['oldState']=result['state']
+                args['states']=utility.getState()
                 return render_template('updateCustomer.html', updateCustomer=True, **args)
             else:
                 flash(
@@ -204,6 +207,7 @@ def updateCustomer(ssn_id=None):
     regdata['name'] = request.form.get('newName')
     regdata['age'] = request.form.get('newAge')
     regdata['address'] = request.form.get('newAddress')
+    regdata['state']=request.form.get('newState')
 
     result, err = cdb.updateSSN(regdata)
 
@@ -249,6 +253,7 @@ def viewCustomerDetail(ssn_id=None):
         args['name'] = result['name']
         args['address'] = result['address']
         args['ssn_id'] = result['ssn_id']
+        args['state']=result['state']
         return render_template('viewCustomerDetail.html', viewCustomerDetail=True, **args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")

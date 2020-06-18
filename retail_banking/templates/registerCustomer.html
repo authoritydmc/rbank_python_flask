@@ -15,7 +15,7 @@
     <form class="mt-5" action="/registerCustomer" method="POST" >
       <div class="form-group">
         <label for="uid">Customer SSN ID</label>
-        <input type="text" class="form-control" name="ssn" readonly placeholder="Enter SSN ID" required value="{{autodata.ssn_id}}">
+        <input type="number" minlength="9" class="form-control" name="ssn" readonly placeholder="Enter SSN ID" required value="{{autodata.ssn_id}}">
       </div>
       <div class="form-group">
         <label for="uid">Customer Name</label>
@@ -32,17 +32,18 @@
       <div class="form-group">
         <label for="uid">State</label>
         <select name="state" id="">
-            <option name="UT" value="Uttar Predesh">Uttar Predesh</option>
-            <option name="MP" value="Madhya Predesh">Madhya Predesh</option>
-        </select>
+          {% for state in autodata.states %}
+            <option name="{{state.code}}" value="{{state.name}}">{{state.name}}</option>
+          {%endfor%}
+          </select>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="uid">City</label>
         <select name="city" id="">
             <option value="Lucknow">Lucknow</option>
             <option value="Indore">Indore</option>
         </select>
-      </div>
+      </div> -->
 
       <button type="submit"  class="btn btn-primary">Submit</button>
     </form>
@@ -50,7 +51,7 @@
 </div>
 
 
-{{ a }}
+
 
 
 

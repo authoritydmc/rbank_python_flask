@@ -25,6 +25,13 @@
                     <input type="text" readonly class="form-control-plaintext" value="{{name}}">
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col col-form-label">Age</label>
+                <div class="col">
+                    <input type="text" readonly class="form-control-plaintext" value="{{age}}">
+                </div>
+            </div>
             <div class="form-group row">
                 <label class="col col-form-label">Address</label>
                 <div class="col">
@@ -33,11 +40,12 @@
             </div>
 
             <div class="form-group row">
-                <label class="col col-form-label">Age</label>
+                <label class="col col-form-label">State</label>
                 <div class="col">
-                    <input type="text" readonly class="form-control-plaintext" value="{{age}}">
+                    <input type="text" readonly class="form-control-plaintext" value="{{state}}">
                 </div>
             </div>
+
     
             <button type="submit" formaction="{{url_for('searchCustomer')}}" class="btn btn-primary mb-2" style="margin-left: 5%;">Update Detail</button>
             <button type="submit" formmethod="GET" formaction='{{url_for("createAccount")}}' class="btn btn-success mb-2" style="margin-left: 5%;">Create Account <i class="fa fa-address-book" aria-hidden="true"></i></button>
