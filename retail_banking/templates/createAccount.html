@@ -15,7 +15,7 @@
         <form class="mt-5" action="/createAccount" method="POST">
             <div class="form-group">
                 <label>Customer SSN ID</label>
-                <input type="text" class="form-control" name="ssn_id"  value="{{autodata.ssn_id}}" placeholder="Enter SSN ID" required >
+                <input type="number" minlength="9" class="form-control" name="ssn_id"  value="{{autodata.ssn_id}}" placeholder="Enter SSN ID" required >
             </div>
             <div class="form-group">
                 <label>Account Type</label>
