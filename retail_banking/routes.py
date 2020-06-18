@@ -382,7 +382,7 @@ def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
     is_redirect=False
-    redirectto="home" #bydefault
+    redirectto="" #bydefault
     acc_id=""
     ssn=""
     result=None
@@ -418,10 +418,10 @@ def searchAccount():
             flash("Please enter Either SSN ID or Customer Account ID! ", "danger")
             return redirect(url_for('searchAccount'))
         
-        is_redirect=bool(request.form.get("is_redirect"))
+        is_redirect=True if request.form.get("is_redirect")=='True' else False
         redirectto=str(request.form.get("redirectto"))
 
-        
+        print("LOGGG  ",is_redirect,redirectto)
         if ssn!="":
             #checking of ssn will be done only hence making acc_id blank
             acc_id=""
@@ -441,7 +441,7 @@ def searchAccount():
                 result=[temp]
                 ssn=temp['ssn_id']
                 #found by account id hence redirect directly to particular redirection
-                if is_redirect:
+                if is_redirect and redirectto!="":
                     flash("Account Found ","success")
                     return redirect(url_for(redirectto)+"?cust_acc_id="+acc_id)
 
