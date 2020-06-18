@@ -21,7 +21,7 @@ def registerSSN(data):
         DB.insertCollection(collectionSSN,data)
         return True,None
     except Exception as e:
-        print("exception ....",e)
+        logging.error(e)
         if 'duplicate key error' in str(e):
             return False,f":A Customer with  SSN_ID={data['ssn_id']} already exist"
         return False,str(e)
@@ -34,8 +34,6 @@ def findSSN(filter):
 def findAccount(filter):
     ##filter will be used to find something ... 
     res=DB.find(collectionAccount,filter)
-    print("finding for in cdb fa ->",filter)
-    print("found->",res)
     return res
 
 
@@ -48,11 +46,9 @@ def findAcc_all_of_ssnid(ssn_id):
     return DB.find(collectionAccount,{"ssn_id":ssn_id},"many")
 
 def updateSSN(data):
-    print("update using these values ",data)
     # ssn_id=data['ssn_id']
     # data.pop('ssn_id',None)
     updatedict={"$set":data}
-    print(updatedict)
     try:
         res=DB.update(collectionSSN,{'ssn_id':data['ssn_id']},updatedict)
         if res:
@@ -74,7 +70,7 @@ def createAccount(data):
         DB.insertCollection(collectionAccount,data)
         return True,None
     except Exception as e:
-        print("exception ....",e)
+        logging.error(e)
         if 'duplicate key error' in str(e):
             return False,f":A Customer with  Account no ={data['cust_acc_id']} already exist"
         return False,str(e)
@@ -102,7 +98,6 @@ def deleteAccount(filter):
     return DB.delete(collectionAccount,filter)
 
 def make_transaction(data,type):
-    print("Making Transaction of  ",data)
     updatedict={}
     #all the required Data
     trans_data=data
@@ -137,15 +132,12 @@ def findAllTransaction(cust_id):
     return tdb.findTransaction({"cust_acc_id":cust_id},"many")
 
 def findTransaction(filter):
-    print("Finding---->",filter)
     res=tdb.findTransaction(filter)
-    print("Found--->",res)
     return res
 
 def transfer(source_acc,dest_acc,amount,exe_sid):
     if source_acc==dest_acc:
         return False,"Error: Source Account and Destination Account is Same"
-    print("Source->cdb tm")
     res1=findAccount({'cust_acc_id':source_acc})
     if res1==None:
         return False,"Error: Couldn't Find Source Account"
@@ -153,7 +145,6 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
     if float(amount)>float(res1['balance']):
         return False,"Error: Insufficient Balance in Source Account"
     
-    print("dest->transfermoney cdb")
     res2=findAccount({'cust_acc_id':dest_acc})
     if res2==None:
         return False,"Error: Couldn't Find Destination Account"

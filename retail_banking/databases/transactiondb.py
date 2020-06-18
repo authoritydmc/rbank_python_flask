@@ -2,7 +2,15 @@ from . import database
 import time
 import random
 import logging
-DB=database.DB()
+try:
+    DB=database.DB()
+except Exception as e:
+    print("*"*80)
+    logging.error("Exception Occured :Possible Fix: Connect to Internet first ")
+    print("*"*80)
+    logging.error(e)
+
+    exit()
 
 collectionTransaction="transactions"
 
@@ -12,7 +20,6 @@ def generateTransactionID():
 
 def recordTransaction(data):
     clctn=DB.getdb()[collectionTransaction]
-    print("recording transaction--->",data)
     clctn.create_index('trans_id',unique=True)
     try:
         data['trans_id']=generateTransactionID()
@@ -21,7 +28,6 @@ def recordTransaction(data):
         DB.insertCollection(collectionTransaction,data)
         return True,"NO error"
     except Exception as e:
-        # print("exception ....",e) 
         logging.error("ERROR _TRANSACTION "+str(e))    
         return False,e
 

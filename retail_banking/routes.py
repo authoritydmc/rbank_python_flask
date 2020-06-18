@@ -4,6 +4,7 @@ from retail_banking import *
 from . import utility
 from time import gmtime, strftime
 import time
+import logging
 from flask import redirect, render_template, url_for, json, flash
 
 import hashlib
@@ -11,7 +12,7 @@ try:
     from .databases import customerdb as cdb
     from .databases import executive as edb
 except Exception as e:
-    print("Import error ",e)
+    logging.error(e)
 
 
 @app.route('/')
@@ -126,7 +127,6 @@ def registerCustomer():
     regdata['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
-    print(regdata)  # Simulating database insertion
 
     result, err = cdb.registerSSN(regdata)
 
@@ -258,8 +258,7 @@ def viewCustomerDetail(ssn_id=None):
 
     # Retrieving details of customer
     result = cdb.findSSN(filter)
-    print("ssn is ", ssn_id)
-    print(result)
+
 
     if result:
         args = {}
@@ -318,7 +317,6 @@ def deleteCustomer():
     result = cdb.deleteSSN(filter)
 
     if result:
-        print(result)
         flash("Successfully deleted customer!", "success")
         return redirect(url_for('home'))
     else:
@@ -361,7 +359,6 @@ def createAccount():
     data['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
-    # print(data)
     # save data to database.
     if not cdb.findSSN({'ssn_id': data['ssn_id']}):
         flash("No such Customer Registered with SSN_ID=" +
@@ -424,11 +421,9 @@ def searchAccount():
         is_redirect=bool(request.form.get("is_redirect"))
         redirectto=str(request.form.get("redirectto"))
 
-        print("---->  ",is_redirect,"   --- ",redirectto,type(is_redirect),type(redirectto))
         
         if ssn!="":
             #checking of ssn will be done only hence making acc_id blank
-            print("SSN NOT == ",ssn)
             acc_id=""
             is_redirect=False #make it False in case ssn id is entered..
             #first find if the ssn id is valid or not
@@ -440,7 +435,6 @@ def searchAccount():
 
 
         if account!="":
-            print("ACC ID == ",account)
             acc_id=account
             temp=cdb.findAccount({'cust_acc_id':acc_id})
             if temp:
@@ -454,15 +448,10 @@ def searchAccount():
 
                 
 
-    print("*"*80)
-    print("found accounts->",result)
-    print("*"*80)
-
     if result:
         account_data = []
         for data in result:
                 account_data.append(data)
-                print(data)
 
         flash("Successfully found Account!", "success")
         return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)
@@ -485,7 +474,6 @@ def deleteAccount():
             cust_acc_id = request.args.get('cust_acc_id')
 
             # find account no and details using ssn_id
-            print("ACC ID :", cust_acc_id)
             # result = cdb.findAccount({'cust_acc_id': cust_acc_id})
             result = cdb.findAccount({'cust_acc_id':cust_acc_id})
 
@@ -503,11 +491,8 @@ def deleteAccount():
         return redirect(url_for('searchAccount'))
 
     filter = {'cust_acc_id': request.form.get('accID')}
-    print("ACC ID ::::", request.form.get('accID'))
     result = cdb.deleteAccount(filter)
-    print("result ", result)
     if result:
-        print("Delete ACC:---->",result)
         flash("Successfully deleted account! :"+filter['cust_acc_id'], "success")
         return redirect(url_for('searchAccount')+"?ssn_id="+result['ssn_id'])
     else:

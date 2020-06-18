@@ -1,6 +1,7 @@
 import pymongo
 from .. import config
 import random
+import logging
 class DB:
     def __init__(self):
 
@@ -21,7 +22,7 @@ class DB:
     def insertCollection(self,collectionName,datainJson):
        collection= self.db[collectionName]
        collection.insert_one(datainJson)
-       print("data inserted successfully ",datainJson)
+       logging.info("data inserted successfully "+str(datainJson))
     
     def RegisterUser(self):
         pass

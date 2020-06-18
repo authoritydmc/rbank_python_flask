@@ -1,6 +1,6 @@
 from . import database
 import random
-
+import logging
 DB=database.DB()
 
 collectionName="executive"
@@ -16,7 +16,7 @@ def register(data):
         DB.insertCollection(collectionName,data)
         return True,None
     except Exception as e:
-        print("exception ....",e)
+        logging.error(e)
         if 'duplicate key error' in str(e):
             return False,"Executive already Registered"
             
