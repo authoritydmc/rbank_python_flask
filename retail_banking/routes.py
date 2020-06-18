@@ -364,11 +364,16 @@ def createAccount():
 def searchAccount():
     if not isLoggedin():
         return redirect(url_for('login'))
-     
+    is_redirect=False
+    redirectto=""
     acc_id=""
     ssn=""
     result=None
     if request.method == "GET":
+        if "redirect" in request.args:
+            is_redirect=True
+            redirectto=request.args.get("redirect")
+
         if 'ssn_id'  in request.args:
             ssn=request.args.get('ssn_id')
 
@@ -379,12 +384,15 @@ def searchAccount():
                 result=[temp]
                 ssn=temp['ssn_id']
                 acc_id=temp['cust_acc_id']
+                flash("Account Found .","success")
+                return redirect(url_for(redirectto)+"?cust_acc_id="+acc_id)
             else:
                 flash(f"Account ID :{request.args.get('cust_acc_id')} does not exist ","danger")
                 return redirect(url_for('searchAccount'))
 
         else:
-            return render_template('searchAccount.html')
+            return render_template('searchAccount.html',is_redirect=str(is_redirect),redirectto=redirectto)
+    
     else: #post requests
         ssn = request.form.get('ssn_id')
         account=request.form.get('cust_acc_id')
@@ -392,6 +400,11 @@ def searchAccount():
             #both are empty redirect 
             flash("Please enter Either SSN ID or Customer Account ID! ", "danger")
             return redirect(url_for('searchAccount'))
+        
+        is_redirect=bool(request.form.get("is_redirect"))
+        redirectto=str(request.form.get("redirectto"))
+
+        print("---->  ",is_redirect,"   --- ",redirectto,type(is_redirect),type(redirectto))
         
         if ssn!="":
             #checking of ssn will be done only hence making acc_id blank
@@ -413,6 +426,10 @@ def searchAccount():
             if temp:
                 result=[temp]
                 ssn=temp['ssn_id']
+                #found by account id hence redirect directly to particular redirection
+                if is_redirect:
+                    flash("Account Found ","success")
+                    return redirect(url_for(redirectto)+"?cust_acc_id="+acc_id)
 
 
                 
@@ -430,7 +447,11 @@ def searchAccount():
         flash("Successfully found Account!", "success")
         return render_template('viewAllAccount.html', datas=account_data,cust_ssn_id=ssn)
     else:
-        flash("Could not find the account! Please enter valid SSN ID", "danger")
+        if acc_id!="":
+            flash("Could not find the account! Please enter valid  Account ID", "danger")
+        else:
+            flash("Could not find any Customer With that SSN ID! Please enter valid  SSN ID", "danger")
+
         return redirect(url_for('searchAccount'))
 
 
@@ -486,7 +507,7 @@ def deposit():
             if result:
                 return render_template('deposit.html',deposit=True,data=result)
 #if nothing matches in GET atlast goto searchAccount route
-        return redirect(url_for('searchAccount'))
+        return redirect(url_for('searchAccount')+"?redirect=deposit")
 
     ###FOR POST >>>MAKING TRANSACTION NOW...
 
@@ -523,7 +544,7 @@ def withdraw():
             if result:
                 return render_template('withdraw.html',deposit=True,data=result)
 #if nothing matches in GET atlast goto searchAccount route
-        return redirect(url_for('searchAccount'))
+        return redirect(url_for('searchAccount')+"?redirect=withdraw")
 
     ###FOR POST >>>MAKING TRANSACTION NOW...
 

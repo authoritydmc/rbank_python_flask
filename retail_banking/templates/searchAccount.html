@@ -13,6 +13,9 @@
 
 
 <form class="form text-center" method="POST">
+    <input type="text" name="redirectto" value="{{redirectto}}" hidden readonly/>
+    <input type="text" name="is_redirect" value="{{is_redirect}}" hidden readonly/>
+
     <div class="form mb-2">
         <label class="pr-2">Customer SSN ID</label>
         <input type="text" class="form-control text-center" style="width: 50%; margin: 5px auto;" name="ssn_id" placeholder="Enter SSN ID" value="">
