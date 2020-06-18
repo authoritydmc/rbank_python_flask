@@ -79,6 +79,19 @@ def registerExecutive():
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
 
+    if len(regdata['name'])<3:
+        flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('registerExecutive'))
+
+    if len(regdata['email'])<1 and not '@' in regdata['email']:
+        flash("Invalid Email entered ","danger")
+        return redirect(url_for('registerExecutive'))
+
+    if len(regdata['pass'])<1:
+        flash("minimum length of password must be 1 character ","danger")
+        return redirect(url_for('registerExecutive'))
+
+
     regdata['creation_time'] = time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
     result, err = edb.register(regdata)
@@ -126,6 +139,30 @@ def registerCustomer():
     regdata['address'] = request.form.get('address')
     regdata['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+
+
+    if len(regdata['name'])<3:
+        flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('registerCustomer'))
+
+    
+    if len(regdata['address'])<3:
+        flash("Address Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('registerCustomer'))
+
+    
+    if regdata['age']<18:
+        flash("Customer should be of minimum 18 years old to Register ","danger")
+        return redirect(url_for('registerCustomer'))
+
+
+    if not utility.isStateValid(regdata['state']):
+        flash("Select State from dropdown correctly ","danger")
+        return redirect(url_for('registerCustomer'))
+        
+
+
+
 
 
     result, err = cdb.registerSSN(regdata)
@@ -223,6 +260,32 @@ def updateCustomer(ssn_id=None):
     regdata['age'] = request.form.get('newAge')
     regdata['address'] = request.form.get('newAddress')
     regdata['state']=request.form.get('newState')
+
+
+    #sanity check now
+
+
+    if len(regdata['name'])<3:
+        flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+    
+    if len(regdata['address'])<3:
+        flash("Address Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+    
+    if regdata['age']<18:
+        flash("Customer should be of minimum 18 years old to Register ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+
+    if not utility.isStateValid(regdata['state']):
+        flash("Select State from dropdown correctly ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+
+
 
     result, err = cdb.updateSSN(regdata)
 

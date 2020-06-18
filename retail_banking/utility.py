@@ -37,3 +37,11 @@ states=[{"code": "AN","name": "Andaman and Nicobar Islands"},
 {"code": "WB","name": "West Bengal"}]
 def getState():
     return states
+
+
+def isStateValid(st):
+    for x in states:
+        if x['name']==st:
+            return True
+    return False
+
