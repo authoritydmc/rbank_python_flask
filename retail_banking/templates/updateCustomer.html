@@ -67,9 +67,9 @@
             <div class="form-group row">
                 <label class="col col-form-label">New State</label>
 
-                <select name="state" id="">
+                <select name="newState" id="">
                   {% for state in states %}
-                    <option name="{{state.code}}" value="{{state.name}}">{{state.name}}</option>
+                    <option name="{{state.code}}" value="{{state.name}}" {% if oldState == state.name %}selected="selected" {%endif%}>{{state.name}} </option>
                   {%endfor%}
                   </select>
               </div>
