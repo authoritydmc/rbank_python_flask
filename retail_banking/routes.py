@@ -150,11 +150,13 @@ def registerCustomer():
         flash("Address Should be of minimum 3 Characters ","danger")
         return redirect(url_for('registerCustomer'))
 
-    
-    if regdata['age']<18:
-        flash("Customer should be of minimum 18 years old to Register ","danger")
-        return redirect(url_for('registerCustomer'))
-
+    try:
+        if int(regdata['age'])<18:
+            flash("Customer should be of minimum 18 years old to Register ","danger")
+            return redirect(url_for('registerCustomer'))
+    except :
+            flash("Customer should be of minimum 18 years old to Register ","danger")
+            return redirect(url_for('registerCustomer'))
 
     if not utility.isStateValid(regdata['state']):
         flash("Select State from dropdown correctly ","danger")
@@ -274,10 +276,14 @@ def updateCustomer(ssn_id=None):
         flash("Address Should be of minimum 3 Characters ","danger")
         return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
 
-    
-    if regdata['age']<18:
-        flash("Customer should be of minimum 18 years old to Register ","danger")
-        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+    try:
+        if int(regdata['age'])<18:
+            flash("Customer should be of minimum 18 years old to Register ","danger")
+            return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+    except:
+            flash("Customer should be of minimum 18 years old to Register ","danger")
+            return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+            
 
 
     if not utility.isStateValid(regdata['state']):
