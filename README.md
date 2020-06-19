@@ -5,7 +5,8 @@
 
  use the following import first
 
- `from retail_banking.DATABASES import <moduleDBNAME> as <whateverDB>`
+ `from retail_banking.databases   
+import <moduleDBNAME> as <whateverDB>`
 
 now to use : call methods in available in moduleDBNAME as
 
