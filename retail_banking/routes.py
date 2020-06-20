@@ -44,7 +44,7 @@ def login():
         else:
             # setup session~~~
             last_login=result.get("last_login","N/A")
-            session_login(uid, result['name'],last_login)
+            session_login(uid, result['name'],last_login,request.headers.get("x-forwarded-for",request.remote_addr))
             if isLoggedin():
 
                 flash("Successfully Logged in", "success")
@@ -98,7 +98,7 @@ def registerExecutive():
 
 
     regdata['creation_time'] =utility.getTime()
-    regdata['access_ip']=request.remote_addr
+    regdata['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
     result, err = edb.register(regdata)
 
@@ -156,7 +156,7 @@ def registerCustomer():
     regdata['address'] = request.form.get('address')
     regdata['email']=request.form.get('cust_email')
     regdata['create_time']=utility.getTime()
-    regdata['access_ip']=request.remote_addr
+    regdata['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
 
 
@@ -236,11 +236,11 @@ def session_logout():
     session.pop('last_login',None)
 
 
-def session_login(ssn_val, username,lastLogin):
+def session_login(ssn_val, username,lastLogin,acc_IP):
     session['ssn_id'] = ssn_val
     session['username'] = username
     session['last_login']=lastLogin
-    access_ip=request.remote_addr
+    access_ip=acc_IP
     edb.update_logintime(ssn_val,access_ip)
 
 
@@ -307,7 +307,7 @@ def updateCustomer(ssn_id=None):
     regdata['state']=request.form.get('newState')
     regdata['email']=request.form.get('newEmail')
     regdata['updated_time']=utility.getTime()
-    regdata['access_ip']=request.remote_addr
+    regdata['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
     #sanity check now
 
@@ -472,7 +472,8 @@ def createAccount():
     cust_acc_id=data['cust_acc_id']
     data['balance'] = 0.0
     data['create_time']=utility.getTime()
-    data['access_ip']=request.remote_addr
+
+    data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
 
 
@@ -651,7 +652,7 @@ def deposit():
     data['remark']="self deposit"
     data['executive_ssn_id']=session.get('ssn_id')
     data['balance']=request.form.get('balance')
-    regdata['access_ip']=request.remote_addr
+    regdata['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
     result,err=cdb.deposit(data)
     if result:
@@ -690,7 +691,7 @@ def withdraw():
     data['remark']="self withdrawl"
     data['executive_ssn_id']=session.get('ssn_id')
     data['balance']=request.form.get('balance')
-    data['access_ip']=request.remote_addr
+    data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
 
     result,err=cdb.withdraw(data)

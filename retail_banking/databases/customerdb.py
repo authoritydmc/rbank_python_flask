@@ -169,7 +169,7 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
     dataS['transaction_type']="debit"
     #negative amount
     dataS['amount']="-"+str(amount)
-    dataS['remark']="Transferred to "+str(dest_acc)+" Transfer ID:"+transfer_id
+    dataS['remark']="Transfer ID:"+transfer_id+" Note:Transferred to "+str(dest_acc)
     dataS['executive_ssn_id']=exe_sid
     dataS['balance']=res1['balance']
     dataS['transfer_id']=transfer_id
@@ -180,7 +180,7 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
     dataD['cust_acc_id']=dest_acc
     dataD['transaction_type']="credit"
     dataD['amount']=str(amount)
-    dataD['remark']="Received From "+str(source_acc)+" Transfer ID:"+transfer_id
+    dataD['remark']="Transfer ID:"+transfer_id+" Note:Received From "+str(source_acc)
     dataD['executive_ssn_id']=exe_sid
     dataD['balance']=res2['balance']
     res1,err1=withdraw(dataS)
