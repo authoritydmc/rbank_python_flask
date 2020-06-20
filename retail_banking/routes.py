@@ -74,13 +74,17 @@ def registerExecutive():
         return redirect(url_for('registerExecutive'))
 
 
-    regdata['name'] = request.form.get('name')
+    regdata['name'] =str( request.form.get('name')).replace("\n","")
     regdata['email'] = request.form.get('email')
     regdata['pass'] = hashlib.sha256(
         request.form.get('psw').encode()).hexdigest()
 
     if len(regdata['name'])<3:
         flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('registerExecutive'))
+
+    if not utility.isNameValid(regdata['name']):
+        flash("Entered Name is invalid ","danger")
         return redirect(url_for('registerExecutive'))
 
     if len(regdata['email'])<1 and not '@' in regdata['email']:
@@ -98,6 +102,18 @@ def registerExecutive():
 
     if result:
         flash("Executive Registered Successfully ...    Login Now", "success")
+
+
+
+        ###EMAIL SEND##
+        data={}
+        data['type']=utility.EMAIL_REG_EXECUTIVE
+        data['ssn_id']=regdata['ssn_id']
+        data['name']=regdata['name']
+        data['senderId']=regdata['email']
+        data['cust_acc_id']="123"
+        utility.sendEmail(data)
+        #####
         return redirect(url_for('login'))
     else:
         flash("Failed to Register :"+err, "danger")
@@ -132,17 +148,25 @@ def registerCustomer():
         flash("SSN ID should only be numerical ","danger")
         return redirect(url_for('registerCustomer'))
 
-    regdata['name'] = request.form.get('name')
+    regdata['name'] = str(request.form.get('name')).replace("\n","").replace("  "," ")
     regdata['age'] = request.form.get('age')
     regdata['state'] = request.form.get('state')
     # regdata['city '] = request.form.get('city')
     regdata['address'] = request.form.get('address')
+    regdata['email']=request.form.get('cust_email')
     regdata['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
 
     if len(regdata['name'])<3:
         flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('registerCustomer'))
+    if not utility.isNameValid(regdata['name']):
+        flash("Entered Name is not Valid ","danger")
+        return redirect(url_for('registerCustomer'))
+
+    if not utility.isNameValid(regdata['name']):
+        flash(f"Entered Name={regdata['name']} is not Valid  ","danger")
         return redirect(url_for('registerCustomer'))
 
     
@@ -171,6 +195,20 @@ def registerCustomer():
 
     if result:
         flash("Customer Registered Successfully", "success")
+
+                ###EMAIL SEND##
+        data={}
+        data['type']=utility.EMAIL_REG_CUSTOMER
+        data['ssn_id']=regdata['ssn_id']
+        data['name']=regdata['name']
+        data['senderId']=regdata.get('email',None)
+        data['cust_acc_id']="123"
+        utility.sendEmail(data)
+        if data['senderId'] !=None:
+            utility.sendEmail(EMail_data)
+        else:
+            logging.error(f"No valid Email found for {data['ssn_id']}")
+        #####
         return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
     else:
         flash("Failed to Register Customer "+err, "danger")
@@ -249,6 +287,7 @@ def updateCustomer(ssn_id=None):
                 args['oldName'] = result['name']
                 args['oldState']=result['state']
                 args['states']=utility.getState()
+                args['oldEmail']=result['email']
                 return render_template('updateCustomer.html', updateCustomer=True, **args)
             else:
                 flash(
@@ -337,6 +376,7 @@ def viewCustomerDetail(ssn_id=None):
         args['address'] = result['address']
         args['ssn_id'] = result['ssn_id']
         args['state']=result['state']
+        args['email']=result['email']
         return render_template('viewCustomerDetail.html', viewCustomerDetail=True, **args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
@@ -428,18 +468,29 @@ def createAccount():
     data['create_time']=time.strftime(
         "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
+
+    reg_cust_details=cdb.findSSN({'ssn_id': data['ssn_id']})
+
     # save data to database.
-    if not cdb.findSSN({'ssn_id': data['ssn_id']}):
-        flash("No such Customer Registered with SSN_ID=" +
-              data['ssn_id'], "danger")
+    if not reg_cust_details:
+        flash("No such Customer Registered with SSN_ID=" +data['ssn_id'], "danger")
         return render_template('createAccount.html', createAccount=True, autodata={'cust_acc_id': cust_acc_id})
 
     result, err = cdb.createAccount(data)
 
     if result:
-        flash(
-            f"Customer Account {data['cust_acc_id']}  Successfully", "success")
-        # return redirect(url_for('viewCustomerDetail')+"/"+regdata['ssn_id'])
+        flash(f"Customer Account {data['cust_acc_id']}  Successfully", "success")
+ ####   ###send mail###
+        EMail_data={}
+        EMail_data['type']=utility.EMAIL_OPENED_Account
+        EMail_data['ssn_id']=reg_cust_details['ssn_id']
+        EMail_data['name']=reg_cust_details['name']
+        EMail_data['cust_acc_id']=data['cust_acc_id']
+
+        EMail_data['senderId']=reg_cust_details.get('email',None)
+        if EMail_data['senderId'] !=None:
+            utility.sendEmail(EMail_data)
+#####################
         return redirect(url_for('home'))
     else:
         flash("Failed to Create Customer Account: "+err, "danger")
