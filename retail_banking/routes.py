@@ -110,7 +110,7 @@ def registerExecutive():
         data['type']=utility.EMAIL_REG_EXECUTIVE
         data['ssn_id']=regdata['ssn_id']
         data['name']=regdata['name']
-        data['senderId']=regdata['email']
+        data['to']=regdata['email']
         data['cust_acc_id']="123"
         utility.sendEmail(data)
         #####
@@ -201,10 +201,10 @@ def registerCustomer():
         data['type']=utility.EMAIL_REG_CUSTOMER
         data['ssn_id']=regdata['ssn_id']
         data['name']=regdata['name']
-        data['senderId']=regdata.get('email',None)
+        data['to']=regdata.get('email',None)
         data['cust_acc_id']="123"
         utility.sendEmail(data)
-        if data['senderId'] !=None:
+        if data['to'] !=None:
             utility.sendEmail(EMail_data)
         else:
             logging.error(f"No valid Email found for {data['ssn_id']}")
@@ -487,8 +487,8 @@ def createAccount():
         EMail_data['name']=reg_cust_details['name']
         EMail_data['cust_acc_id']=data['cust_acc_id']
 
-        EMail_data['senderId']=reg_cust_details.get('email',None)
-        if EMail_data['senderId'] !=None:
+        EMail_data['to']=reg_cust_details.get('email',None)
+        if EMail_data['to'] !=None:
             utility.sendEmail(EMail_data)
 #####################
         return redirect(url_for('home'))

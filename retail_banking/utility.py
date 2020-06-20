@@ -1,7 +1,10 @@
 import requests
 import json
 import logging
-
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from mailjet_rest import Client
 
 EMAIL_REG_EXECUTIVE=1
 EMAIL_REG_CUSTOMER=2
@@ -56,19 +59,90 @@ def isStateValid(st):
 
 
 
-def sendEmail(data):
-    url = "https://api.sendinblue.com/v3/smtp/email"
-    headers = {
-        'accept': "application/json",
-        'content-type': "application/json",
-        'api-key': "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"
+
+
+
+def isNameValid(name):
+    cnt=0
+    for z in name.lower():
+        if z in "abcedefghijklmnopqrstuvwxyz":
+            cnt+=1
+        if cnt>=3:
+            return True
+    return False
+
+
+def sendEmailBysendGrid(data):
+    message = Mail(
+        from_email='from@example.com',
+        to_emails=data['to'],
+        subject=data['subject'],
+        html_content=data['htmlContent'])
+    try:
+        api=os.environ.get('SENDGRID_API_KEY',None)
+        if api==None:
+            import config_internal
+            api=config_internal.sendgridapi
+
+        sg = SendGridAPIClient(api)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print("at sendGrid",e)
+
+
+
+def sendEmailByMailjet(dataz):
+    api_key=os.environ.get("MAILJET_API_KEY",None)
+    api_secret=os.environ.get("MAILJET_API_SKEY",None)
+    if api_key==None:
+        import config_internal
+        api_key=config_internal.mailjet_api_key
+        api_secret=config_internal.mailjet_api_skey
+    mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+    data = {
+    'Messages': [
+        {
+        "From": {
+            "Email": "authoritydmc@gmail.com",
+            "Name": "Rbank"
+        },
+        "To": [
+            {
+            "Email": f"{dataz['to']}",
+            "Name": f"{dataz['name']}"
+            }
+        ],
+        "Subject": f"{dataz['subject']}",
+        "HTMLPart": f"{dataz['htmlContent']}"
         }
+    ]
+    }
+    result = mailjet.send.create(data=data)
+    print (result.status_code)
+    print (result.json())
+
+
+    
+
+
+
+def sendEmail(data):
+    # url = "https://api.sendinblue.com/v3/smtp/email"
+    # headers = {
+    #     'accept': "application/json",
+    #     'content-type': "application/json",
+    #     'api-key': "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"
+    #     }
 
 
     payload={}
-    payload['sender']={"name":"Rbank","email":"noreply@noreply.com"}
+    payload['senderId']={"name":"Rbank","email":"noreply@noreply.com"}
     payload["replyTo"]={"email":"noreply@noreply.com","name":"Admin"}
-    payload["to"]=[{"email":f"{data['senderId']}","name":f"{data['name']}"}]
+    payload["to"]=f"{data['to']}"
+    payload["name"]=f"{data['name']}"
 
     if data['type']==EMAIL_OPENED_Account:
         payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!! <br><br>Account Opened at our Bank.Below are your Account Details<br><br>Account ID:  {data['cust_acc_id']} <br><br>SSN ID:  {data['ssn_id']} <br><br>Thank You,<br><a href='rbank.herokuapp.com'>Rbank </a>,Always at your Service "
@@ -82,29 +156,26 @@ def sendEmail(data):
         payload["subject"]="Executive Registered"
 
     try:
-        json_payload=json.dumps(payload)
-        print(json_payload)
+        sendEmailBysendGrid(payload)
+        sendEmailByMailjet(payload)
+        # json_payload=json.dumps(payload)
+        # print(json_payload)
 
-        response = requests.request("POST", url, data=json_payload, headers=headers)
+        # response = requests.request("POST", url, data=json_payload, headers=headers)
 
-        print(response.text)
-    except :
+        # # print(response.text)
+    except Exception as e:
         logging.error("Exception @ sendEmail in utility")
+        logging.error(str(e))
         
 
 
-# data={}
-# data['type']=EMAIL_REG_CUSTOMER
-# data['ssn_id']="123456789"
-# data['name']="Test Customer"
-# data['senderId']="rajdubeygkp@gmail.com"
-# data['cust_acc_id']="123"
 
-def isNameValid(name):
-    cnt=0
-    for z in name.lower():
-        if z in "abcedefghijklmnopqrstuvwxyz":
-            cnt+=1
-        if cnt>=3:
-            return True
-    return False
+data={}
+data['type']=EMAIL_REG_CUSTOMER
+data['ssn_id']="123456789"
+data['name']="Test Customer"
+data['to']="rajdubeygkp@gmail.com"
+data['cust_acc_id']="123"
+
+sendEmail(data)
