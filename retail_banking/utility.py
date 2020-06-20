@@ -108,7 +108,7 @@ def sendEmailSendInBlue(data):
 
 def sendEmailBysendGrid(data):
     message = Mail(
-        from_email='retailBank@protonmail.com',
+        from_email='sender.rbank@gmail.com',
         to_emails=data['to'],
         subject=data['subject'],
         html_content=data['htmlContent'])
