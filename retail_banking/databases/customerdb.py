@@ -120,13 +120,19 @@ def make_transaction(data,type):
         return False,str(e)
 
 def deposit(data):
-    if float(data['amount'])<1:
-        return False,"Minimum amount should be Rs 1 to deposit"
+    try:
+        if float(data['amount'])<1:
+            return False,"Minimum amount should be Rs 1 to deposit"
+    except :
+        return False,"Occur occured ,while making Depositing the money.."
     return make_transaction(data,"credit")
-
+    
 def withdraw(data):
-    if float(data['balance'])+float(data['amount']) <0:
-        return False,"Not Sufficient Balance in account to withdraw"
+    try:
+        if float(data['balance'])+float(data['amount']) <0:
+            return False,"Not Sufficient Balance in account to withdraw"
+    except :
+        return False,"error occured while withdrawing money"
     return make_transaction(data,"debit")
 
 

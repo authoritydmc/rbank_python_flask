@@ -5,7 +5,7 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from mailjet_rest import Client
-
+import time
 EMAIL_REG_EXECUTIVE=1
 EMAIL_REG_CUSTOMER=2
 EMAIL_OPENED_Account=3
@@ -58,6 +58,8 @@ def isStateValid(st):
     return False
 
 
+def getTime():
+   return  time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
 
 
 
@@ -181,11 +183,12 @@ def sendEmail(data):
 
 
 
-data={}
-data['type']=EMAIL_REG_CUSTOMER
-data['ssn_id']="123456789"
-data['name']="Test Customer"
-data['to']="rajdubeygkp@gmail.com"
-data['cust_acc_id']="123"
+# data={}
+# data['type']=EMAIL_REG_CUSTOMER
+# data['ssn_id']="123456789"
+# data['name']="Test Customer"
+# data['to']="rajdubeygkp@gmail.com"
+# data['cust_acc_id']="123"
 if __name__=="__main__":
-    sendEmail(data)
+    # sendEmail(data)
+    print(getTime())

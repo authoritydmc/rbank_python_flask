@@ -45,6 +45,7 @@ def login():
             # setup session~~~
             session_login(uid, result['name'])
             if isLoggedin():
+
                 flash("Successfully Logged in", "success")
             else:
                 flash("Can not setup session ", "danger")
@@ -96,8 +97,7 @@ def registerExecutive():
         return redirect(url_for('registerExecutive'))
 
 
-    regdata['creation_time'] = time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    regdata['creation_time'] =utility.getTime()
     result, err = edb.register(regdata)
 
     if result:
@@ -153,8 +153,7 @@ def registerCustomer():
     # regdata['city '] = request.form.get('city')
     regdata['address'] = request.form.get('address')
     regdata['email']=request.form.get('cust_email')
-    regdata['create_time']=time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    regdata['create_time']=utility.getTime()
 
 
     if len(regdata['name'])<3:
@@ -235,6 +234,7 @@ def session_logout():
 def session_login(ssn_val, username):
     session['ssn_id'] = ssn_val
     session['username'] = username
+    edb.update_logintime(ssn_val)
 
 
 def isLoggedin():
@@ -299,7 +299,7 @@ def updateCustomer(ssn_id=None):
     regdata['address'] = request.form.get('newAddress')
     regdata['state']=request.form.get('newState')
     regdata['email']=request.form.get('newEmail')
-
+    regdata['updated_time']=utility.getTime()
 
     #sanity check now
 
@@ -463,8 +463,7 @@ def createAccount():
     data['cust_acc_id'] = request.form.get('cust_acc_id')
     cust_acc_id=data['cust_acc_id']
     data['balance'] = 0.0
-    data['create_time']=time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    data['create_time']=utility.getTime()
 
 
     reg_cust_details=cdb.findSSN({'ssn_id': data['ssn_id']})
