@@ -99,7 +99,7 @@ def deleteAccount(filter):
 
 def make_transaction(data,type):
     updatedict={}
-    #all the required Data
+    #all the required Data for recording data
     trans_data=data
 
     updatedict["$inc"]={"balance":float(data['amount'])} #negate the amount so decrease
@@ -143,17 +143,17 @@ def findTransaction(filter):
     res=tdb.findTransaction(filter)
     return res
 
-def transfer(source_acc,dest_acc,amount,exe_sid):
-    if source_acc==dest_acc:
+def transfer(data):
+    if data['source_acc']==data['dest_acc']:
         return False,"Error: Source Account and Destination Account is Same"
-    res1=findAccount({'cust_acc_id':source_acc})
+    res1=findAccount({'cust_acc_id':data['source_acc']})
     if res1==None:
         return False,"Error: Couldn't Find Source Account"
 
-    if float(amount)>float(res1['balance']):
+    if float(data['amount'])>float(res1['balance']):
         return False,"Error: Insufficient Balance in Source Account"
     
-    res2=findAccount({'cust_acc_id':dest_acc})
+    res2=findAccount({'cust_acc_id':data['dest_acc']})
     if res2==None:
         return False,"Error: Couldn't Find Destination Account"
 
@@ -165,23 +165,24 @@ def transfer(source_acc,dest_acc,amount,exe_sid):
 
     transfer_id=tdb.generateTransactionID()
 
-    dataS['cust_acc_id']=source_acc
+    dataS['cust_acc_id']=data['source_acc']
     dataS['transaction_type']="debit"
     #negative amount
-    dataS['amount']="-"+str(amount)
-    dataS['remark']="Transfer ID:"+transfer_id+" Note:Transferred to "+str(dest_acc)
-    dataS['executive_ssn_id']=exe_sid
+    dataS['amount']="-"+str(data['amount'])
+    dataS['remark']="Transfer ID:"+transfer_id+" Note:Transferred to "+str(data['dest_acc'])
+    dataS['executive_ssn_id']=data['executive_ssn_id']
     dataS['balance']=res1['balance']
     dataS['transfer_id']=transfer_id
+    dataS['access_ip']=data['access_ip']
 
 
-
+    dataD['access_ip']=data['access_ip']
     dataD['transfer_id']=transfer_id
-    dataD['cust_acc_id']=dest_acc
+    dataD['cust_acc_id']=data['dest_acc']
     dataD['transaction_type']="credit"
-    dataD['amount']=str(amount)
-    dataD['remark']="Transfer ID:"+transfer_id+" Note:Received From "+str(source_acc)
-    dataD['executive_ssn_id']=exe_sid
+    dataD['amount']=str(data['amount'])
+    dataD['remark']="Transfer ID:"+transfer_id+" Note:Received From "+str(data['source_acc'])
+    dataD['executive_ssn_id']=data['executive_ssn_id']
     dataD['balance']=res2['balance']
     res1,err1=withdraw(dataS)
     result2,err2=deposit(dataD)

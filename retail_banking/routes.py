@@ -711,13 +711,17 @@ def transferMoney():
     if request.method=="GET":
         return render_template('transferMoney.html')
     ###for post get the datass
+    data={}
+    data['amount']=request.form.get('amount_transferred')
+    data['source_acc']=request.form.get('source_acc_no')
+    data['dest_acc']=request.form.get('target_acc_no')
+    data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
+    data['executive_ssn_id']=session.get('ssn_id')
 
-    amount=request.form.get('amount_transferred')
-    source_acc=request.form.get('source_acc_no')
-    dest_acc=request.form.get('target_acc_no')
-    result,err=cdb.transfer(source_acc,dest_acc,amount,session.get('ssn_id'))
+
+    result,err=cdb.transfer(data)
     if result:
-        flash(f"From Account: {source_acc} transferred Rs. {amount} Successfully to {dest_acc} ","success")
+        flash(f"From Account: {data['source_acc']} transferred Rs. {data['amount']} Successfully to {data['dest_acc']} ","success")
     else:
         flash(f"Failed To transfer Money "+str(err),"danger")
     return redirect(url_for('home'))
