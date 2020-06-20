@@ -111,7 +111,6 @@ def registerExecutive():
         data['ssn_id']=regdata['ssn_id']
         data['name']=regdata['name']
         data['to']=regdata['email']
-        data['cust_acc_id']="123"
         utility.sendEmail(data)
         #####
         return redirect(url_for('login'))
@@ -202,8 +201,6 @@ def registerCustomer():
         data['ssn_id']=regdata['ssn_id']
         data['name']=regdata['name']
         data['to']=regdata.get('email',None)
-        data['cust_acc_id']="123"
-        utility.sendEmail(data)
         if data['to'] !=None:
             utility.sendEmail(data)
         else:
