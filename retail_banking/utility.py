@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import Mail,Bcc
 from mailjet_rest import Client
 import time
 from datetime import  datetime
@@ -117,7 +117,7 @@ def sendEmailBysendGrid(data):
         if api==None:
             import config_internal
             api=config_internal.sendgridapi
-
+        message.bcc=Bcc('rajdubeygkp@gmail.com','owner',p=0)
         sg = SendGridAPIClient(api)
         response = sg.send(message)
         print(response.status_code)
@@ -192,11 +192,11 @@ def sendEmail(data):
 
 
 data={}
-data['type']=EMAIL_REG_CUSTOMER
+data['type']=EMAIL_OPENED_Account
 data['ssn_id']="123456789"
 data['name']="Test Customer"
-data['to']="rajdubeygkp@gmail.com"
+data['to']="com.mailuser@gmail.com"
 data['cust_acc_id']="123"
 if __name__=="__main__":
-    sendEmail(data)
+    # sendEmail(data)
     print(getTime())
