@@ -50,11 +50,11 @@ def updateDetail(filter,data):
             return False,"Can not Update to Database update@edb"
     except Exception as e:
         return False,"Error Occured : "+str(e)
-def update_logintime(ssn_id):
+def update_logintime(ssn_id,access_ip):
     try:
         ct=utility.getTime()
         f=  {"ssn_id":str(ssn_id)}
-        print("LAST_LOGIN",updateDetail(f,{"last_login":ct}))
+        print("LAST_LOGIN",updateDetail(f,{"last_login":ct,"access_ip":access_ip}))
     except Exception as e:
         print("ERROR @ EDB 57",e)
 

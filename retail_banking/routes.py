@@ -78,8 +78,7 @@ def registerExecutive():
 
     regdata['name'] =str( request.form.get('name')).replace("\n","")
     regdata['email'] = request.form.get('email')
-    regdata['pass'] = hashlib.sha256(
-        request.form.get('psw').encode()).hexdigest()
+    regdata['pass'] = hashlib.sha256(request.form.get('psw').encode()).hexdigest()
 
     if len(regdata['name'])<3:
         flash("Name Should be of minimum 3 Characters ","danger")
@@ -99,6 +98,8 @@ def registerExecutive():
 
 
     regdata['creation_time'] =utility.getTime()
+    regdata['access_ip']=request.remote_addr
+
     result, err = edb.register(regdata)
 
     if result:
@@ -155,6 +156,8 @@ def registerCustomer():
     regdata['address'] = request.form.get('address')
     regdata['email']=request.form.get('cust_email')
     regdata['create_time']=utility.getTime()
+    regdata['access_ip']=request.remote_addr
+
 
 
     if len(regdata['name'])<3:
@@ -237,7 +240,8 @@ def session_login(ssn_val, username,lastLogin):
     session['ssn_id'] = ssn_val
     session['username'] = username
     session['last_login']=lastLogin
-    edb.update_logintime(ssn_val)
+    access_ip=request.remote_addr
+    edb.update_logintime(ssn_val,access_ip)
 
 
 def isLoggedin():
@@ -303,6 +307,7 @@ def updateCustomer(ssn_id=None):
     regdata['state']=request.form.get('newState')
     regdata['email']=request.form.get('newEmail')
     regdata['updated_time']=utility.getTime()
+    regdata['access_ip']=request.remote_addr
 
     #sanity check now
 
@@ -467,6 +472,8 @@ def createAccount():
     cust_acc_id=data['cust_acc_id']
     data['balance'] = 0.0
     data['create_time']=utility.getTime()
+    data['access_ip']=request.remote_addr
+
 
 
     reg_cust_details=cdb.findSSN({'ssn_id': data['ssn_id']})
@@ -644,6 +651,8 @@ def deposit():
     data['remark']="self deposit"
     data['executive_ssn_id']=session.get('ssn_id')
     data['balance']=request.form.get('balance')
+    regdata['access_ip']=request.remote_addr
+
     result,err=cdb.deposit(data)
     if result:
         flash(f"Amount {data['amount']} deposited Successfully to Account ID :{data['cust_acc_id']}","success")
@@ -681,6 +690,8 @@ def withdraw():
     data['remark']="self withdrawl"
     data['executive_ssn_id']=session.get('ssn_id')
     data['balance']=request.form.get('balance')
+    data['access_ip']=request.remote_addr
+
 
     result,err=cdb.withdraw(data)
     if result:
