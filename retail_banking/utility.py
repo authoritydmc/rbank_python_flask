@@ -106,7 +106,7 @@ def sendEmailByMailjet(dataz):
     'Messages': [
         {
         "From": {
-            "Email": "authoritydmc@gmail.com",
+            "Email": "admin@rbank.herokuapp.com",
             "Name": "Rbank"
         },
         "To": [
@@ -177,5 +177,5 @@ data['ssn_id']="123456789"
 data['name']="Test Customer"
 data['to']="rajdubeygkp@gmail.com"
 data['cust_acc_id']="123"
-
-sendEmail(data)
+if __name__=="__main__":
+    sendEmail(data)
