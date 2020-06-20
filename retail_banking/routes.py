@@ -739,7 +739,7 @@ def viewTransaction():
             return render_template('searchTransaction.html')
   
     if TRANS_DATA:
-        return render_template('viewAllTransaction.html',datas=TRANS_DATA,cust_acc_id=cust_id)
+        return render_template('viewAllTransaction.html',datas=TRANS_DATA.sort('epoch_time',-1),cust_acc_id=cust_id)
     else:
         if trans_id=="":
             flash(f"No Transaction Exist for Account id {cust_id}","danger")

@@ -6,7 +6,6 @@ class DB:
     def __init__(self):
 
         self._url=config.config.dburl
-
         if self._url==None:
             #change this url to your mongodb database for testing ....
             from retail_banking import config_internal
