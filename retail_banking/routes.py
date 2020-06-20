@@ -205,7 +205,7 @@ def registerCustomer():
         data['cust_acc_id']="123"
         utility.sendEmail(data)
         if data['to'] !=None:
-            utility.sendEmail(EMail_data)
+            utility.sendEmail(data)
         else:
             logging.error(f"No valid Email found for {data['ssn_id']}")
         #####
