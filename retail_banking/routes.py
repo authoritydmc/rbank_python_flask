@@ -166,6 +166,9 @@ def registerCustomer():
     if not utility.isNameValid(regdata['name']):
         flash("Entered Name is not Valid ","danger")
         return redirect(url_for('registerCustomer'))
+    if not utility.isNameValid(regdata['address']):
+        flash("Entered Address is not Valid ","danger")
+        return redirect(url_for('registerCustomer'))
 
     if not utility.isNameValid(regdata['name']):
         flash(f"Entered Name={regdata['name']} is not Valid  ","danger")
@@ -314,6 +317,15 @@ def updateCustomer(ssn_id=None):
 
     if len(regdata['name'])<3:
         flash("Name Should be of minimum 3 Characters ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+    if not utility.isNameValid(regdata['name']):
+        flash("Entered Name is not Valid ","danger")
+        return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
+
+    
+    if not utility.isNameValid(regdata['address']):
+        flash("Entered Address is not Valid ","danger")
         return redirect(url_for('updateCustomer')+"/"+regdata['ssn_id'])
 
     
