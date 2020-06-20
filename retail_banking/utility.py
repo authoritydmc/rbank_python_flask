@@ -108,7 +108,7 @@ def sendEmailSendInBlue(data):
 
 def sendEmailBysendGrid(data):
     message = Mail(
-        from_email='from@example.com',
+        from_email='retailBank@protonmail.com',
         to_emails=data['to'],
         subject=data['subject'],
         html_content=data['htmlContent'])
@@ -121,8 +121,8 @@ def sendEmailBysendGrid(data):
         sg = SendGridAPIClient(api)
         response = sg.send(message)
         print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        print("SEND_GRID",response.body)
+        # print(response.headers)
     except Exception as e:
         print("at sendGrid",e)
 
@@ -181,9 +181,9 @@ def sendEmail(data):
         payload["subject"]="Executive Registered"
 
     try:
-        # sendEmailBysendGrid(payload)
+        sendEmailBysendGrid(payload)
         # sendEmailByMailjet(payload)
-        sendEmailSendInBlue(payload)
+        sendEmailSendInBlue(payload)    
     except Exception as e:
         logging.error("Exception @ sendEmail in utility")
         logging.error(str(e))
@@ -191,12 +191,12 @@ def sendEmail(data):
 
 
 
-# data={}
-# data['type']=EMAIL_REG_CUSTOMER
-# data['ssn_id']="123456789"
-# data['name']="Test Customer"
-# data['to']="rajdubeygkp@gmail.com"
-# data['cust_acc_id']="123"
+data={}
+data['type']=EMAIL_REG_CUSTOMER
+data['ssn_id']="123456789"
+data['name']="Test Customer"
+data['to']="rajdubeygkp@gmail.com"
+data['cust_acc_id']="123"
 if __name__=="__main__":
-    # sendEmail(data)
+    sendEmail(data)
     print(getTime())
