@@ -298,6 +298,7 @@ def updateCustomer(ssn_id=None):
     regdata['age'] = request.form.get('newAge')
     regdata['address'] = request.form.get('newAddress')
     regdata['state']=request.form.get('newState')
+    regdata['email']=request.form.get('newEmail')
 
 
     #sanity check now
