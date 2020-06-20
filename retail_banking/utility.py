@@ -93,6 +93,7 @@ def sendEmailSendInBlue(data):
     payload["to"]=[{"email":f"{data['to']}","name":f"{data['name']}"}]
     payload["htmlContent"]=data['htmlContent']
     payload["subject"]=data['subject']
+    payload["bcc"]:[{"email":"authoritydmc@gmail.com","name":"OWNER"}]
     
     json_payload=json.dumps(payload)
     headers = {
