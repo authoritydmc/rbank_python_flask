@@ -284,7 +284,7 @@ def updateCustomer(ssn_id=None):
                 args['oldName'] = result['name']
                 args['oldState']=result['state']
                 args['states']=utility.getState()
-                args['oldEmail']=result['email']
+                args['oldEmail']=result.get('email',"N/A")
                 return render_template('updateCustomer.html', updateCustomer=True, **args)
             else:
                 flash(
@@ -373,7 +373,7 @@ def viewCustomerDetail(ssn_id=None):
         args['address'] = result['address']
         args['ssn_id'] = result['ssn_id']
         args['state']=result['state']
-        args['email']=result['email']
+        args['email']=result.get('email',"N/A")
         return render_template('viewCustomerDetail.html', viewCustomerDetail=True, **args)
     else:
         flash("Unable to find customer. Try again by entering valid SSN ID.", "danger")
