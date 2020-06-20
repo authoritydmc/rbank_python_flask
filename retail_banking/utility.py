@@ -94,7 +94,7 @@ def sendEmailSendInBlue(data):
 
     response = requests.request("POST", url, data=json_payload, headers=headers)
 
-    print(response.text)
+    print("SEND_IN_BLUE: "+response.text)
 
 def sendEmailBysendGrid(data):
     message = Mail(
@@ -154,29 +154,20 @@ def sendEmailByMailjet(dataz):
 
 
 def sendEmail(data):
-    # url = "https://api.sendinblue.com/v3/smtp/email"
-    # headers = {
-    #     'accept': "application/json",
-    #     'content-type': "application/json",
-    #     'api-key': "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"
-    #     }
-
-
     payload={}
-    payload['senderId']={"name":"Rbank","email":"noreply@noreply.com"}
     payload["replyTo"]={"email":"noreply@noreply.com","name":"Admin"}
     payload["to"]=f"{data['to']}"
     payload["name"]=f"{data['name']}"
 
     if data['type']==EMAIL_OPENED_Account:
-        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!! <br><br>Account Opened at our Bank.Below are your Account Details<br><br>Account ID:  <b>{data['cust_acc_id']}</b> <br><br>SSN ID:  <b>{data['ssn_id']}</b> <br><br>Thank You,<br><a href='rbank.herokuapp.com'>Rbank </a>,Always at your Service "
+        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!! <br><br>Account Opened at our Bank.<br><br>Account Details<br><hr><br>Account ID:  <b>{data['cust_acc_id']}</b> <br><br>SSN ID:  <b>{data['ssn_id']}</b> <br><hr><br>Thank You,<br><a href='rbank.herokuapp.com'>   Rbank </a><br>Always at your Service "
         payload["subject"]=f"Account Opened for {data['ssn_id']} @Rbank"
 
     elif data['type']==EMAIL_REG_CUSTOMER:
-        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!! Thank you for registering with us as a Customer..<br><br>Here is Your SSN ID <b>{data['ssn_id']}</b> <br><br>Thank You,<br><a href='rbank.herokuapp.com'>Rbank </a>,Always at your Service "
+        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!! Thank you for registering with us as a Customer..<br><br>Here is Your SSN ID <b>{data['ssn_id']}</b> <br><br>Thank You,<br><a href='rbank.herokuapp.com'>   Rbank </a><br>Always at your Service "
         payload["subject"]="Registered as a Customer @ Rbank"
     if data['type']==EMAIL_REG_EXECUTIVE :
-        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!!<br><br>Thank you on being a part of Rbank.<br><br> <br>Here is Your SSN ID:  {data['ssn_id']}   <br> <br>please Login using this ID and your password!!! <br><br>Thank You,<br><a href='rbank.herokuapp.com'>Rbank </a>,Always at your Service "
+        payload["htmlContent"]=f"Dear {data['name']},<br> <br>Congratulation !!!<br><br>Thank you on being a part of Rbank.<br><br> <br>Here is Your SSN ID:  {data['ssn_id']}   <br> <br>please Login using this ID and your password!!! <br><br>Thank You,<br><a href='rbank.herokuapp.com'>    Rbank </a><br>Always at your Service "
         payload["subject"]="Executive Registered"
 
     try:
