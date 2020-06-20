@@ -2,6 +2,7 @@ from . import database
 import time
 import random
 import logging
+from .. import utility
 try:
     DB=database.DB()
 except Exception as e:
@@ -15,7 +16,7 @@ except Exception as e:
 collectionTransaction="transactions"
 
 def generateTransactionID():
-    return str(time.time_ns())[-7:]+str(random.randint(1000,9999))
+    return str(time.time_ns())[-11:]+str(random.randint(1000,9999))
 
 
 def recordTransaction(data):
@@ -23,8 +24,8 @@ def recordTransaction(data):
     clctn.create_index('trans_id',unique=True)
     try:
         data['trans_id']=generateTransactionID()
-        data['transaction_time']=time.strftime(
-        "%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+        data['transaction_time']=utility.getTime()
+        data['epoch_time']=utility.getTimeUTC()
         DB.insertCollection(collectionTransaction,data)
         return True,"NO error"
     except Exception as e:

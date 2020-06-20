@@ -43,7 +43,8 @@ def login():
             return redirect(url_for('login'))
         else:
             # setup session~~~
-            session_login(uid, result['name'])
+            last_login=result.get("last_login","N/A")
+            session_login(uid, result['name'],last_login)
             if isLoggedin():
 
                 flash("Successfully Logged in", "success")
@@ -229,11 +230,13 @@ def logout():
 def session_logout():
     session.pop('ssn_id', None)
     session.pop('username', None)
+    session.pop('last_login',None)
 
 
-def session_login(ssn_val, username):
+def session_login(ssn_val, username,lastLogin):
     session['ssn_id'] = ssn_val
     session['username'] = username
+    session['last_login']=lastLogin
     edb.update_logintime(ssn_val)
 
 

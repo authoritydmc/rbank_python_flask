@@ -57,3 +57,5 @@ def update_logintime(ssn_id):
         print("LAST_LOGIN",updateDetail(f,{"last_login":ct}))
     except Exception as e:
         print("ERROR @ EDB 57",e)
+
+

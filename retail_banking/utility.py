@@ -6,6 +6,8 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from mailjet_rest import Client
 import time
+from datetime import  datetime
+import pytz
 EMAIL_REG_EXECUTIVE=1
 EMAIL_REG_CUSTOMER=2
 EMAIL_OPENED_Account=3
@@ -59,8 +61,13 @@ def isStateValid(st):
 
 
 def getTime():
-   return  time.strftime("%a,%d %b %Y %I:%M:%S %p %Z", time.gmtime())
+    india_tz=pytz.timezone('Asia/Kolkata')
+    india_date=india_tz.localize(datetime.now())
+    formats='%a,%d %b %Y,%I:%M %p %Z'
+    return india_date.strftime(formats)
 
+def getTimeUTC():
+    return str(time.time_ns())
 
 
 
