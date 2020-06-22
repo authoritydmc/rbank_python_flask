@@ -15,6 +15,11 @@ except Exception as e:
     logging.error(e)
 
 
+@app.after_request
+def ar(r):
+    r.headers['Cache-Control']="no-store"
+    return r
+
 @app.route('/')
 def home():
     return render_template('home.html', home=True)
