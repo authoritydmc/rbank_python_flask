@@ -26,10 +26,10 @@ def session_ui(which_one):
         edb.storeUI(which_one,ssn_id)
         
         
-@app.after_request
-def ar(r):
-    r.headers['Cache-Control']="no-store"
-    return r
+# @app.after_request
+# def ar(r):
+#     r.headers['Cache-Control']="no-store"
+#     return r
 
 @app.route('/')
 def home():
@@ -264,7 +264,7 @@ def session_logout():
     session.pop('ssn_id', None)
     session.pop('username', None)
     session.pop('last_login',None)
-    session.pop('ui',None)
+    # session.pop('ui',None)
 
 
 def session_login(ssn_val, username,lastLogin,acc_IP,ui_type):
