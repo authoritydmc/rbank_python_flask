@@ -35,6 +35,11 @@
     <li><a href="{{ url_for('withdraw')}}" >Withdraw Amount <i class="fas fa-folder-minus"></i></a></li>
     <li><a href="{{ url_for('transferMoney')}}" >Transfer Money <i class="fas fa-exchange-alt"></i></a></li>
     <li><a href="{{ url_for('viewTransaction')}}" >View Transactions <i class="fas fa-search-dollar"></i></a></li>
+
+    <li class="heading">Change UI <i class="fa fa-cogs" aria-hidden="true"></i></li>
+
+    <li><a href="{{ url_for('UI')}}?ui=2" >USE CLEAN UI <i class="fas fa-search-dollar"></i></a></li>
+
     
     {% endif %}
 </ul>

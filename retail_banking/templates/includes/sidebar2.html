@@ -1,0 +1,46 @@
+<ul class="vertical-nav-menu metismenu">
+    {% if not 'ssn_id' in session.keys() %}
+
+    <li class="nav-item active">
+        <a class="nav-link btn {% if login %}btn-primary {% endif%}" href='{{ url_for("login") }}'>Login <i
+                        class="fas fa-sign-in-alt"></i></a>
+    </li>
+    <li class="nav-item active">
+        <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register
+                    <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+    </li>
+    {% else %}
+
+    <!-- <li class="app-sidebar__heading"> Home <i class="fa fa-home" aria-hidden="true"></i></li> -->
+    <li class="nav-item  active">
+        <a href="{{ url_for('home')}}" class="btn nav-link {% if home %}btn-primary {% endif%}">Home <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </li>
+
+    <li class="nav-item  active"><a href="{{ url_for('logout')}}" class="btn nav-link ">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+
+    <li class="app-sidebar__heading">Customer Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
+
+    <li class="nav-item  active"><a href="{{ url_for('registerCustomer')}}" class="nav-link btn {% if registerCustomer %}btn-primary {% endif%}">Register Customer <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
+    <li class="nav-item active"><a href="{{ url_for('updateCustomer')}}" class="nav-link btn {% if updateCustomer %}btn-primary {% endif%}">Update Customer <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </a></li>
+    <li class="nav-item active"><a href="{{ url_for('searchCustomer')}}" class="nav-link btn {% if searchCustomer %}btn-primary {% endif%}">Search Customer <i class="fas fa-search"></i> </a></li>
+
+    <li class="nav-item  active"><a href="{{ url_for('viewAllCustomer')}}" class="nav-link btn {% if viewAllCustomer %}btn-primary {% endif%}">All Customer <i class="fa fa-eye" aria-hidden="true"></i>
+                </a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deleteCustomer')}}" class="nav-link btn {% if deleteCustomer %}btn-primary {% endif%}">Delete Customer <i class="far fa-trash-alt"></i></a></li>
+    <li class="app-sidebar__heading">Account Management <i class="fa fa-cogs" aria-hidden="true"></i></li>
+
+    <li class="nav-item  active"><a href="{{ url_for('createAccount')}}" class="btn nav-link {% if createAccount %}btn-primary {% endif%}">Add Account <i class="fa fa-address-book"></i></a></li>
+    <li class="nav-item active"><a href="{{ url_for('searchAccount')}}" class="nav-link btn {% if searchAccount %}btn-primary {% endif%}">Search Account <i class="fas fa-search-dollar"></i> </a></li>
+
+    <li class="nav-item  active"><a href="{{ url_for('deleteAccount')}}" class="btn nav-link {% if deleteAccount %}btn-primary {% endif%}">Delete Account <i class="far fa-trash-alt"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('deposit')}}" class="btn nav-link {% if deposit %}btn-primary {% endif%}">Deposit Amount  <i class="fas fa-folder-plus"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('withdraw')}}" class="btn nav-link {% if withdraw %}btn-primary {% endif%}">Withdraw Amount <i class="fas fa-folder-minus"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('transferMoney')}}" class="btn nav-link {% if transfer %}btn-primary {% endif%}">Transfer Money <i class="fas fa-exchange-alt"></i></a></li>
+    <li class="nav-item  active"><a href="{{ url_for('viewTransaction')}}" class="btn nav-link {% if transfer %}btn-primary {% endif%}">View Transactions <i class="fas fa-search-dollar"></i></a></li>
+    <li class="app-sidebar__heading">Change UI <i class="fa fa-cogs" aria-hidden="true"></i></li>
+  
+    <li class="nav-item  active"><a href="{{ url_for('UI')}}?ui=1" class="btn nav-link {% if transfer %}btn-primary {% endif%}">Use Minimal UI <i class="fas fa-search-dollar"></i></a></li>
+            
+    {% endif %}
+</ul>

@@ -14,7 +14,18 @@ try:
 except Exception as e:
     logging.error(e)
 
+def session_ui(which_one):
+    if which_one==1:
+        session['ui']='base1.html'
+    if which_one==2:
+        session['ui']='base2.html'
 
+    ssn_id=session.get('ssn_id',None)
+    if ssn_id != None:
+        print("Storing it ")
+        edb.storeUI(which_one,ssn_id)
+        
+        
 @app.after_request
 def ar(r):
     r.headers['Cache-Control']="no-store"
@@ -23,6 +34,16 @@ def ar(r):
 @app.route('/')
 def home():
     return render_template('home.html', home=True)
+
+@app.route('/ui')
+def UI():
+    try:
+        ui_type=int(request.args.get('ui',1))
+        session_ui(ui_type)
+    except :
+        pass
+    return redirect(url_for('home'))
+
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -49,7 +70,8 @@ def login():
         else:
             # setup session~~~
             last_login=result.get("last_login","N/A")
-            session_login(uid, result['name'],last_login,request.headers.get("x-forwarded-for",request.remote_addr))
+            ui_type=result.get('ui','base1.html')
+            session_login(uid, result['name'],last_login,request.headers.get("x-forwarded-for",request.remote_addr),ui_type)
             if isLoggedin():
 
                 flash("Successfully Logged in", "success")
@@ -242,12 +264,14 @@ def session_logout():
     session.pop('ssn_id', None)
     session.pop('username', None)
     session.pop('last_login',None)
+    session.pop('ui',None)
 
 
-def session_login(ssn_val, username,lastLogin,acc_IP):
+def session_login(ssn_val, username,lastLogin,acc_IP,ui_type):
     session['ssn_id'] = ssn_val
     session['username'] = username
     session['last_login']=lastLogin
+    session['ui']=ui_type
     access_ip=acc_IP
     edb.update_logintime(ssn_val,access_ip)
 
