@@ -9,6 +9,13 @@
         <a class="btn nav-link {% if registerExecutive %}btn-primary {% endif%}" href='{{ url_for("registerExecutive") }}'>Register
                     <i class="fa fa-user-plus" aria-hidden="true"></i></a>
     </li>
+
+
+    <li class="app-sidebar__heading">Change UI <i class="fa fa-cogs" aria-hidden="true"></i></li>
+  
+    <li class="nav-item  active"><a href="{{ url_for('UI')}}?ui=1" class="btn nav-link {% if transfer %}btn-primary {% endif%}">Use Minimal UI <i class="fa fa-desktop"></i></a></li>
+      
+    
     {% else %}
 
     <!-- <li class="app-sidebar__heading"> Home <i class="fa fa-home" aria-hidden="true"></i></li> -->
