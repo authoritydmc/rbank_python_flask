@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+<link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">  
+
+
+
+<link href="{{url_for('static',filename='css/base1.css')}}" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/b0efb4e1c0.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+
+
+{% block head %} {% endblock %}
+
+
+</head>
+<body>
+    <header class="my_header">
+        <div class="tophead" id="tophead">    
+            <div >
+                <p class="menulines" id="hamburger" onclick="ToggleSidebar   ()">&#9776;</p>
+            </div>
+        
+
+            <div class="brandLogo">
+               <a href='{{url_for("home")}}'><b> Rbank</b></a>
+            </div>
+         
+
+</div>
+    </header>
+    <div class="my_sidebar" id="my_sidebar">
+
+        {% include 'includes/sidebar1.html' %}
+    </div>
+                          
+
+<section class="main_section" id="main_section">
+
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                            {% if messages%}
+                                {%for category,message in messages%}
+                                    <div>
+                                        <p style="font-size:20px;" class="text-{{category}}">{{message}}</p>
+                                    </div>
+                                {%endfor%}
+                            {%endif%}
+
+                        {%endwith%}
+                                            
+                                        {% block content %}
+
+                                        {% endblock %}
+                                    {% include 'includes/footer.html' %}
+                      
+    
+                                </section>
+                                <script src="{{url_for('static',filename='scripts/base1.js')}}"></script>
+                               
+                            
+<!-- Latest compiled JavaScript -->
+                            </body>
+                                
+
+                            </html>

@@ -59,3 +59,17 @@ def update_logintime(ssn_id,access_ip):
         print("ERROR @ EDB 57",e)
 
 
+def storeUI(which_one,ssn_id):
+    try:
+        ui_name="base1.html"
+        if which_one==1:
+            ui_name="base1.html"
+        else:
+            ui_name="base2.html"
+
+        f=  {"ssn_id":str(ssn_id)}
+        print("change_ui",updateDetail(f,{"ui":ui_name}))
+    except Exception as e:
+        print("ERROR @ EDB 73",e)
+
+
