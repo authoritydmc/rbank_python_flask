@@ -693,7 +693,7 @@ def deposit():
     data['remark']="self deposit"
     data['executive_ssn_id']=session.get('ssn_id')
     data['balance']=request.form.get('balance')
-    regdata['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
+    data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
     result,err=cdb.deposit(data)
     if result:
