@@ -6,6 +6,22 @@ const sidebar=document.getElementById("my_sidebar");
 const ham=document.getElementById("hamburger");
 const tophead=document.getElementById("tophead");
 const main_section=document.getElementById("main_section");
+const footer_section=document.querySelector(".footer_section");
+const footer_height=footer_section.offsetHeight;
+const viewport_height=window.innerHeight;
+const required_min=viewport_height-footer_height-main_section.offsetHeight+0.1*viewport_height;
+const footer_div=document.querySelector(".my_footer");
+console.log(footer_div);
+
+
+
+
+console.log("MAIN "+main_section.offsetHeight)
+console.log("viewport "+window.innerHeight);
+console.log("FOOTER"+footer_height);
+console.log("Required ->"+required_min);
+main_section.style.minHeight=required_min+"px";
+console.log("main now"+main_section.offsetHeight)
 
 
 window.mobileCheck = function() {
@@ -35,6 +51,7 @@ if (IS_SIDE_OPENED==false){
     main_section.style.marginLeft="300px";
     main_section.style.paddingLeft="50px";
     main_section.style.paddingRight="50px";
+    footer_div.style.marginLeft="300px";
 
 }
   console.debug("opening sidebar");
@@ -48,6 +65,8 @@ if (IS_SIDE_OPENED==false){
  {main_section.style.marginLeft="10px";
  main_section.style.paddingLeft="0";
  main_section.style.paddingRight="0px";
+ footer_div.style.marginLeft="10px";
+
 
 
 }
