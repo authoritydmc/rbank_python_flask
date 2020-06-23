@@ -34,6 +34,8 @@ if (IS_SIDE_OPENED==false){
  {
     main_section.style.marginLeft="300px";
     main_section.style.paddingLeft="50px";
+    main_section.style.paddingRight="50px";
+
 }
   console.debug("opening sidebar");
 }else //closing sidebar
@@ -45,6 +47,8 @@ if (IS_SIDE_OPENED==false){
   if(!window.mobileCheck())
  {main_section.style.marginLeft="10px";
  main_section.style.paddingLeft="0";
+ main_section.style.paddingRight="0px";
+
 
 }
 console.debug("closing sidebar");
