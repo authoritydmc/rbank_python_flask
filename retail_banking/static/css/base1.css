@@ -55,7 +55,7 @@ transform: translateX(-25%);
     top: 66px;
     left: 0;
     z-index: 1;
-
+    overflow-x: hidden;
     padding-top: 30px;
     box-sizing: border-box;
     padding-bottom: 30px;
