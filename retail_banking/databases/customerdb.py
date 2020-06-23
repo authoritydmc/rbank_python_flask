@@ -124,7 +124,7 @@ def deposit(data):
         if float(data['amount'])<1:
             return False,"Minimum amount should be Rs 1 to deposit"
     except :
-        return False,"Occur occured ,while making Depositing the money.."
+        return False,"Error occured ,while Depositing the money.."
     return make_transaction(data,"credit")
     
 def withdraw(data):
