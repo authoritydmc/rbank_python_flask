@@ -14,6 +14,9 @@
 
    
     {% else %}
+    <li class="heading">Hello ,{{session.username}}</li>
+    <li class="sub_heading">Last Login:{{ session.last_login }}</li>
+
 
     <li>
         <a href="{{ url_for('home')}}" >Home <i class="fa fa-home" aria-hidden="true"></i>

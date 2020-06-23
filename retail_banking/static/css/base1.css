@@ -1,6 +1,6 @@
 body{
 height:100%;
-
+background: aliceblue !important;
 }
 
 
@@ -8,10 +8,11 @@ height:100%;
 {
     width: 100%;
     height: 65px;
-    background: aliceblue;
+    background: #272634;
     display: flex;
     align-items: center;
     justify-content:space-between;
+    color: aliceblue;
 
 
 
@@ -26,13 +27,14 @@ height:100%;
 }
 .my_header a{
     text-decoration: none;
-    color: black;
+    color: aliceblue;
     text-align: center;
     
 }
 .my_header a:hover{
     text-decoration: none;
-    color: black;
+    color: aliceblue;
+
 }
 
 .brandLogo{
@@ -59,7 +61,7 @@ transform: translateX(-25%);
     height: 100%;
     width: 0;
     position:fixed;
-    top: 66px;
+    top: 65px;
     left: 0;
     z-index: 1;
     overflow-x: hidden;
@@ -77,10 +79,21 @@ transform: translateX(-25%);
     transition: 0.4s;
     
 }
-.heading {
- color: aliceblue; 
- font-size: 22px;  
+.heading  {
+ color: #FFFFFF; 
+ font-size: 18px;  
+ background: #212121;
+ margin-right: 10px;
+ box-sizing: border-box;
+ 
 
+}
+
+.sub_heading
+{
+    color: aliceblue; 
+    font-size: 12px;  
+    background: #212121;
 }
  
 .my_sidebar a:hover{
@@ -109,3 +122,8 @@ transform: translateX(-25%);
     width: 0px;  
     background: transparent;  
 }
+
+
+ul {
+    list-style-type: none;
+  }
