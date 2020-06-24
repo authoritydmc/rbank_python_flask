@@ -692,7 +692,6 @@ def deposit():
     data['amount']=request.form.get('amount')
     data['remark']="self deposit"
     data['executive_ssn_id']=session.get('ssn_id')
-    data['balance']=request.form.get('balance')
     data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
     result,err=cdb.deposit(data)
@@ -728,10 +727,9 @@ def withdraw():
 
     data['cust_acc_id']=request.form.get('cust_acc_id')
     data['transaction_type']="debit"
-    data['amount']="-"+request.form.get('amount')
+    data['amount']=request.form.get('amount')
     data['remark']="self withdrawl"
     data['executive_ssn_id']=session.get('ssn_id')
-    data['balance']=request.form.get('balance')
     data['access_ip']=request.headers.get("x-forwarded-for",request.remote_addr)
 
 

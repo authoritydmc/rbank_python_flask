@@ -9,7 +9,7 @@ const main_section=document.getElementById("main_section");
 const footer_section=document.querySelector(".footer_section");
 const footer_height=footer_section.offsetHeight;
 const viewport_height=window.innerHeight;
-const required_min=viewport_height-footer_height-main_section.offsetHeight+0.1*viewport_height;
+const required_min=viewport_height-footer_height-66-20;
 const footer_div=document.querySelector(".my_footer");
 console.log(footer_div);
 

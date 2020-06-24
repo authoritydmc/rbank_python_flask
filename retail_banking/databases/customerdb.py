@@ -124,15 +124,26 @@ def deposit(data):
         if float(data['amount'])<1:
             return False,"Minimum amount should be Rs 1 to deposit"
     except :
-        return False,"Error occured ,while Depositing the money.."
+        return False,"Error occurred ,while Depositing the money.."
+   
+    cust_details=findAccount({'cust_acc_id':data['cust_acc_id']})
+    
+    data['balance']=cust_details['balance']
     return make_transaction(data,"credit")
     
 def withdraw(data):
     try:
-        if float(data['balance'])+float(data['amount']) <0:
+        if float(data['balance'])-float(data['amount']) <0:
             return False,"Not Sufficient Balance in account to withdraw"
     except :
-        return False,"error occured while withdrawing money"
+        return False,"Error occurred while withdrawing money"
+
+
+    cust_details=findAccount({'cust_acc_id':data['cust_acc_id']})
+
+    data['amount']="-"+data['amount'] #add a negative sign
+
+    data['balance']=cust_details['balance']
     return make_transaction(data,"debit")
 
 
@@ -168,7 +179,7 @@ def transfer(data):
     dataS['cust_acc_id']=data['source_acc']
     dataS['transaction_type']="debit"
     #negative amount
-    dataS['amount']="-"+str(data['amount'])
+    dataS['amount']=data['amount']
     dataS['remark']="Transfer ID:"+transfer_id+" Note:Transferred to "+str(data['dest_acc'])
     dataS['executive_ssn_id']=data['executive_ssn_id']
     dataS['balance']=res1['balance']
@@ -180,7 +191,7 @@ def transfer(data):
     dataD['transfer_id']=transfer_id
     dataD['cust_acc_id']=data['dest_acc']
     dataD['transaction_type']="credit"
-    dataD['amount']=str(data['amount'])
+    dataD['amount']=data['amount']
     dataD['remark']="Transfer ID:"+transfer_id+" Note:Received From "+str(data['source_acc'])
     dataD['executive_ssn_id']=data['executive_ssn_id']
     dataD['balance']=res2['balance']
