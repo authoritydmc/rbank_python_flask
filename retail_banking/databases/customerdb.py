@@ -132,14 +132,16 @@ def deposit(data):
     return make_transaction(data,"credit")
     
 def withdraw(data):
-    try:
-        if float(data['balance'])-float(data['amount']) <0:
-            return False,"Not Sufficient Balance in account to withdraw"
-    except :
-        return False,"Error occurred while withdrawing money"
-
-
     cust_details=findAccount({'cust_acc_id':data['cust_acc_id']})
+
+    try:
+        if float(cust_details['balance'])-float(data['amount']) <0:
+            return False,"Not Sufficient Balance in account to withdraw"
+    except Exception as e :
+        logging.error("WITHDRAW "+str(e))
+        return False,"Error occurred while withdrawing money"+str(e)
+
+
 
     data['amount']="-"+data['amount'] #add a negative sign
 
