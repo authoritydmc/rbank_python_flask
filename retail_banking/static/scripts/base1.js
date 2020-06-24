@@ -65,7 +65,7 @@ if (IS_SIDE_OPENED==false){
  {main_section.style.marginLeft="10px";
  main_section.style.paddingLeft="0";
  main_section.style.paddingRight="0px";
- footer_div.style.marginLeft="10px";
+ footer_div.style.marginLeft="0";
 
 
 

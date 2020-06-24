@@ -115,8 +115,7 @@ transform: translateX(-25%);
 
 .footer_section
 {
-    /* position:sticky;
-    bottom: 0; */
+    margin: 0;
 }
 .closebtn
 {
